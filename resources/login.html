@@ -1,0 +1,214 @@
+<!--<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+</head>
+<body>
+	<iframe
+	width="350"
+	height="430"
+	src="https://console.api.ai/api-client/demo/embedded/9ab30b08-67af-4c11-b949-02ffbe01420e">
+</iframe>
+</body>
+</html>-->
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Bank one</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <link href="https://fonts.googleapis.com/css?family=Titillium+Web:200" rel="stylesheet" type="text/css">
+  <style type="text/css">
+    html {
+      box-sizing: border-box;
+      width: 100%;
+      height: 100%;
+    }
+    *, *:before, *:after {
+      box-sizing: inherit;
+    }
+    body {
+      background-color: #FAFAFA;
+      font-family: "Titillium Web", Arial, sans-serif;
+      font-size: 20px;
+      margin: 0;
+      width: 100%;
+      height: 100%;
+    }
+    .container {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+    }
+
+    .outer {
+        display: table;
+        position: absolute;
+        height: 100%;
+        width: 100%;
+    }
+
+    .middle {
+        display: table-cell;
+        vertical-align: middle;
+    }
+
+    .inner {
+        margin-left: auto;
+        margin-right: auto; 
+        width: /*whatever width you want*/;
+    }
+
+    .header{
+        width: 100%;
+        text-align: center;
+    }
+
+    .image{
+        width: 100%;
+        max-width: 100%;
+    }
+
+    .img_bkn{
+        width: 15%;
+    }
+
+    .content_info{
+        position: relative;
+        margin: 0 auto;
+        width: 80%;
+    }
+    .lbl{
+        color: #000000;
+        font-size: 1.3em;
+    }
+
+    .div_butt{
+        width: 100%;
+        text-align: center;
+        margin-top: 5%;
+    }
+
+    input {
+      color: #000000;
+      font-family: "Titillium Web";
+      font-size: 20px;
+      line-height: 43px;
+      padding: 0 0.75em;
+      width: 100%;
+      border-radius: 10px;
+    }
+    textarea {
+      background-color: #070F24;
+      border: 1px solid #122435;
+      color: #606B88;
+      padding: 0.5em;
+      width: 100%;
+      -webkit-transition: all 0.35s ease-in;
+    }
+    input:active, input:focus, textarea:active, textarea:focus {
+      outline: 1px solid #48788B;
+    }
+    .btn {
+      background-color: #58ACFA;
+      border: 1px solid #58ACFA;
+      color: #000000;
+      font-weight: bold;
+      cursor: pointer;
+      display: inline-block;
+      font-family: "Titillium Web";
+      font-size: 20px;
+      line-height: 43px;
+      padding: 0 0.75em;
+      text-align: center;
+      text-transform: uppercase;
+      -webkit-transition: all 0.35s ease-in;
+    }
+    .btn:hover {
+      background-color: #1888A9;
+      color: #183035;
+    }
+    .debug {
+      bottom: 0;
+      position: fixed;
+      right: 0;
+    }
+    .debug__content {
+      font-size: 14px;
+      max-height: 0;
+      overflow: hidden;
+      -webkit-transition: all 0.35s ease-in;
+    }
+    .debug__content.is-active {
+      display: block;
+      max-height: 500px;
+    }
+    .debug__btn {
+      width: 100%;
+    }
+    .spoken-response {
+      max-height: 0;
+      overflow: hidden;
+      -webkit-transition: all 0.35s ease-in;
+    }
+    .spoken-response.is-active {
+      max-height: 400px;
+    }
+    .spoken-response__text {
+      background-color: #040E23;
+      color: #7584A2;
+      padding: 1em;
+    }
+
+    label{
+    	color: #FFFFFF;
+    	font-weight: bold;
+    	font-family: "Titillium Web";
+    }
+  </style>
+</head>
+<body>
+    <section class="outer">
+        <section class="middle">
+            <section class="inner">
+                <header class="header">
+                    <div class="image">
+                        <img src="bnk1.jpg" class="img_bkn" />
+                    </div>
+                </header>
+                <section class="content_info">
+                    <div class="div_inp">
+                        <label class="lbl" for="username"><b>Nombre de usuario:</b> </label><br/>
+                        <input id="username" name="username" type="text" />
+                    </div>
+                    <div class="div_inp">
+                        <label class="lbl" for="password"><b>Contraseña:</b> </label><br/>
+                        <input id="password" name="password" type="password" />
+                    </div>
+                    <div class="div_butt">
+                        <button id="login" class="btn">Ingresar</button>
+                    </div>
+                </section>
+            </section>
+        </section>
+    </section>
+  	<script src="https://chatbot-todo1.herokuapp.com/jquery.js"></script>
+  	<script type="text/javascript">
+
+  		$("#login").on("click",function(){
+  			var username = $("#username").val();
+  			var password = $("#password").val();
+
+  			var newLocation = '/authorize' + window.location.search;
+
+  			if (window.location.search) {
+			    newLocation += '&';
+			} else {
+			    newLocation += '?';
+			}
+
+  			window.location = newLocation + 'username=' + username + '&password='+password;
+  		});
+	  		
+  	</script>
+</body>
+</html>
