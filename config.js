@@ -1,6 +1,6 @@
 //Configuration data
 module.exports = {
-  facebook_token : "EAABbuWnnQHoBAAMFpZBc9fmbwIrAjtKlA85G1Gpb5CjH1HFZARvHgjjZBCdjr511tI7FZBMcrDbQ1eEQljohMdh9QHCwMgmtgMExARhRIWiMstK02NB9Gu3ZA52jyN60k5DfglB4BSeZBQxKTngOEjqhJG1Buucj605K3V9ZBjbygZDZD",
+  facebook_token : "EAAB0sHcYLxoBABgRJfbmVe1MbTlhbIGgAB6XkvqYfbjIPzg4WOTZAeRBtPLO2L8QOAil5eKCqVG2jmy7D8C1LuVUZB3u8JAYy9ZB2NNKTD3ve6i3llWWrGQgVdvmHrRuyDVSqJAVZAZB81jHIDKR6KMkUpGVEIcef2I25ZA6HaYQZDZD",
   apiAI_token    : "d9ee0ae9d4244f06984494103b3d7271",
   apiAI_developer_token: "4884d96f37ba401ea46e3e2a80597f56",
   v: "20170516"

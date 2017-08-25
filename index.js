@@ -4,7 +4,6 @@ const request = require('request');
 const uuid = require('uuid');
 const apiai = require('apiai');
 const fs = require('fs');
-const text2png = require('text2png');
 
 const config = require('./config.js');//Module that returns the tokens.
 const transfer = require('./actions/transfer.js');
@@ -843,13 +842,6 @@ app.post('/ai', (req, res) => {
                         todo1ChatBot.callbackFacebookTransfer(req.body.sessionId, { text: req.body.result.fulfillment.messages[0].speech })
 
                         text = `Cuenta origen: ${accountFrom}\nCuenta destino: ${accountTo}\nValor transferido: $${amount}\nNúmero de Comprobante:  0000042401\nFecha: ${formatDate(new Date())}\nHora: ${formatTime(new Date())}`;
-                        fs.writeFileSync('resources/' + req.body.sessionId + '.png', text2png(text, {
-                            font: '15px Helvetica',
-                            textColor: 'black',
-                            bgColor: '#F2F2F2',
-                            lineSpacing: 10,
-                            padding: 10
-                        }));
 
                         todo1ChatBot.callbackTransfer(text, req.body.sessionId, accountFrom);
                     } else {
