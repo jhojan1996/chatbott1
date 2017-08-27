@@ -181,7 +181,7 @@ class Todo1ChatBot {
                     attachment: {
                         type: "image",
                         payload: {
-                            url: "https://chatbot-todo1.herokuapp.com/" + id + ".png"
+                            url: "https://chatbot-todo1.azurewebsites.net/images/" + id + ".png"
                         }
                     }
                 }
@@ -329,7 +329,7 @@ class Todo1ChatBot {
 
     setupAcountLinkingUrl(res) {
         var data = {
-            account_linking_url: "https://chatbot-todo1.herokuapp.com/confirmAuth"
+            account_linking_url: "https://chatbot-todo1.azurewebsites.net/confirmAuth"
         };
 
         // Start the request
@@ -423,7 +423,8 @@ const app = express();
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
-app.use(express.static('resources'));
+app.use(express.static('src'));
+app.use(express.static('assets'));
 
 const server = app.listen(process.env.PORT || 5000, () => {
     console.log('Express server listening on port %d in %s mode', server.address().port, app.settings.env);
@@ -549,7 +550,7 @@ app.post('/ai', (req, res) => {
                             buttons:[
                                 {
                                     type: "account_link",
-                                    url: "https://chatbot-todo1.herokuapp.com/login.html"
+                                    url: "https://chatbot-todo1.azurewebsites.net/login.html"
                                 }
                             ]
                         }
@@ -642,28 +643,28 @@ app.post('/ai', (req, res) => {
                             elements: [
                                 {
                                     title: "Transferencia",
-                                    image_url: "https://chatbot-todo1.herokuapp.com/transferencias.png",
+                                    image_url: "https://chatbot-todo1.azurewebsites.net/images/transferencias.png",
                                     subtitle: "Escribe por ejemplo: Transferir de nómina a mamá 30000 "
                                 },
                                 {
                                     title: "Consulta de saldo tarjeta de crédito o cuenta de ahorros",
-                                    image_url: "https://chatbot-todo1.herokuapp.com/consulta_saldos.png",
+                                    image_url: "https://chatbot-todo1.azurewebsites.net/images/consulta_saldos.png",
                                     subtitle: "Escribe por ejemplo:  saldo de mi tarjeta de crédito visa"
                                 },
                                 {
                                     title: "Movimientos",
-                                    image_url: "https://chatbot-todo1.herokuapp.com/movimientos.png",
+                                    image_url: "https://chatbot-todo1.azurewebsites.net/images/movimientos.png",
                                     subtitle: "Escribe por ejemplo: Movimientos de mi tarjeta de crédito visa "
                                 },
                                 {
                                     title: "Pago tarjeta de crédito",
-                                    image_url: "https://chatbot-todo1.herokuapp.com/pago_tc.png",
+                                    image_url: "https://chatbot-todo1.azurewebsites.net/images/pago_tc.png",
                                     subtitle: "Escribe por ejemplo: Pagar tarjeta de crédito visa "
 
                                 },
                                 {
                                     title: "Servicios adicionales",
-                                    image_url: "https://chatbot-todo1.herokuapp.com/servicios_adicionales_tc_ahorros.png",
+                                    image_url: "https://chatbot-todo1.azurewebsites.net/images/servicios_adicionales_tc_ahorros.png",
                                     subtitle: "Tarjeta de crédito y Cuenta de ahorros",
                                     buttons: [
                                         {
@@ -697,7 +698,7 @@ app.post('/ai', (req, res) => {
                             elements: [
                                 {
                                     title: "Servicios tarjeta de crédito",
-                                    image_url: "https://chatbot-todo1.herokuapp.com/servicios_adicionales_tc.png",
+                                    image_url: "https://chatbot-todo1.azurewebsites.net/images/servicios_adicionales_tc.png",
                                     subtitle: "Ejemplo: Bloqueo de mi tarjeta de crédito. Quiero ampliar mi cupo",
                                     buttons: [
                                         {
@@ -720,7 +721,7 @@ app.post('/ai', (req, res) => {
                                 },
                                 {
                                     title: "Servicios cuenta de ahorros",
-                                    image_url: "https://chatbot-todo1.herokuapp.com/servicios_adicionales_ahorros.png",
+                                    image_url: "https://chatbot-todo1.azurewebsites.net/images/servicios_adicionales_ahorros.png",
                                     subtitle: "Ejemplo: Necesito cambiar el plástico de mi tarjeta, Requiero una certificación bancaria.",
                                     buttons: [
                                         {
@@ -759,7 +760,7 @@ app.post('/ai', (req, res) => {
                             elements: [
                                 {
                                     title: "Servicios tarjeta de crédito",
-                                    image_url: "https://chatbot-todo1.herokuapp.com/servicios_adicionales_tc.png",
+                                    image_url: "https://chatbot-todo1.azurewebsites.net/images/servicios_adicionales_tc.png",
                                     subtitle: "Ejemplo: Bloqueo de mi tarjeta de crédito. Quiero ampliar mi cupo",
                                     buttons: [
                                         {
@@ -956,7 +957,7 @@ app.post('/ai', (req, res) => {
                         if (accounts[key].type !== 'tc') {
                             listAccounts.push({ content_type: "text", title: accounts[key].type + " " + accounts[key].id, payload: "consulta_saldos" });
                         } else {
-                            listAccounts.push({ content_type: "text", title: accounts[key].id, image_url: "https://chatbot-todo1.herokuapp.com/" + accounts[key].alias + ".png", payload: "consulta_saldos" });
+                            listAccounts.push({ content_type: "text", title: accounts[key].id, image_url: "https://chatbot-todo1.azurewebsites.net/images/" + accounts[key].alias + ".png", payload: "consulta_saldos" });
                         }
                     }
                     return res.json({
@@ -1193,7 +1194,7 @@ app.post('/ai', (req, res) => {
                     console.log("Franquicia ")
                     accounts = todo1ChatBot.getAccount("tc", true);
                     for (key in accounts) {
-                        listAccounts.push({ content_type: "text", title: accounts[key].id, payload: "pagos", image_url: "https://chatbot-todo1.herokuapp.com/" + accounts[key].alias + ".png" });
+                        listAccounts.push({ content_type: "text", title: accounts[key].id, payload: "pagos", image_url: "https://chatbot-todo1.azurewebsites.net/images/" + accounts[key].alias + ".png" });
                     }
                     speech = req.body.result.fulfillment.messages[0].speech;
                     message = {
