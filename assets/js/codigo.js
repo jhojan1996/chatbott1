@@ -136,7 +136,7 @@ function prepareResponse(val) {
     let debugJSON = JSON.stringify(val, undefined, 2);
     let intent = val.result.metadata.intentName;
     if(intent === "default-welcome-intent"){
-        let r = getEnrollments();
+        var r = getEnrollments();
         console.log(r);
         if(r.ResponseCode === "SUC"){
             let l = r.Result.length;
