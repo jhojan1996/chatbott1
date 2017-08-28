@@ -42,7 +42,7 @@ $(document).ready(function() {
 
     $recordBtn.on("click",()=>{
         spokenResponse = `Por favor di: never forget tomorrow is a new day`;
-        $.when(respond(spokenResponse)).then(startRecording());
+        $.when(respond(spokenResponse)).done(startRecording());
     });
 
     $stopRec.on("click", function(){
