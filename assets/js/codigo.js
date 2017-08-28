@@ -52,7 +52,7 @@ $(document).ready(function() {
             var hf = document.createElement('a');
 
             $.ajax({
-                url: "http://chatbot-todo1.azurewebsites.net/getEnrollments",
+                url: "https://chatbot-todo1.azurewebsites.net/getEnrollments",
                 method: "POST",
                 data:{
                     userId: "developerUserId",
