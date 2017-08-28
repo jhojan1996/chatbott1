@@ -141,16 +141,16 @@ function prepareResponse(val) {
             if(r.ResponseCode === "SUC"){
                 let l = r.Result.length;
                 if(l < 3){
-                    spokenResponse = `Usted tiene ${l} inscripciones, debe realizar ${3-l} para completar. Por favor presione el botón grabar para iniciar`;
+                    spokenResponse = `Usted tiene ${l} inscripciones, debe realizar ${3-l} para completar.`;
                 }else{
                     hasEnroll = true;
-                    spokenResponse = `Ya puede proceder a realizar la autenticación, presione el boton grabar para realizarla.`;
+                    spokenResponse = `Ya puede proceder a realizar la autenticación.`;
                 }
             }
         });
         $recBtn.prop("disabled", true);
         $recordBtn.prop("disabled", false);
-        spokenResponse = "Por favor presione el botón grabar para iniciar la inscripción";
+        spokenResponse += "Por favor presione el botón grabar para iniciar la inscripción";
     }else{
         spokenResponse = val.result.fulfillment.speech;
     }
