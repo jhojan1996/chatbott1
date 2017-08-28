@@ -137,7 +137,7 @@ function prepareResponse(val) {
     let intent = val.result.metadata.intentName;
     if(intent === "default-welcome-intent"){
         $.when(getEnrollments()).then((r, textStatus, jqXHR)=>{
-            console.log(r);
+            console.log("Datos del ajax ====> ",r);
             if(r.ResponseCode === "SUC"){
                 let l = r.Result.length;
                 if(l < 3){
@@ -250,21 +250,14 @@ function stopRecording(callback, AudioFormat) {
 }
 
 function getEnrollments(){
-    var retornar; 
     $.ajax({
         url: "https://chatbot-todo1.azurewebsites.net/getEnrollments",
         method: "POST",
         data:{
             userId: "developerUserId",
             password: "d0CHipUXOk"
-        },
-        success:(data)=>{
-            console.log("Datos del ajax a getEnrollments =====> ",data);
-            retornar = data;
         }
     });
-
-    return retornar;
 }
 
 function createEnrollmentByWavURL(wavUrl){
