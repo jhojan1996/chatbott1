@@ -136,8 +136,11 @@ function prepareResponse(val) {
     let debugJSON = JSON.stringify(val, undefined, 2);
     let intent = val.result.metadata.intentName;
     if(intent === "default-welcome-intent"){
-        var r = getEnrollments();
-        console.log(r);
+        let ret;
+        $.when(getEnrollments()).then((data, textStatus, jqXHR)=>{
+            ret = data;
+        });
+        console.log(ret);
         if(r.ResponseCode === "SUC"){
             let l = r.Result.length;
             if(l < 3){
