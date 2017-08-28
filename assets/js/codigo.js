@@ -51,18 +51,26 @@ $(document).ready(function() {
             var au = document.createElement('audio');
             var hf = document.createElement('a');
 
-            au.controls = true;
+            $.ajax({
+                url: "http://chatbot-todo1.azurewebsites.net/getEnrollments",
+                method: "POST",
+                data:{
+                    userId: "developerUserId",
+                    password: "d0CHipUXOk"
+                }
+                success:(data)=>{
+                    console.log("Datos del ajax a getEnrollments =====> ",data);
+                }
+            });
+
+            /*au.controls = true;
             au.src = url;
             hf.href = url;
-            // Important:
-            // Change the format of the file according to the mimetype
-            // e.g for audio/wav the extension is .wav 
-            //     for audio/mpeg (mp3) the extension is .mp3
             hf.download = new Date().toISOString() + '.wav';
             hf.innerHTML = hf.download;
             li.appendChild(au);
             li.appendChild(hf);
-            document.getElementById("recordingslist").appendChild(li);
+            document.getElementById("recordingslist").appendChild(li);*/
         }, _AudioFormat);
     });
 
@@ -89,7 +97,7 @@ function startRecognition() {
         respond(messageCouldntHear);
         stopRecognition();
     };
-    recognition.lang = "es-ES";
+    recognition.lang = "es-CO";
     recognition.start();
 }
 
@@ -139,7 +147,7 @@ function prepareResponse(val) {
     if(intent === "default-welcome-intent"){
         $recBtn.prop("disabled", true);
         $recordBtn.prop("disabled", false);
-        spokenResponse = "Por favor precione el boton grabar para generar un archivo wav";
+        spokenResponse = "Por favor presione el boton grabar para iniciar la inscripción";
     }else{
         spokenResponse = val.result.fulfillment.speech;
     }
@@ -157,7 +165,7 @@ function respond(val) {
         var msg = new SpeechSynthesisUtterance();
         msg.voiceURI = "native";
         msg.text = val;
-        msg.lang = "es-ES";
+        msg.lang = "es-CO";
         window.speechSynthesis.speak(msg);
     }
     $("#spokenResponse").addClass("is-active").find(".spoken-response__text").html(val);

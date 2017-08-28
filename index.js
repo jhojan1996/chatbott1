@@ -478,8 +478,8 @@ app.get('/', (req, res) => {
 /*Autenticacion por voz*/
 app.post('/getEnrollments',(req,res)=>{
     voiceIt.getEnrollments({
-        userId: 'developerUserId',
-        password: 'd0CHipUXOk',
+        userId: req.body.userId,
+        password: req.body.password,
         callback: function(response){
             res.send(response);
         }
