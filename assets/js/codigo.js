@@ -57,7 +57,7 @@ $(document).ready(function() {
                 data:{
                     userId: "developerUserId",
                     password: "d0CHipUXOk"
-                }
+                },
                 success:(data)=>{
                     console.log("Datos del ajax a getEnrollments =====> ",data);
                 }
