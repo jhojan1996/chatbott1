@@ -136,20 +136,18 @@ function prepareResponse(val) {
     let debugJSON = JSON.stringify(val, undefined, 2);
     let intent = val.result.metadata.intentName;
     if(intent === "default-welcome-intent"){
-        let ret;
-        $.when(getEnrollments()).then((data, textStatus, jqXHR)=>{
-            ret = data;
-        });
-        console.log(ret);
-        if(r.ResponseCode === "SUC"){
-            let l = r.Result.length;
-            if(l < 3){
-                spokenResponse = `Usted tiene ${l} inscripciones, debe realizar ${3-l} para completar. Por favor presione el botón grabar para iniciar`;
-            }else{
-                hasEnroll = true;
-                spokenResponse = `Ya puede proceder a realizar la autenticación, presione el boton grabar para realizarla.`;
+        $.when(getEnrollments()).then((r, textStatus, jqXHR)=>{
+            console.log(r);
+            if(r.ResponseCode === "SUC"){
+                let l = r.Result.length;
+                if(l < 3){
+                    spokenResponse = `Usted tiene ${l} inscripciones, debe realizar ${3-l} para completar. Por favor presione el botón grabar para iniciar`;
+                }else{
+                    hasEnroll = true;
+                    spokenResponse = `Ya puede proceder a realizar la autenticación, presione el boton grabar para realizarla.`;
+                }
             }
-        }
+        });
         $recBtn.prop("disabled", true);
         $recordBtn.prop("disabled", false);
         spokenResponse = "Por favor presione el botón grabar para iniciar la inscripción";
