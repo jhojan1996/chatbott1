@@ -138,7 +138,7 @@ function prepareResponse(val) {
     let intent = val.result.metadata.intentName;
     if(intent === "default-welcome-intent"){
         getEnrollments(r=>{
-            console.log("Datos del ajax ====> ",r);
+            console.log("Datos del ajax ====> ",r.ResponseCode);
             if(r.ResponseCode === "SUC"){
                 let l = r.Result.length;
                 if(l < 3){
