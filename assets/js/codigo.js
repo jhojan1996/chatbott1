@@ -9,6 +9,7 @@ var accessToken = "d9ee0ae9d4244f06984494103b3d7271",
     recognition,
     audio_context,
     recorder,
+    hasEnroll = false,
     audio_stream,
     messageRecording = "Escuchando...",
     messageCouldntHear = "No pude oirte, ¿Puedes decirlo de nuevo?",
@@ -31,16 +32,16 @@ $(document).ready(function() {
             send();
         }
     });
-    $recBtn.on("click", function(event) {
-        switchRecognition();
-    });
+    $recBtn.on("click", (event)=> switchRecognition());
+
     $(".debug__btn").on("click", function() {
         $(this).next().toggleClass("is-active");
         return false;
     });
 
-    $recordBtn.on("click",function(){
-        startRecording();
+    $recordBtn.on("click",()=>{
+        let spokenResponse = `Por favor di: never forget tomorrow is a new day`;
+        respond(spokenResponse).done(startRecording());
     });
 
     $stopRec.on("click", function(){
@@ -51,7 +52,7 @@ $(document).ready(function() {
             var au = document.createElement('audio');
             var hf = document.createElement('a');
 
-            //createEnrollmentByWavURL(url);
+            let response = (!hasEnroll)?createEnrollmentByWavURL(url):authentication(url);
 
             au.controls = true;
             au.src = url;
@@ -123,23 +124,32 @@ function send() {
             "Authorization": "Bearer " + developerToken
         },
         data: JSON.stringify({query: text, lang: "es", sessionId: "yaydevdiner"}),
-        success: function(data) {
+        success: (data)=>{
             prepareResponse(data);
         },
-        error: function() {
+        error: ()=>{
             respond(messageInternalError);
         }
     });
 }
 function prepareResponse(val) {
-    var debugJSON = JSON.stringify(val, undefined, 2);
+    let debugJSON = JSON.stringify(val, undefined, 2);
     let intent = val.result.metadata.intentName;
     if(intent === "default-welcome-intent"){
         let r = getEnrollments();
         console.log(r);
+        if(r.ResponseCode === "SUC"){
+            let l = r.Result.length;
+            if(l < 3){
+                spokenResponse = `Usted tiene ${l} inscripciones, debe realizar ${3-l} para completar. Por favor presione el botón grabar para iniciar`;
+            }else{
+                hasEnroll = true;
+                spokenResponse = `Ya puede proceder a realizar la autenticación, presione el boton grabar para realizarla.`;
+            }
+        }
         $recBtn.prop("disabled", true);
         $recordBtn.prop("disabled", false);
-        spokenResponse = "Por favor presione el boton grabar para iniciar la inscripción";
+        spokenResponse = "Por favor presione el botón grabar para iniciar la inscripción";
     }else{
         spokenResponse = val.result.fulfillment.speech;
     }
@@ -257,6 +267,7 @@ function getEnrollments(){
 }
 
 function createEnrollmentByWavURL(wavUrl){
+    var retornar; 
     $.ajax({
         url: "https://chatbot-todo1.azurewebsites.net/createEnrollmentByWavURL",
         method: "POST",
@@ -266,8 +277,27 @@ function createEnrollmentByWavURL(wavUrl){
             urlToEnrollmentWav: wavUrl
         },
         success:(data)=>{
-            console.log("Datos del ajax a getEnrollments =====> ",data);
+            console.log("Datos del ajax a createEnroll =====> ",data);
             retornar = data;
         }
     }); 
+    return retornar;
+}
+
+function authentication(wavUrl){
+    var retornar; 
+    $.ajax({
+        url: "https://chatbot-todo1.azurewebsites.net/authentication",
+        method: "POST",
+        data:{
+            userId: "developerUserId",
+            password: "d0CHipUXOk",
+            urlToEnrollmentWav: wavUrl
+        },
+        success:(data)=>{
+            console.log("Datos del ajax a auth =====> ",data);
+            retornar = data;
+        }
+    }); 
+    return retornar;
 }
