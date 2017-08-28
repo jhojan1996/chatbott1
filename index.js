@@ -488,8 +488,8 @@ app.post('/getEnrollments',(req,res)=>{
 
 app.post('/createEnrollmentByWavURL',(req,res)=>{
     voiceIt.createEnrollmentByWavURL({
-        userId: 'developerUserId',
-        password: 'd0CHipUXOk',
+        userId: req.body.userId,
+        password: req.body.password,
         urlToEnrollmentWav: req.body.wavUrl,
         contentLanguage: 'es-CO',
         callback: function(response){
@@ -500,8 +500,8 @@ app.post('/createEnrollmentByWavURL',(req,res)=>{
 
 app.post('/deleteEnrollment',(req,res)=>{
     voiceIt.deleteEnrollment({
-        userId: 'developerUserId',
-        password: 'd0CHipUXOk',
+        userId: req.body.userId,
+        password: req.body.password,
         enrollmentId: req.body.enrollmentId,
         contentLanguage: 'es-CO',
         callback: function(response){
@@ -512,8 +512,8 @@ app.post('/deleteEnrollment',(req,res)=>{
 
 app.post('/authentication',(req,res)=>{
     voiceIt.authentication({
-        userId: 'developerUserId',
-        password: 'd0CHipUXOk',
+        userId: req.body.userId,
+        password: req.body.userId,
         pathToAuthenticationWav: req.body.wavUrl,
         contentLanguage: 'es-CO',
         callback: function(response){

@@ -51,26 +51,16 @@ $(document).ready(function() {
             var au = document.createElement('audio');
             var hf = document.createElement('a');
 
-            $.ajax({
-                url: "https://chatbot-todo1.azurewebsites.net/getEnrollments",
-                method: "POST",
-                data:{
-                    userId: "developerUserId",
-                    password: "d0CHipUXOk"
-                },
-                success:(data)=>{
-                    console.log("Datos del ajax a getEnrollments =====> ",data);
-                }
-            });
+            //createEnrollmentByWavURL(url);
 
-            /*au.controls = true;
+            au.controls = true;
             au.src = url;
             hf.href = url;
             hf.download = new Date().toISOString() + '.wav';
             hf.innerHTML = hf.download;
             li.appendChild(au);
             li.appendChild(hf);
-            document.getElementById("recordingslist").appendChild(li);*/
+            document.getElementById("recordingslist").appendChild(li);
         }, _AudioFormat);
     });
 
@@ -244,4 +234,38 @@ function stopRecording(callback, AudioFormat) {
             recorder.clear();
         }, (AudioFormat || "audio/wav"));
     }
+}
+
+function getEnrollments(){
+    var retornar; 
+    $.ajax({
+        url: "https://chatbot-todo1.azurewebsites.net/getEnrollments",
+        method: "POST",
+        data:{
+            userId: "developerUserId",
+            password: "d0CHipUXOk"
+        },
+        success:(data)=>{
+            console.log("Datos del ajax a getEnrollments =====> ",data);
+            retornar = data;
+        }
+    });
+
+    return retornar;
+}
+
+function createEnrollmentByWavURL(wavUrl){
+    $.ajax({
+        url: "https://chatbot-todo1.azurewebsites.net/createEnrollmentByWavURL",
+        method: "POST",
+        data:{
+            userId: "developerUserId",
+            password: "d0CHipUXOk",
+            urlToEnrollmentWav: wavUrl
+        },
+        success:(data)=>{
+            console.log("Datos del ajax a getEnrollments =====> ",data);
+            retornar = data;
+        }
+    });   
 }
