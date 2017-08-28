@@ -9,6 +9,7 @@ var accessToken = "d9ee0ae9d4244f06984494103b3d7271",
     recognition,
     audio_context,
     recorder,
+    spokenResponse,
     hasEnroll = false,
     audio_stream,
     messageRecording = "Escuchando...",
@@ -40,7 +41,7 @@ $(document).ready(function() {
     });
 
     $recordBtn.on("click",()=>{
-        let spokenResponse = `Por favor di: never forget tomorrow is a new day`;
+        spokenResponse = `Por favor di: never forget tomorrow is a new day`;
         respond(spokenResponse).done(startRecording());
     });
 
@@ -150,7 +151,7 @@ function prepareResponse(val) {
             $recBtn.prop("disabled", true);
             $recordBtn.prop("disabled", false);
             spokenResponse += ` Por favor presione el botón grabar para iniciar la inscripción`;
-        }.bind(spokenResponse));
+        });
     }else{
         spokenResponse = val.result.fulfillment.speech;
     }
