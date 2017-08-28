@@ -53,7 +53,11 @@ $(document).ready(function() {
             var au = document.createElement('audio');
             var hf = document.createElement('a');
 
-            let response = (!hasEnroll)?createEnrollmentByWavURL(url):authentication(url);
+            if(!hasEnroll){
+                createEnrollmentByWavURL(url,data=>console.log("createEnrollmentByWavURL====>",data));
+            }else{
+                authentication(url,data=>console.log("authentication====>",data))
+            }
 
             au.controls = true;
             au.src = url;
@@ -268,8 +272,7 @@ function getEnrollments(callback){
     });
 }
 
-function createEnrollmentByWavURL(wavUrl){
-    var retornar; 
+function createEnrollmentByWavURL(wavUrl, callback){
     $.ajax({
         url: "https://chatbot-todo1.azurewebsites.net/createEnrollmentByWavURL",
         method: "POST",
@@ -279,15 +282,12 @@ function createEnrollmentByWavURL(wavUrl){
             urlToEnrollmentWav: wavUrl
         },
         success:(data)=>{
-            console.log("Datos del ajax a createEnroll =====> ",data);
-            retornar = data;
+            callback(data);
         }
     }); 
-    return retornar;
 }
 
-function authentication(wavUrl){
-    var retornar; 
+function authentication(wavUrl, callback){
     $.ajax({
         url: "https://chatbot-todo1.azurewebsites.net/authentication",
         method: "POST",
@@ -297,9 +297,7 @@ function authentication(wavUrl){
             urlToEnrollmentWav: wavUrl
         },
         success:(data)=>{
-            console.log("Datos del ajax a auth =====> ",data);
-            retornar = data;
+            callback(data);
         }
     }); 
-    return retornar;
 }
