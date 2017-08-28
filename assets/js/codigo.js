@@ -150,7 +150,7 @@ function prepareResponse(val) {
             $recBtn.prop("disabled", true);
             $recordBtn.prop("disabled", false);
             spokenResponse += ` Por favor presione el botón grabar para iniciar la inscripción`;
-        });
+        }.bind(spokenResponse));
     }else{
         spokenResponse = val.result.fulfillment.speech;
     }
@@ -258,7 +258,6 @@ function getEnrollments(callback){
             password: "d0CHipUXOk"
         },
         success:(data)=>{
-            console.log("Datos del ajax a createEnroll =====> ",data);
             callback(data);
         }
     });
