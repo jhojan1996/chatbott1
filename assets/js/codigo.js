@@ -42,7 +42,7 @@ $(document).ready(function() {
 
     $recordBtn.on("click",()=>{
         spokenResponse = `Por favor di: never forget tomorrow is a new day`;
-        respond(spokenResponse).done(startRecording());
+        respond(spokenResponse, ()=>startRecording());
     });
 
     $stopRec.on("click", function(){
@@ -164,7 +164,7 @@ function prepareResponse(val) {
 function debugRespond(val) {
     $("#response").text(val);
 }
-function respond(val) {
+function respond(val, callback=false) {
     if (val == "") {
         val = messageSorry;
     }
@@ -174,6 +174,9 @@ function respond(val) {
         msg.text = val;
         msg.lang = "es-CO";
         window.speechSynthesis.speak(msg);
+        if(callback != false){
+            callback();
+        }
     }
     $("#spokenResponse").addClass("is-active").find(".spoken-response__text").html(val);
 }
