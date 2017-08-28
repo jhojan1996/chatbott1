@@ -135,6 +135,8 @@ function prepareResponse(val) {
     var debugJSON = JSON.stringify(val, undefined, 2);
     let intent = val.result.metadata.intentName;
     if(intent === "default-welcome-intent"){
+        let r = getEnrollments();
+        console.log(r);
         $recBtn.prop("disabled", true);
         $recordBtn.prop("disabled", false);
         spokenResponse = "Por favor presione el boton grabar para iniciar la inscripción";
@@ -267,5 +269,5 @@ function createEnrollmentByWavURL(wavUrl){
             console.log("Datos del ajax a getEnrollments =====> ",data);
             retornar = data;
         }
-    });   
+    }); 
 }
