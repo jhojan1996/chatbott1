@@ -151,13 +151,14 @@ function prepareResponse(val) {
             $recBtn.prop("disabled", true);
             $recordBtn.prop("disabled", false);
             spokenResponse += ` Por favor presione el botón grabar para iniciar la inscripción`;
-            return;
+            respond(spokenResponse);
+            debugRespond(debugJSON);
         });
     }else{
         spokenResponse = val.result.fulfillment.speech;
+        respond(spokenResponse);
+        debugRespond(debugJSON);
     }
-    respond(spokenResponse);
-    debugRespond(debugJSON);
 }
 function debugRespond(val) {
     $("#response").text(val);
