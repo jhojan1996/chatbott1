@@ -54,7 +54,7 @@ $(document).ready(function() {
             var hf = document.createElement('a');
             var fileName = new Date().toISOString() + '.wav';
 
-            saveFile(fileName,data=>{
+            saveFile(AudioBLOB,data=>{
                 if(data.response === "OK"){
                     if(!hasEnroll){
                         createEnrollmentByWavURL("https://chatbot-todo1.azurewebsites.net/files/"+fileName,data=>console.log("createEnrollmentByWavURL====>",data));
@@ -313,6 +313,7 @@ function saveFile(name, callback){
     $.ajax({
         url: "https://chatbot-todo1.azurewebsites.net/submitRecord",
         method: "POST",
+        headers: { 'Content-Type': 'audio/wav' },
         data:{
             name: name
         },
