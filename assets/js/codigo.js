@@ -139,6 +139,7 @@ function prepareResponse(val) {
     if(intent === "default-welcome-intent"){
         $recBtn.prop("disabled", true);
         $recordBtn.prop("disabled", false);
+        spokenResponse = "Por favor precione el boton grabar para generar un archivo wav";
     }else{
         spokenResponse = val.result.fulfillment.speech;
     }
