@@ -14,29 +14,33 @@
 
 <html>
 <head>
-  <title>Bank one</title>
-  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-  <link href="https://fonts.googleapis.com/css?family=Titillium+Web:200" rel="stylesheet" type="text/css" />
-  <link rel="stylesheet" type="text/css" href="https://chatbot-todo1.azurewebsites.net/css/style.css" />
+    <title>Bank one</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <link href="https://fonts.googleapis.com/css?family=Titillium+Web:200" rel="stylesheet" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="https://chatbot-todo1.azurewebsites.net/css/style.css" />
 </head>
 <body>
-  <div class="container">
-    <input id="speech" type="text">
-    <button id="rec" class="btn">Hablar</button>
-    <div id="spokenResponse" class="spoken-response">
-      <div class="spoken-response__text"></div>
+    <div class="container">
+        <input id="speech" type="text">
+        <button id="rec" class="btn">Hablar</button>
+        <button id="save-rec" class="btn" disabled>Grabar</button>
+        <button id="save-rec-stop" class="btn" disabled>Grabar</button>
+        <div id="spokenResponse" class="spoken-response">
+            <div class="spoken-response__text"></div>
+        </div>
+        <div class="content-wav">
+            <ul id="recordingslist"></ul>
+        </div>
     </div>
-  </div>
-  <div class="debug">
-    <div class="debug__btn btn">
-      Debug JSON results
+    <div class="debug">
+        <div class="debug__btn btn">
+            Debug JSON results
+        </div>
+        <div class="debug__content">
+            <textarea id="response" cols="40" rows="20"></textarea>
+        </div>
     </div>
-    <div class="debug__content">
-      <textarea id="response" cols="40" rows="20"></textarea>
-    </div>
-  </div>
-
-  <script type="text/javascript" src="https://chatbot-todo1.azurewebsites.net/js/jquery.js"></script>
-  <script type="text/javascript" src="https://chatbot-todo1.azurewebsites.net/js/codigo.js"></script>
+    <script type="text/javascript" src="https://chatbot-todo1.azurewebsites.net/js/jquery.js"></script>
+    <script type="text/javascript" src="https://chatbot-todo1.azurewebsites.net/js/codigo.js"></script>
 </body>
 </html>
