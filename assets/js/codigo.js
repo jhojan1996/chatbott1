@@ -147,10 +147,10 @@ function prepareResponse(val) {
                     spokenResponse = `Ya puede proceder a realizar la autenticación.`;
                 }
             }
+            $recBtn.prop("disabled", true);
+            $recordBtn.prop("disabled", false);
+            spokenResponse += ` Por favor presione el botón grabar para iniciar la inscripción`;
         });
-        $recBtn.prop("disabled", true);
-        $recordBtn.prop("disabled", false);
-        spokenResponse += "Por favor presione el botón grabar para iniciar la inscripción";
     }else{
         spokenResponse = val.result.fulfillment.speech;
     }
