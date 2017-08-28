@@ -4,6 +4,7 @@ const request = require('request');
 const uuid = require('uuid');
 const apiai = require('apiai');
 const fs = require('fs');
+const voiceIt = require('VoiceIt');
 
 const config = require('./config.js');//Module that returns the tokens.
 const transfer = require('./actions/transfer.js');
@@ -419,6 +420,7 @@ class Todo1ChatBot {
 }
 
 let todo1ChatBot = new Todo1ChatBot();
+voiceIt.initialize('5cd68e4c391e4c09a5fad1917b4073a5');
 const app = express();
 
 app.use(bodyParser.json());
@@ -472,6 +474,54 @@ app.get('/', (req, res) => {
     //res.status(200).send("correcto");
     res.sendfile('demo.html');
 });
+
+/*Autenticacion por voz*/
+app.post('/getEnrollments',(req,res)=>{
+    voiceIt.getEnrollments({
+        userId: 'developerUserId',
+        password: 'd0CHipUXOk',
+        callback: function(response){
+            res.send(response);
+        }
+    });
+});
+
+app.post('/createEnrollmentByWavURL',(req,res)=>{
+    voiceIt.createEnrollmentByWavURL({
+        userId: 'developerUserId',
+        password: 'd0CHipUXOk',
+        urlToEnrollmentWav: req.body.wavUrl,
+        contentLanguage: 'es-CO',
+        callback: function(response){
+            res.send(response);
+        }
+    });
+});
+
+app.post('/deleteEnrollment',(req,res)=>{
+    voiceIt.deleteEnrollment({
+        userId: 'developerUserId',
+        password: 'd0CHipUXOk',
+        enrollmentId: req.body.enrollmentId,
+        contentLanguage: 'es-CO',
+        callback: function(response){
+            res.send(response);
+        }
+    });
+});
+
+app.post('/authentication',(req,res)=>{
+    voiceIt.authentication({
+        userId: 'developerUserId',
+        password: 'd0CHipUXOk',
+        pathToAuthenticationWav: req.body.wavUrl,
+        contentLanguage: 'es-CO',
+        callback: function(response){
+            res.send(response);
+        }
+    });
+});
+
 
 /* For Facebook Validation */
 /* Handling all messenges entered by the user */
