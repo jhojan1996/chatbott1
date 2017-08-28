@@ -134,7 +134,7 @@ function send() {
     });
 }
 function prepareResponse(val) {
-    var debugJSON = JSON.stringify(val, undefined, 2),
+    var debugJSON = JSON.stringify(val, undefined, 2);
     let intent = val.result.metadata.intentName;
     if(intent === "default-welcome-intent"){
         $recBtn.prop("disabled", true);
