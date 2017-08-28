@@ -250,7 +250,7 @@ function stopRecording(callback, AudioFormat) {
 }
 
 function getEnrollments(){
-    $.ajax({
+    return $.ajax({
         url: "https://chatbot-todo1.azurewebsites.net/getEnrollments",
         method: "POST",
         data:{
