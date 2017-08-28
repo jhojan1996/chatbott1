@@ -196,6 +196,7 @@ function Initialize() {
 }
 
 function startRecording() {
+    console.log("inicie startRecording");
     // Access the Microphone using the navigator.getUserMedia method to obtain a stream
     navigator.getUserMedia({ audio: true }, function (stream) {
         // Expose the stream to be accessible globally
