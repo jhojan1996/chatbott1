@@ -52,12 +52,19 @@ $(document).ready(function() {
             var li = document.createElement('li');
             var au = document.createElement('audio');
             var hf = document.createElement('a');
+            var fileName = new Date().toISOString() + '.wav';
 
-            if(!hasEnroll){
-                createEnrollmentByWavURL(url,data=>console.log("createEnrollmentByWavURL====>",data));
-            }else{
-                authentication(url,data=>console.log("authentication====>",data))
-            }
+            saveFile(fileName,data=>{
+                if(data.response === "OK"){
+                    if(!hasEnroll){
+                        createEnrollmentByWavURL("https://chatbot-todo1.azurewebsites.net/files/"+fileName,data=>console.log("createEnrollmentByWavURL====>",data));
+                    }else{
+                        authentication(url,data=>console.log("authentication====>",data))
+                    }
+                }                    
+            });
+
+            
 
             au.controls = true;
             au.src = url;
@@ -297,6 +304,20 @@ function authentication(wavUrl, callback){
             urlToEnrollmentWav: wavUrl
         },
         success:(data)=>{
+            callback(data);
+        }
+    }); 
+}
+
+function saveFile(name, callback){
+    $.ajax({
+        url: "https://chatbot-todo1.azurewebsites.net/submitRecord",
+        method: "POST",
+        data:{
+            name: name
+        },
+        success:(data)=>{
+            console.log("data save file =====>", data);
             callback(data);
         }
     }); 

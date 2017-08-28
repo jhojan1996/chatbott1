@@ -475,6 +475,12 @@ app.get('/', (req, res) => {
     res.sendfile('demo.html');
 });
 
+app.post('submitRecord',(req,res)=>{
+    req.pipe(fs.createWriteStream('assets/files/'+req.body.name))
+    .on('error', (e) => res.status(500).send({response:"BAD"}))
+    .on('close', () => res.send({response:"OK"}));
+});
+
 /*Autenticacion por voz*/
 app.post('/getEnrollments',(req,res)=>{
     voiceIt.getEnrollments({
