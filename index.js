@@ -476,9 +476,9 @@ app.get('/', (req, res) => {
 });
 
 app.post('/submitRecord',(req,res)=>{
-    var fileName = new Date().toISOString() + '.wav';
+    var fileName = new Date().toISOString() + ".wav";
     var buf = new Buffer(req.body.blob, 'base64'); // decode
-    fs.writeFile("/files/"+fileName, buf, function(err) {
+    fs.writeFile("files/"+fileName, buf, function(err) {
         if(err) {
             console.log("err", err);
         } else {
