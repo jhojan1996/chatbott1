@@ -482,7 +482,7 @@ app.post('/submitRecord',(req,res)=>{
         if(err) {
             console.log("err", err);
         } else {
-            return res.json({'status': 'success'});
+            return res.send({'status': 'success', 'fileName':fileName});
         }
     }) 
 });
