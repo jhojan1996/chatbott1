@@ -324,7 +324,6 @@ function saveFile(name, callback){
     $.ajax({
         url: "https://chatbot-todo1.azurewebsites.net/submitRecord",
         method: "POST",
-        headers: { 'Content-Type': 'audio/wav' },
         data:{
             blob: name
         },
