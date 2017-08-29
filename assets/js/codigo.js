@@ -320,7 +320,6 @@ function authentication(wavUrl, callback){
 }
 
 function saveFile(name, callback){
-    console.log("Base 64 ====>",name);
     $.ajax({
         url: "https://chatbot-todo1.azurewebsites.net/submitRecord",
         method: "POST",
