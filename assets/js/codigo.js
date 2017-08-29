@@ -65,8 +65,7 @@ $(document).ready(function() {
             };
 
             blobToBase64(AudioBLOB, function(base64){ // encode
-                var update = {'blob': base64};
-                saveFile(update,data=>{
+                saveFile(base64,data=>{
                     if(data.response === "OK"){
                         if(!hasEnroll){
                             createEnrollmentByWavURL("https://chatbot-todo1.azurewebsites.net/files/"+data.fileName,data=>console.log("createEnrollmentByWavURL====>",data));
@@ -326,7 +325,7 @@ function saveFile(name, callback){
         method: "POST",
         headers: { 'Content-Type': 'audio/wav' },
         data:{
-            name: name
+            blob: name
         },
         success:(data)=>{
             console.log("data save file =====>", data);
