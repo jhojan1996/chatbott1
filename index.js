@@ -477,9 +477,14 @@ app.get('/', (req, res) => {
 
 app.post('/submitRecord',(req,res)=>{
     var fileName = new Date().toISOString() + '.wav';
-    req.pipe(fs.createWriteStream('assets/files/'+fileName))
-    .on('error', (e) => res.status(500).send({response:"BAD"}))
-    .on('close', () => res.send({response:"OK", fileName:fileName}));
+    var buf = new Buffer(req.body.blob, 'base64'); // decode
+    fs.writeFile("assets/files/"+fileName, buf, function(err) {
+        if(err) {
+            console.log("err", err);
+        } else {
+            return res.json({'status': 'success'});
+        }
+    }) 
 });
 
 /*Autenticacion por voz*/
