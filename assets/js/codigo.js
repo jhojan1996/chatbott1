@@ -54,7 +54,7 @@ $(document).ready(function() {
             var hf = document.createElement('a');
             var fileName = new Date().toISOString() + '.wav';
 
-            var blobToBase64 = function(blob, cb) {
+            /*var blobToBase64 = function(blob, cb) {
                 var reader = new FileReader();
                 reader.onload = function() {
                     var dataUrl = reader.result;
@@ -74,7 +74,15 @@ $(document).ready(function() {
                         }
                     }                    
                 });
-            });            
+            });*/
+
+             if(!hasEnroll){
+                createEnrollmentByWavURL(url,data=>console.log("createEnrollmentByWavURL====>",data));
+            }else{
+                authentication(url,data=>console.log("authentication====>",data))
+            }
+
+
 
             au.controls = true;
             au.src = url;

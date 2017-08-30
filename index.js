@@ -5,6 +5,7 @@ const uuid = require('uuid');
 const apiai = require('apiai');
 const fs = require('fs');
 const voiceIt = require('VoiceIt');
+//var BinaryServer = require('binaryjs').BinaryServer;
 
 const config = require('./config.js');//Module that returns the tokens.
 const transfer = require('./actions/transfer.js');
@@ -475,7 +476,7 @@ app.get('/', (req, res) => {
     res.sendfile('demo.html');
 });
 
-app.post('/submitRecord',(req,res)=>{
+/*app.post('/submitRecord',(req,res)=>{
     var fileName = new Date().toISOString() + ".wav";
     var buf = new Buffer(req.body.blob, 'base64'); // decode
 
@@ -483,14 +484,38 @@ app.post('/submitRecord',(req,res)=>{
     ws.on('error', (e)=>console.error(e));
     ws.write(buf);
     ws.end();
-    /*ws.write("./assets/files/"+fileName, buf, function(err) {
+    ws.write("./assets/files/"+fileName, buf, function(err) {
         if(err) {
             console.log("err", err);
         } else {
             return res.send({'status': 'success', 'fileName':fileName});
         }
-    })*/
-});
+    })
+});*/
+
+/*binaryServer = BinaryServer({port: 9001});
+
+binaryServer.on('connection', function(client) {
+  console.log('new connection');
+
+  let file = new Date().toISOString() + '.wav';
+
+  var fileWriter = new wav.FileWriter("./assets/files/"+file, {
+    channels: 1,
+    sampleRate: 48000,
+    bitDepth: 16
+  });
+
+  client.on('stream', function(stream, meta) {
+    console.log('new stream');
+    stream.pipe(fileWriter);
+
+    stream.on('end', function() {
+      fileWriter.end();
+      console.log('wrote to file ' + outFile);
+    });
+  });
+});*/
 
 /*Autenticacion por voz*/
 app.post('/getEnrollments',(req,res)=>{
