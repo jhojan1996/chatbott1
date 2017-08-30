@@ -19,7 +19,7 @@ var accessToken = "d9ee0ae9d4244f06984494103b3d7271",
 
 $(document).ready(function() {
     //Con esta linea checkeamos si el browser tiene activo el permiso de usar microfono//
-    //Initialize();
+    Initialize();
     //--------------------------------------------------------------------------------//
 
     $speechInput = $("#speech");
@@ -47,7 +47,45 @@ $(document).ready(function() {
 
     $stopRec.on("click", function(){
         var _AudioFormat = "audio/wav";
-        stopRecording();
+        stopRecording(function(AudioBLOB){
+            var url = URL.createObjectURL(AudioBLOB);
+            var li = document.createElement('li');
+            var au = document.createElement('audio');
+            var hf = document.createElement('a');
+            var fileName = new Date().toISOString() + '.wav';
+
+            /*var blobToBase64 = function(blob, cb) {
+                var reader = new FileReader();
+                reader.onload = function() {
+                    var dataUrl = reader.result;
+                    var base64 = dataUrl.split(',')[1];
+                    cb(base64);
+                };
+                reader.readAsDataURL(blob);
+            };
+
+            blobToBase64(AudioBLOB, function(base64){ // encode
+                saveFile(base64,data=>{
+                    if(data.response === "OK"){
+                        if(!hasEnroll){
+                            createEnrollmentByWavURL("https://chatbot-todo1.azurewebsites.net/files/"+data.fileName,data=>console.log("createEnrollmentByWavURL====>",data));
+                        }else{
+                            authentication(url,data=>console.log("authentication====>",data))
+                        }
+                    }                    
+                });
+            });*/
+
+
+            au.controls = true;
+            au.src = url;
+            hf.href = url;
+            hf.download = new Date().toISOString() + '.wav';
+            hf.innerHTML = hf.download;
+            li.appendChild(au);
+            li.appendChild(hf);
+            document.getElementById("recordingslist").appendChild(li);
+        }, _AudioFormat);
     });
 
 });
@@ -179,7 +217,7 @@ function Initialize() {
     }
 }
 
-/*function startRecording() {
+function startRecording() {
     console.log("inicie startRecording");
     // Access the Microphone using the navigator.getUserMedia method to obtain a stream
     navigator.getUserMedia({ audio: true }, function (stream) {
@@ -203,9 +241,9 @@ function Initialize() {
     }, function (e) {
         console.error('No live audio input: ' + e);
     });
-}*/
+}
 
-/*function stopRecording(callback, AudioFormat) {
+function stopRecording(callback, AudioFormat) {
     // Stop the recorder instance
     recorder && recorder.stop();
     console.log('Stopped recording.');
@@ -221,12 +259,22 @@ function Initialize() {
     // The callback providen in the stop recording method receives the blob
     if(typeof(callback) == "function"){
 
+        /**
+         * Export the AudioBLOB using the exportWAV method.
+         * Note that this method exports too with mp3 if
+         * you provide the second argument of the function
+         */
         recorder && recorder.exportWAV(function (blob) {
             callback(blob);
+
+            // create WAV download link using audio data blob
+            // createDownloadLink();
+
+            // Clear the Recorder to start again !
             recorder.clear();
         }, (AudioFormat || "audio/wav"));
     }
-}*/
+}
 
 function getEnrollments(callback){
     $.ajax({

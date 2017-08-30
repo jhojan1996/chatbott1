@@ -494,30 +494,6 @@ app.get('/', (req, res) => {
     })
 });*/
 
-bs = BinaryServer({port: 9001});
-
-bs.on('connection', function(client) {
-  console.log('new connection');
-
-  let file = new Date().toISOString() + '.wav';
-
-  var fileWriter = new wav.FileWriter("./assets/files/"+file, {
-    channels: 1,
-    sampleRate: 48000,
-    bitDepth: 16
-  });
-
-  client.on('stream', function(stream, meta) {
-    console.log('new stream');
-    stream.pipe(fileWriter);
-
-    stream.on('end', function() {
-      fileWriter.end();
-      console.log('wrote to file ' + outFile);
-    });
-  });
-});
-
 /*Autenticacion por voz*/
 app.post('/getEnrollments',(req,res)=>{
     voiceIt.getEnrollments({
