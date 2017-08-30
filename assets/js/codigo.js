@@ -76,13 +76,29 @@ $(document).ready(function() {
                 });
             });*/
 
-             if(!hasEnroll){
-                createEnrollmentByWavURL(url,data=>console.log("createEnrollmentByWavURL====>",data));
-            }else{
-                authentication(url,data=>console.log("authentication====>",data))
-            }
+            var xhr = new XMLHttpRequest;
+            xhr.responseType = 'blob';
 
+            xhr.onload = function() {
+               var recoveredBlob = xhr.response;
 
+               var reader = new FileReader;
+
+               reader.onload = function() {
+                    var blobAsDataUrl = reader.result;
+                    console.log("BLOBAS URL ====>",blobAsDataUrl);
+                    if(!hasEnroll){
+                        createEnrollmentByWavURL(blobAsDataUrl,data=>console.log("createEnrollmentByWavURL====>",data));
+                    }else{
+                        authentication(url,data=>console.log("authentication====>",data))
+                    }
+               };
+
+               reader.readAsDataURL(recoveredBlob);
+            };
+
+            xhr.open('GET', blobUrl);
+            xhr.send();
 
             au.controls = true;
             au.src = url;
