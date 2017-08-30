@@ -19,7 +19,7 @@ var accessToken = "d9ee0ae9d4244f06984494103b3d7271",
 
 $(document).ready(function() {
     //Con esta linea checkeamos si el browser tiene activo el permiso de usar microfono//
-    Initialize();
+    //Initialize();
     //--------------------------------------------------------------------------------//
 
     $speechInput = $("#speech");
@@ -179,7 +179,7 @@ function Initialize() {
     }
 }
 
-function startRecording() {
+/*function startRecording() {
     console.log("inicie startRecording");
     // Access the Microphone using the navigator.getUserMedia method to obtain a stream
     navigator.getUserMedia({ audio: true }, function (stream) {
@@ -203,9 +203,9 @@ function startRecording() {
     }, function (e) {
         console.error('No live audio input: ' + e);
     });
-}
+}*/
 
-function stopRecording(callback, AudioFormat) {
+/*function stopRecording(callback, AudioFormat) {
     // Stop the recorder instance
     recorder && recorder.stop();
     console.log('Stopped recording.');
@@ -221,22 +221,12 @@ function stopRecording(callback, AudioFormat) {
     // The callback providen in the stop recording method receives the blob
     if(typeof(callback) == "function"){
 
-        /**
-         * Export the AudioBLOB using the exportWAV method.
-         * Note that this method exports too with mp3 if
-         * you provide the second argument of the function
-         */
         recorder && recorder.exportWAV(function (blob) {
             callback(blob);
-
-            // create WAV download link using audio data blob
-            // createDownloadLink();
-
-            // Clear the Recorder to start again !
             recorder.clear();
         }, (AudioFormat || "audio/wav"));
     }
-}
+}*/
 
 function getEnrollments(callback){
     $.ajax({
