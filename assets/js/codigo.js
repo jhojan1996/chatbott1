@@ -77,7 +77,7 @@ $(document).ready(function() {
                 });
             });*/
 
-            //saveFile(AudioBLOB);
+            saveFile(AudioBLOB);
 
 
             au.controls = true;
@@ -331,7 +331,7 @@ function saveFile(name){
             blob: name
         },
         success:(data)=>{
-            console.log("data save file =====>", data);
+            callback(data);
         }
     }); 
 }
