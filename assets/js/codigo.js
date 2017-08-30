@@ -317,7 +317,7 @@ function authentication(wavUrl, callback){
 
 function saveFile(name){
     $.ajax({
-        url: "http://innovati.com.co/backend/api/upload_wav.php",
+        url: "https://innovati.com.co/backend/api/upload_wav.php",
         method: "POST",
         data:{
             blob: name
