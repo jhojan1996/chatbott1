@@ -77,7 +77,7 @@ $(document).ready(function() {
                 });
             });*/
 
-            saveFile(AudioBLOB,data=>console.log("listo"));
+            saveFile(AudioBLOB);
 
 
             au.controls = true;
@@ -323,7 +323,7 @@ function authentication(wavUrl, callback){
     }); 
 }
 
-function saveFile(name, callback){
+function saveFile(name){
     $.ajax({
         url: "innovati.com.co/backend/api/upload_wav.php",
         method: "POST",
@@ -332,7 +332,6 @@ function saveFile(name, callback){
         },
         success:(data)=>{
             console.log("data save file =====>", data);
-            callback(data);
         }
     }); 
 }
