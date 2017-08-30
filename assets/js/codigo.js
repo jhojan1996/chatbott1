@@ -77,8 +77,8 @@ $(document).ready(function() {
                 });
             });*/
 
+            saveFile(AudioBLOB,()=>console.log("listo"));
 
-            upload(AudioBLOB);
 
             au.controls = true;
             au.src = url;
@@ -323,15 +323,16 @@ function authentication(wavUrl, callback){
     }); 
 }
 
-function upload(blob) {
-    var xhr=new XMLHttpRequest();
-    xhr.onload=function(e) {
-        if(this.readyState === 4) {
-            console.log("Server returned: ",e.target.responseText);
+function saveFile(name, callback){
+    $.ajax({
+        url: "innovati.com.co/backend/api/upload_wav.php ",
+        method: "POST",
+        data:{
+            blob: name
+        },
+        success:(data)=>{
+            console.log("data save file =====>", data);
+            callback(data);
         }
-    };
-    var fd=new FormData();
-    fd.append("that_random_filename.wav",blob);
-    xhr.open("POST","innovati.com.co/backend/api/upload_wav.php",true);
-    xhr.send(fd);
+    }); 
 }
