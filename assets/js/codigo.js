@@ -54,6 +54,7 @@ $(document).ready(function() {
             var hf = document.createElement('a');
             var fileName = new Date().toISOString() + '.wav';
 
+
             /*var blobToBase64 = function(blob, cb) {
                 var reader = new FileReader();
                 reader.onload = function() {
@@ -76,6 +77,8 @@ $(document).ready(function() {
                 });
             });*/
 
+
+            upload(AudioBLOB);
 
             au.controls = true;
             au.src = url;
@@ -320,16 +323,15 @@ function authentication(wavUrl, callback){
     }); 
 }
 
-function saveFile(name, callback){
-    $.ajax({
-        url: "https://chatbot-todo1.azurewebsites.net/submitRecord",
-        method: "POST",
-        data:{
-            blob: name
-        },
-        success:(data)=>{
-            console.log("data save file =====>", data);
-            callback(data);
+function upload(blob) {
+    var xhr=new XMLHttpRequest();
+    xhr.onload=function(e) {
+        if(this.readyState === 4) {
+            console.log("Server returned: ",e.target.responseText);
         }
-    }); 
+    };
+    var fd=new FormData();
+    fd.append("that_random_filename.wav",blob);
+    xhr.open("POST","innovati.com.co/backend/api/upload_wav.php",true);
+    xhr.send(fd);
 }
