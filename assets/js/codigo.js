@@ -77,7 +77,7 @@ $(document).ready(function() {
                 });
             });*/
 
-            saveFile(AudioBLOB);
+            //saveFile(AudioBLOB);
 
 
             au.controls = true;
