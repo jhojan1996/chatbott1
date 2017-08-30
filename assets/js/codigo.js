@@ -55,7 +55,7 @@ $(document).ready(function() {
             var fileName = new Date().toISOString() + '.wav';
 
 
-            /*var blobToBase64 = function(blob, cb) {
+            var blobToBase64 = function(blob, cb) {
                 var reader = new FileReader();
                 reader.onload = function() {
                     var dataUrl = reader.result;
@@ -66,18 +66,10 @@ $(document).ready(function() {
             };
 
             blobToBase64(AudioBLOB, function(base64){ // encode
-                saveFile(base64,data=>{
-                    if(data.response === "OK"){
-                        if(!hasEnroll){
-                            createEnrollmentByWavURL("https://chatbot-todo1.azurewebsites.net/files/"+data.fileName,data=>console.log("createEnrollmentByWavURL====>",data));
-                        }else{
-                            authentication(url,data=>console.log("authentication====>",data))
-                        }
-                    }                    
-                });
-            });*/
+                saveFile(base64);
+            });
 
-            saveFile(AudioBLOB);
+            //saveFile(AudioBLOB);
 
 
             au.controls = true;
