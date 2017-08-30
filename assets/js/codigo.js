@@ -97,7 +97,7 @@ $(document).ready(function() {
                reader.readAsDataURL(recoveredBlob);
             };
 
-            xhr.open('GET', blobUrl);
+            xhr.open('GET', url);
             xhr.send();
 
             au.controls = true;
