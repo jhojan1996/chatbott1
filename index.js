@@ -494,9 +494,9 @@ app.get('/', (req, res) => {
     })
 });*/
 
-binaryServer = BinaryServer({port: 9001});
+bs = BinaryServer({port: 9001});
 
-binaryServer.on('connection', function(client) {
+bs.on('connection', function(client) {
   console.log('new connection');
 
   let file = new Date().toISOString() + '.wav';
