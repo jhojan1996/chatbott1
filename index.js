@@ -5,7 +5,8 @@ const uuid = require('uuid');
 const apiai = require('apiai');
 const fs = require('fs');
 const voiceIt = require('VoiceIt');
-//var BinaryServer = require('binaryjs').BinaryServer;
+var BinaryServer = require('binaryjs').BinaryServer;
+var wav = require('wav');
 
 const config = require('./config.js');//Module that returns the tokens.
 const transfer = require('./actions/transfer.js');
@@ -493,7 +494,7 @@ app.get('/', (req, res) => {
     })
 });*/
 
-/*binaryServer = BinaryServer({port: 9001});
+binaryServer = BinaryServer({port: 9001});
 
 binaryServer.on('connection', function(client) {
   console.log('new connection');
@@ -515,7 +516,7 @@ binaryServer.on('connection', function(client) {
       console.log('wrote to file ' + outFile);
     });
   });
-});*/
+});
 
 /*Autenticacion por voz*/
 app.post('/getEnrollments',(req,res)=>{

@@ -47,68 +47,7 @@ $(document).ready(function() {
 
     $stopRec.on("click", function(){
         var _AudioFormat = "audio/wav";
-        stopRecording(function(AudioBLOB){
-            var url = URL.createObjectURL(AudioBLOB);
-            var li = document.createElement('li');
-            var au = document.createElement('audio');
-            var hf = document.createElement('a');
-            var fileName = new Date().toISOString() + '.wav';
-
-            /*var blobToBase64 = function(blob, cb) {
-                var reader = new FileReader();
-                reader.onload = function() {
-                    var dataUrl = reader.result;
-                    var base64 = dataUrl.split(',')[1];
-                    cb(base64);
-                };
-                reader.readAsDataURL(blob);
-            };
-
-            blobToBase64(AudioBLOB, function(base64){ // encode
-                saveFile(base64,data=>{
-                    if(data.response === "OK"){
-                        if(!hasEnroll){
-                            createEnrollmentByWavURL("https://chatbot-todo1.azurewebsites.net/files/"+data.fileName,data=>console.log("createEnrollmentByWavURL====>",data));
-                        }else{
-                            authentication(url,data=>console.log("authentication====>",data))
-                        }
-                    }                    
-                });
-            });*/
-
-            var xhr = new XMLHttpRequest;
-            xhr.responseType = 'blob';
-
-            xhr.onload = function() {
-               var recoveredBlob = xhr.response;
-
-               var reader = new FileReader;
-
-               reader.onload = function() {
-                    var blobAsDataUrl = reader.result;
-                    console.log("BLOBAS URL ====>",blobAsDataUrl);
-                    if(!hasEnroll){
-                        createEnrollmentByWavURL(blobAsDataUrl,data=>console.log("createEnrollmentByWavURL====>",data));
-                    }else{
-                        authentication(url,data=>console.log("authentication====>",data))
-                    }
-               };
-
-               reader.readAsDataURL(recoveredBlob);
-            };
-
-            xhr.open('GET', url);
-            xhr.send();
-
-            au.controls = true;
-            au.src = url;
-            hf.href = url;
-            hf.download = new Date().toISOString() + '.wav';
-            hf.innerHTML = hf.download;
-            li.appendChild(au);
-            li.appendChild(hf);
-            document.getElementById("recordingslist").appendChild(li);
-        }, _AudioFormat);
+        stopRecording();
     });
 
 });
