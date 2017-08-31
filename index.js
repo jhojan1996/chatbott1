@@ -484,6 +484,7 @@ app.post('/submitRecord',(req,res)=>{
     request({
         url: 'http://innovati.com.co/backend/apis/upload_wav.php',
         method: 'POST',
+        headers: {'content-type':'application/json'},
         json: true,
         body: {
             blob: req.body.blob
