@@ -320,7 +320,7 @@ function saveFile(name, callback){
     var reader = new FileReader();
     reader.onload = function(event){
         var fd = new FormData();
-        fd.append('fname', 'test.wav');
+        fd.append('fname', 'test2.wav');
         fd.append('data', name);
 
         console.log("FORM DATA ====>",fd);
@@ -330,7 +330,7 @@ function saveFile(name, callback){
             type: "POST",
             data: fd,
             processData: false,
-            contentType: false
+            contentType: false,
             success:(data)=>{
                 callback(data);
             }
