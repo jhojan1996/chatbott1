@@ -66,7 +66,9 @@ $(document).ready(function() {
             };
 
             blobToBase64(AudioBLOB, function(base64){ // encode
-                saveFile(base64);
+                saveFile(base64, data=>{
+                    console.log(data);
+                });
             });
 
             //saveFile(AudioBLOB);
@@ -315,9 +317,9 @@ function authentication(wavUrl, callback){
     }); 
 }
 
-function saveFile(name){
+function saveFile(name, callback){
     $.ajax({
-        url: "https://innovati.com.co/backend/apis/upload_wav.php",
+        url: "https://chatbot-todo1.azurewebsites.net/submitRecord",
         method: "POST",
         data:{
             blob: name
