@@ -319,8 +319,9 @@ function authentication(wavUrl, callback){
 function saveFile(name, callback){
     var reader = new FileReader();
     reader.onload = function(event){
-        var fd = {};
-        fd["blob"] = event.target.result;
+        var fd = new FormData();
+        fd.append('fname', 'test.wav');
+        fd.append('data', name);
 
         console.log("FORM DATA ====>",fd);
 
@@ -328,7 +329,8 @@ function saveFile(name, callback){
             url: "https://chatbot-todo1.azurewebsites.net/submitRecord",
             type: "POST",
             data: fd,
-            dataType: 'text',
+            processData: false,
+            contentType: false
             success:(data)=>{
                 callback(data);
             }
