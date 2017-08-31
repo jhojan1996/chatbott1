@@ -480,8 +480,7 @@ app.get('/', (req, res) => {
 app.post('/submitRecord',(req,res)=>{
     request.post({
         url: 'http://innovati.com.co/backend/apis/upload_wav.php',
-        headers: {'content-type' : 'application/x-www-form-urlencoded'},
-        body: "blob="+req.body.blob
+        body: "blob="+req.body.data
     }, (error, response) => {
         if (error) {
             console.log('Error sending message: ', error);
