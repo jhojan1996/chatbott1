@@ -317,20 +317,16 @@ function authentication(wavUrl, callback){
 }
 
 function saveFile(name, callback){
-    var frmData = new FormData();
-
-    frmData.append('blob', name);
-
-    console.log("FormData=====>",frmData);
-
+    var fd = {};
+    fd["blob"] = name;
     $.ajax({
         url: "https://chatbot-todo1.azurewebsites.net/submitRecord",
         type: "POST",
-        data: frmData,
+        data: fd,
         processData: false,
         contentType: false,
         success:(data)=>{
             callback(data);
         }
-    }); 
+    });        
 }
