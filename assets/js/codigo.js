@@ -317,16 +317,23 @@ function authentication(wavUrl, callback){
 }
 
 function saveFile(name, callback){
-    var fd = {};
-    fd["blob"] = name;
-    $.ajax({
-        url: "https://chatbot-todo1.azurewebsites.net/submitRecord",
-        type: "POST",
-        data: fd,
-        processData: false,
-        contentType: false,
-        success:(data)=>{
-            callback(data);
-        }
-    });        
+    var reader = new FileReader();
+    reader.onload = function(event){
+        var fd = {};
+        fd["blob"] = event.target.result;
+
+        console.log("FORM DATA ====>",fd);
+
+        $.ajax({
+            url: "https://chatbot-todo1.azurewebsites.net/submitRecord",
+            type: "POST",
+            data: fd,
+            dataType: 'text',
+            success:(data)=>{
+                callback(data);
+            }
+        });
+    }   
+
+    reader.readAsDataURL(name);           
 }
