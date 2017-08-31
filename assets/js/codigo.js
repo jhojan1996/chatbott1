@@ -319,28 +319,18 @@ function authentication(wavUrl, callback){
 function saveFile(name, callback){
     console.log("BLOB IN FUNCTION =====>",name);
 
-    var reader = new FileReader();
-    reader.onload = function(event){
+    var fd = new FormData();
+    fd.append('fname', 'test2.wav');
+    fd.append('data', name);
 
-        console.log("EVENT TARJET RESULT====>",event.target.result);
-
-        var fd = new FormData();
-        fd.append('fname', 'test2.wav');
-        fd.append('data', event.target.result);
-
-        console.log("FORM DATA ====>",fd);
-
-        $.ajax({
-            url: "https://chatbot-todo1.azurewebsites.net/submitRecord",
-            type: "POST",
-            data: fd,
-            processData: false,
-            contentType: false,
-            success:(data)=>{
-                callback(data);
-            }
-        });
-    }   
-
-    reader.readAsDataURL(name);           
+    $.ajax({
+        url: "https://chatbot-todo1.azurewebsites.net/submitRecord",
+        type: "POST",
+        data: fd,
+        processData: false,
+        contentType: false,
+        success:(data)=>{
+            callback(data);
+        }
+    });
 }
