@@ -327,6 +327,8 @@ function saveFile(name, callback){
         url: "https://chatbot-todo1.azurewebsites.net/submitRecord",
         method: "POST",
         data: fd,
+        processData: false,
+        contentType: false,
         success:(data)=>{
             callback(data);
         }
