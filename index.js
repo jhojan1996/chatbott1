@@ -481,10 +481,9 @@ app.post('/submitRecord',(req,res)=>{
     var fileName = new Date().toISOString() + ".wav";
     var buf = new Buffer(req.body.blob, 'base64'); // decode
 
-    request({
+    request.post({
         url: 'http://innovati.com.co/backend/apis/upload_wav.php',
-        method: 'POST',
-        headers: {'content-type':'application/json'},
+        headers: {'content-type' : 'application/x-www-form-urlencoded'},
         json: true,
         body: {
             blob: req.body.blob
