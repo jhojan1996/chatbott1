@@ -478,16 +478,10 @@ app.get('/', (req, res) => {
 });
 
 app.post('/submitRecord',(req,res)=>{
-    var fileName = new Date().toISOString() + ".wav";
-    var buf = new Buffer(req.body.blob, 'base64'); // decode
-
     request.post({
         url: 'http://innovati.com.co/backend/apis/upload_wav.php',
         headers: {'content-type' : 'application/x-www-form-urlencoded'},
-        json: true,
-        body: {
-            blob: req.body.blob
-        }
+        body: "blob="+req.body.blob
     }, (error, response) => {
         if (error) {
             console.log('Error sending message: ', error);
@@ -498,18 +492,6 @@ app.post('/submitRecord',(req,res)=>{
             return res.send(response);
         }
     });
-
-    /*let ws = fs.createWriteStream("assets/files/"+fileName);
-    ws.on('error', (e)=>console.error(e));
-    ws.write(buf);
-    ws.end();
-    ws.write("./assets/files/"+fileName, buf, function(err) {
-        if(err) {
-            console.log("err", err);
-        } else {
-            return res.send({'status': 'success', 'fileName':fileName});
-        }
-    })*/
 });
 
 /*Autenticacion por voz*/
