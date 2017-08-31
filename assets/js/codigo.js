@@ -66,6 +66,8 @@ $(document).ready(function() {
             };
 
            
+            console.log("audio BLOB", AudioBLOB);
+
             saveFile(AudioBLOB, data=>{console.log(data);});
 
             //saveFile(AudioBLOB);
@@ -323,7 +325,7 @@ function saveFile(name, callback){
 
     $.ajax({
         url: "https://chatbot-todo1.azurewebsites.net/submitRecord",
-        method: "POST",
+        type: "POST",
         data: frmData,
         processData: false,
         contentType: false,
