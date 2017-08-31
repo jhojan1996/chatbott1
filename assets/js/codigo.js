@@ -315,16 +315,16 @@ function authentication(wavUrl, callback){
 }
 
 function saveFile(name, callback){
-    var formData = new FormData();
+    var frmData = new FormData();
 
-    formData.append('blob', name);
+    frmData.append('blob', name);
 
-    console.log("FormData=====>",FormData);
+    console.log("FormData=====>",frmData);
 
     $.ajax({
         url: "https://chatbot-todo1.azurewebsites.net/submitRecord",
         method: "POST",
-        data: formData,
+        data: frmData,
         processData: false,
         contentType: false,
         success:(data)=>{
