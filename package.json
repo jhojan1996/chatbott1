@@ -13,7 +13,7 @@
     "apiai": "^4.0.1",
     "binaryjs": "^0.2.1",
     "body-parser": "^1.17.1",
-    "express": "^4.15.2",
+    "express": "^4.15.4",
     "request": "^2.81.0",
     "uuid": "^3.0.1",
     "wav": "^1.0.1"

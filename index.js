@@ -425,8 +425,8 @@ let todo1ChatBot = new Todo1ChatBot();
 voiceIt.initialize('5cd68e4c391e4c09a5fad1917b4073a5');
 const app = express();
 
-app.use(bodyParser.json({limit: "50mb"}));
-app.use(bodyParser.urlencoded({limit: "50mb", extended: true, parameterLimit:50000}));
+app.use(bodyParser.json({limit: "100mb", type:'application/json'}));
+app.use(bodyParser.urlencoded({limit: "100mb", extended: true, parameterLimit:50000}));
 app.use(express.static('src'));
 app.use(express.static('assets'));
 

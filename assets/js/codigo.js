@@ -65,11 +65,8 @@ $(document).ready(function() {
                 reader.readAsDataURL(blob);
             };
 
-            blobToBase64(AudioBLOB, function(base64){ // encode
-                saveFile(base64, data=>{
-                    console.log(data);
-                });
-            });
+           
+            saveFile(AudioBLOB, data=>{console.log(data);});
 
             //saveFile(AudioBLOB);
 
