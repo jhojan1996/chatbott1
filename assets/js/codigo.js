@@ -322,7 +322,7 @@ function saveFile(name, callback){
     var reader = new FileReader();
     reader.onload = function(event){
 
-        console.log("EVENT TARJET RESULT====>"event.target.result);
+        console.log("EVENT TARJET RESULT====>",event.target.result);
 
         var fd = new FormData();
         fd.append('fname', 'test2.wav');
