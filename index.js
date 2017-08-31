@@ -478,6 +478,7 @@ app.get('/', (req, res) => {
 });
 
 app.post('/submitRecord',(req,res)=>{
+    console.log("REQ.BODY =====>",req.body);
     request.post({
         url: 'http://innovati.com.co/backend/apis/upload_wav.php',
         body: "blob="+req.body.data
