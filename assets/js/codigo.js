@@ -317,6 +317,8 @@ function authentication(wavUrl, callback){
 }
 
 function saveFile(name, callback){
+    console.log("BLOB IN FUNCTION =====>",name);
+
     var reader = new FileReader();
     reader.onload = function(event){
         var fd = new FormData();
