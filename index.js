@@ -478,23 +478,6 @@ app.get('/', (req, res) => {
     res.sendfile('demo.html');
 });
 
-app.post('/submitRecord',(req,res)=>{
-    console.log("REQ.BODY =====>",req.body);
-    request.post({
-        url: 'http://innovati.com.co/backend/apis/upload_wav.php',
-        body: "blob="+req.body.data
-    }, (error, response) => {
-        if (error) {
-            console.log('Error sending message: ', error);
-        } else if (response.body.error) {
-            console.log('Error: ', response.body.error);
-        } else {
-            console.log('response-------->', response.body);
-            return res.send(response);
-        }
-    });
-});
-
 /*Autenticacion por voz*/
 app.post('/getEnrollments',(req,res)=>{
     voiceIt.getEnrollments({
@@ -510,7 +493,7 @@ app.post('/createEnrollmentByWavURL',(req,res)=>{
     voiceIt.createEnrollmentByWavURL({
         userId: req.body.userId,
         password: req.body.password,
-        urlToEnrollmentWav: req.body.wavUrl,
+        urlToEnrollmentWav: req.body.urlToEnrollmentWav,
         contentLanguage: 'es-CO',
         callback: function(response){
             res.send(response);
