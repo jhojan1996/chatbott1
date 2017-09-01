@@ -21,10 +21,35 @@ exports.pagos = (res, req)=>{
 				setContext = [{"name":"pago_tarjeta", "lifespan":0, "parameters":{}}];
 			}else{
 				let totxmin = (tipo_pago === 'minimo') ? accountDetail[0].pagoMinimo : accountDetail[0].pagoTotal;
-				text = `Ok, quires realizar el pago ${tipo_pago} por $ ${totxmin} de tu tarjeta de crédito ${franquicia} terminada en ${account[0].id}`
+				text = `Ok, quires realizar el pago ${tipo_pago} por $ ${totxmin} de tu tarjeta de crédito ${franquicia} terminada en ${account[0].id}`;
+				setContext = [
+					{
+						"name":"pago_tarjeta", 
+						"lifespan":1, 
+						"parameters":{
+							"pagar_accion":"pago", 
+							"franquicia": franquicia, 
+							"tipo_pago": tipo_pago, 
+							"confirm": ""
+						}
+					}
+				];
 			}
 		}else{
 			console.log("El tipo de pago no fue ingresado");
+			text = `¿Deseas realizar el pago minimo o total de tu tarjeta de credito ${franquicia}?`;
+			setContext = [
+				{
+					"name":"pago_tarjeta", 
+					"lifespan":1, 
+					"parameters":{
+						"pagar_accion":"pago", 
+						"franquicia": franquicia, 
+						"tipo_pago": "", 
+						"confirm": ""
+					}
+				}
+			];
 		}
 	}else{
 		console.log("La franquicia no fue enviada");
@@ -32,7 +57,7 @@ exports.pagos = (res, req)=>{
 		setContext = [
 			{
 				"name":"pago_tarjeta", 
-				"lifespan":0, 
+				"lifespan":1, 
 				"parameters":{
 					"pagar_accion":"pago", 
 					"franquicia": "", 
