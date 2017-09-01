@@ -27,7 +27,7 @@ exports.transferencia = function (res, req){
                         "parameters":{
                             "transferir_action":"transferir", 
                             "cuenta_destino": cuentaDestino, 
-                            "monto": monto, 
+                            "monto": {"number":monto}, 
                             "confirm": ""
                         }
                     }
