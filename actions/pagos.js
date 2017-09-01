@@ -8,6 +8,7 @@ exports.pagos = (res, req)=>{
 	let confirm = (typeof req.body.result.contexts[0].parameters.confirm_pago !== 'undefined') ? req.body.result.contexts[0].parameters.confirm_pago : '';
 	let response;
 	let text;
+	let resetContext;
 
 	if(franquicia){
 		console.log("Franquicia obtenida ====>",franquicia);
@@ -20,6 +21,7 @@ exports.pagos = (res, req)=>{
 				response = {
 					text: text
 				};
+				resetContext = [{"name":"pago_tarjeta", "lifespan":0, "parameters":{}}];
 			}else{
 				let totxmin = (tipo_pago === 'minimo') ? accountDetail[0].pagoMinimo : accountDetail[0].pagoTotal;
 				text = `Ok, quires realizar el pago ${tipo_pago} por $ ${totxmin} de tu tarjeta de crédito ${franquicia} terminada en ${account[0].id}`
@@ -34,11 +36,22 @@ exports.pagos = (res, req)=>{
 		console.log("La franquicia no fue enviada");
 	}
 
-	return res.json({
-	    speech: text,
-	    displayText: text,
-	    messages: response,
-	    contextOut: [{"name":"pago_tarjeta", "lifespan":0, "parameters":{}}],
-	    source: 'pagos'
-	});
+	if (resetContext.length > 0) {
+		return res.json({
+		    speech: text,
+		    displayText: text,
+		    messages: response,
+		    contextOut: resetContext,
+		    source: 'pagos'
+		});
+	}else{
+		return res.json({
+		    speech: text,
+		    displayText: text,
+		    messages: response,
+		    source: 'pagos'
+		});
+	}
+
+	
 }
