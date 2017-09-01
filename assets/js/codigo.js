@@ -41,7 +41,7 @@ $(document).ready(function() {
     });
 
     $recordBtn.on("click",()=>{
-        spokenResponse = `Por favor di: never forget tomorrow is a new day`;
+        spokenResponse = `Por favor repite la siguiente frase: Todo uno presente en la feria Bancolombia`;
         $.when(respond(spokenResponse)).done(startRecording());
     });
 
@@ -151,7 +151,7 @@ function prepareResponse(val) {
             if(r.ResponseCode === "SUC"){
                 let l = r.Result.length;
                 if(l < 3){
-                    spokenResponse = `Usted tiene ${l} inscripciones, debe realizar ${3-l} para completar.`;
+                    spokenResponse = `Buenos días. Para poder ayudarte necesito registrar tu voz. Por favor presiona el boton grabar para iniciar el reconocimiento`;
                 }else{
                     hasEnroll = true;
                     spokenResponse = `Ya puede proceder a realizar la autenticación.`;
@@ -172,7 +172,7 @@ function prepareResponse(val) {
 function debugRespond(val) {
     $("#response").text(val);
 }
-function respond(val) {
+function respond(val, callback="") {
     if (val == "") {
         val = messageSorry;
     }
@@ -181,7 +181,17 @@ function respond(val) {
         msg.voiceURI = "native";
         msg.text = val;
         msg.lang = "es-CO";
+        msg.onend = event=>{
+            console.log("Termine de hablar");
+        }
+
         window.speechSynthesis.speak(msg);
+
+
+
+        if(typeof callback === "function"){
+
+        }
     }
     $("#spokenResponse").addClass("is-active").find(".spoken-response__text").html(val);
 }
