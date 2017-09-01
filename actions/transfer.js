@@ -3,7 +3,7 @@ const Accounts = require('../modelAccounts');
 exports.transferencia = function (res, req){
     console.log('***** transferencia *****');
     const cuentaDestino = (typeof req.body.result.contexts[0].parameters.cuenta_destino !== 'undefined') ? req.body.result.contexts[0].parameters.cuenta_destino : '';
-    const monto = (typeof req.body.result.contexts[0].parameters.monto !== 'undefined') ? req.body.result.contexts[0].parameters.monto: '';
+    const monto = (typeof req.body.result.contexts[0].parameters.monto.number !== 'undefined') ? req.body.result.contexts[0].parameters.monto.number: '';
     const confirm = (typeof req.body.result.contexts[0].parameters.confirm_transfer !== 'undefined') ? req.body.result.contexts[0].parameters.confirm_transfer : '';
     let response;
     let text;
@@ -13,7 +13,7 @@ exports.transferencia = function (res, req){
         console.log("Cuenta destino enviada =====>", cuentaDestino);
         if(monto){
             console.log("Monton enviado ======>", monto);
-            if(confirm_transfer){
+            if(confirm){
                 console.log("Confirmacion enviada ======>", confirm);
                 text = (confirm === 'si' || confirm === 'si') ? `La transferencia fue realizada exitosamente, ¿Puedo ayudarte en algo más?` : `Transferencia no realizada, ¿qué más deseas hacer?`;
                 setContext = [{"name":"transferencia", "lifespan":0, "parameters":{}}];
