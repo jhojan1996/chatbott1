@@ -47,7 +47,7 @@ exports.pagos = (res, req)=>{
 		text: text
 	};	
 
-	if (resetContext) {
+	if (setContext) {
 		return res.json({
 		    speech: text,
 		    displayText: text,
