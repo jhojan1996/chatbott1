@@ -62,7 +62,7 @@ $(document).ready(function() {
                                 let r3 = JSON.parse(data);
                                 console.log("getEnrollments ====> ",r3);
                                 if(r3.ResponseCode === "SUC"){
-                                    let l = r.Result.length;
+                                    let l = r3.Result.length;
                                     spokenResponse = (l < 3) ? `Inscripción exitosa, debe realizar ${3-l} para terminar.` : `Ya puede proceder a realizar la autenticación.`;
                                 }
                             });
