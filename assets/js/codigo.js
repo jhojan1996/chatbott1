@@ -53,6 +53,7 @@ $(document).ready(function() {
                 console.log(data);
                 let r = JSON.parse(data);
                 if(r.status === "200"){
+                    console.log("URL DE ENVIO ====>", r.url);
                     createEnrollmentByWavURL(r.url, data=>{
                         console.log("Enrollment by wav URL====>",data);
                         let r2 = JSON.parse(data);
