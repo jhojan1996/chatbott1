@@ -185,7 +185,9 @@ function respond(val, callback="") {
             console.log("Empece a hablar");
         };
         msg.onend = event=>{
+            console.log("termine de hablar");
             if(typeof callback === 'function'){
+                console.log("Ya puedes empezar a hablar");
                 callback();
             }
         }
