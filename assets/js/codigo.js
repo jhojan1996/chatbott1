@@ -66,10 +66,10 @@ $(document).ready(function() {
                                 if(r3.ResponseCode === "SUC"){
                                     let l = r3.Result.length;
                                     spokenResponse = (l < 3) ? `Inscripción exitosa, debe realizar ${3-l} para terminar.` : `Ya puede proceder a realizar la autenticación.`;
+                                    respond(spokenResponse);
                                 }
                             });
                         }
-                        respond(spokenResponse);
                     });
                 }
             });
