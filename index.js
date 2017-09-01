@@ -14,6 +14,7 @@ const balance = require('./actions/balance');
 const session = require('./actions/session.js');
 const accounts = require('./actions/accounts.js');
 const movements = require('./actions/movements');
+const pagos = require('./actions/pagos');
 const listAccounts = require('./model.js');
 
 
@@ -850,7 +851,7 @@ app.post('/ai', (req, res) => {
         break;
         case 'pagos':
            console.log("Inicio pagar tarjeta");
-            movements.movements(res, req);
+            pagos.pagos(res, req);
         break;
     }
 
