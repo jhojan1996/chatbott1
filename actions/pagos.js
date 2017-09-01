@@ -6,6 +6,7 @@ exports.pagos = (res, req)=>{
 	let franquicia = req.body.result.parameters.franquicia;
 	let tipo_pago = req.body.result.parameters.tipo_pago;
 	let response;
+	let text;
 
 	if(franquicia){
 		console.log("Franquicia obtenida ====>",franquicia);
@@ -13,6 +14,7 @@ exports.pagos = (res, req)=>{
 		let accountDetail = Accounts.listAccountDetail(account[0].id);
 		if(tipo_pago){
 			let totxmin = (tipo_pago === 'minimo') ? accountDetail[0].pagoMinimo : accountDetail[0].pagoTotal;
+			text = `Ok, quires realizar el pago ${tipo_pago} por $ ${totxmin} de tu tarjeta de crédito ${franquicia} terminada en ${account[0].id}`
 			response = {
 				text: `Ok, quires realizar el pago ${tipo_pago} por $ ${totxmin} de tu tarjeta de crédito ${franquicia} terminada en ${account[0].id}`
 			};
