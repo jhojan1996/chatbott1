@@ -1,55 +1,54 @@
 /* ***** lista de cuentas ***** */
 var accounts = [
   {
-    type: "ahorros",
+    type: 1,
     alias: "mi cuenta",
     id: "2345",
     saldo: "530.000",
     propia: true
   },
   {
-    type: "ahorros",
+    type: 1,
     alias: "mama",
     id: "1234",
     saldo: 0,
     propia: false
   },
   {
-    type: "ahorros",
+    type: 1,
     alias: "transporte",
     id: "6789",
     saldo: 0,
     propia: false
   },
   {
-    type: "ahorros",
+    type: 1,
     alias: "juan",
     id: "5678",
     saldo: 0,
     propia: false
   },
   {
-    type: "ahorros",
+    type: 1,
     alias: "Personal",
     id: "4567",
     saldo: "245.000",
     propia: true
   },
   {
-    type: "tc",
+    type: 2,
     alias: "visa",
     id: "6614",
     saldo: "245.000",
     propia: true
   },
   {
-    type: "tc",
+    type: 2,
     alias: "mastercard",
     id: "9078",
     saldo: "245.000",
     propia: true
   }
-
 ];
 
 /* ***** detalle de las cuentas ***** */
@@ -60,8 +59,8 @@ var details = [
     disponibleAvances: "2.300.000",
     disponibleTotal: "2.300.000",
     fechaPago: "2017/05/31",
-    pagoMinimo: "00",
-    pagoTotal: "00",
+    pagoMinimo: "200",
+    pagoTotal: "500",
     otroValor: "00"
   },
   {
@@ -70,8 +69,8 @@ var details = [
     disponibleAvances: "2.300.000",
     disponibleTotal: "2.300.000",
     fechaPago: "2017/05/20",
-    pagoMinimo: "00",
-    pagoTotal: "00",
+    pagoMinimo: "400",
+    pagoTotal: "700",
     otroValor: "00"
   }
 ];
@@ -134,7 +133,7 @@ function listAcc(criterion) {
 
 function listAccTC(criterion) {
   let list = accounts.filter((element) => {
-    return element.propia === criterion && element.type === 'tc'
+    return element.propia === criterion && element.type === 2
   });
 
   return list;

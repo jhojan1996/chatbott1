@@ -2,7 +2,7 @@ const Accounts = require('../modelAccounts');
 
 exports.movements = function (res, req) {
   console.log('------->movimientos');
-  let listTC = Accounts.listAccTC(true)
+  let listTC = Accounts.listAccTC(true);
   let message;
   let quick_replies = [];
   let text = '';
