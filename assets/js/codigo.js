@@ -48,39 +48,28 @@ $(document).ready(function() {
     $stopRec.on("click", function(){
         var _AudioFormat = "audio/wav";
         stopRecording(function(AudioBLOB){
-            var url = URL.createObjectURL(AudioBLOB);
-            var li = document.createElement('li');
-            var au = document.createElement('audio');
-            var hf = document.createElement('a');
-            var fileName = new Date().toISOString() + '.wav';
-
-
-            var blobToBase64 = function(blob, cb) {
-                var reader = new FileReader();
-                reader.onload = function() {
-                    var dataUrl = reader.result;
-                    var base64 = dataUrl.split(',')[1];
-                    cb(base64);
-                };
-                reader.readAsDataURL(blob);
-            };
-
-           
             console.log("audio BLOB", AudioBLOB);
-
-            saveFile(AudioBLOB, data=>{console.log(data);});
-
-            //saveFile(AudioBLOB);
-
-
-            au.controls = true;
-            au.src = url;
-            hf.href = url;
-            hf.download = new Date().toISOString() + '.wav';
-            hf.innerHTML = hf.download;
-            li.appendChild(au);
-            li.appendChild(hf);
-            document.getElementById("recordingslist").appendChild(li);
+            saveFile(AudioBLOB, data=>{
+                console.log(data);
+                let r = JSON.parse(data);
+                if(r.status === "200"){
+                    createEnrollmentByWavURL(r.url, data=>{
+                        console.log("Enrollment by wav URL====>",data);
+                        let r2 = JSON.parse(data);
+                        if(r2.ResponseCode === "SUC"){
+                            getEnrollments(data=>{
+                                let r3 = JSON.parse(data);
+                                console.log("getEnrollments ====> ",r3);
+                                if(r3.ResponseCode === "SUC"){
+                                    let l = r.Result.length;
+                                    spokenResponse = (l < 3) ? `Inscripción exitosa, debe realizar ${3-l} para terminar.` : `Ya puede proceder a realizar la autenticación.`;
+                                }
+                            });
+                        }
+                        respond(spokenResponse);
+                    });
+                }
+            });
         }, _AudioFormat);
     });
 
