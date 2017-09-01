@@ -16,7 +16,7 @@ exports.pagos = (res, req)=>{
 		if(tipo_pago){
 			if(confirm){
 				console.log("La confirmacion fue obtenida =======>",confirm);
-				text = (confirm === 'si' || confirm === 'si') ? `El pago ${tipo_pago} de tu tarjeta de credito ${franquicia} terminada en ${account[0].id} fue realizado con exito` : `Pago no realizado, ¿qué mas deceas hacer?`;				
+				text = (confirm === 'si' || confirm === 'si') ? `El pago ${tipo_pago} de tu tarjeta de crédito ${franquicia} terminada en ${account[0].id} fue realizado con exito` : `Pago no realizado, ¿qué mas deceas hacer?`;
 				response = {
 					text: text
 				};
@@ -38,6 +38,7 @@ exports.pagos = (res, req)=>{
 	    speech: text,
 	    displayText: text,
 	    messages: response,
+	    contextOut: [{"name":"pago_tarjeta ", "lifespan":0, "parameters":{}}],
 	    source: 'pagos'
 	});
 }
