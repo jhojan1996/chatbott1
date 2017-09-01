@@ -154,7 +154,7 @@ function send() {
 function prepareResponse(val) {
     let debugJSON = JSON.stringify(val, undefined, 2);
     let intent = val.result.metadata.intentName;
-    if(intent === "default-welcome-intent"){
+    if(intent === "initial_intent"){
         getEnrollments(data=>{
             let r = JSON.parse(data);
             console.log("Datos del ajax ====> ",r);
