@@ -36,7 +36,7 @@ exports.pagos = (res, req)=>{
 		console.log("La franquicia no fue enviada");
 	}
 
-	if (resetContext.length > 0) {
+	if (resetContext) {
 		return res.json({
 		    speech: text,
 		    displayText: text,
