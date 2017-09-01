@@ -3,9 +3,9 @@ const Accounts = require('../modelAccounts');
 exports.pagos = (res, req)=>{
 	console.log("***** Pagos ********");
 	const tc = Accounts.listAccTC(true);
-	let franquicia = (typeof req.body.result.contexts[0].parameters.franquicia !== 'undefined') ? req.body.result.contexts[0].parameters.franquicia : '';
-	let tipo_pago = (typeof req.body.result.contexts[0].parameters.tipo_pago !== 'undefined') ? req.body.result.contexts[0].parameters.tipo_pago : '';
-	let confirm = (typeof req.body.result.contexts[0].parameters.confirm_pago !== 'undefined') ? req.body.result.contexts[0].parameters.confirm_pago : '';
+	const franquicia = (typeof req.body.result.contexts[0].parameters.franquicia !== 'undefined') ? req.body.result.contexts[0].parameters.franquicia : '';
+	const tipo_pago = (typeof req.body.result.contexts[0].parameters.tipo_pago !== 'undefined') ? req.body.result.contexts[0].parameters.tipo_pago : '';
+	const confirm = (typeof req.body.result.contexts[0].parameters.confirm_pago !== 'undefined') ? req.body.result.contexts[0].parameters.confirm_pago : '';
 	let response;
 	let text;
 	let setContext;
@@ -88,6 +88,4 @@ exports.pagos = (res, req)=>{
 		    source: 'pagos'
 		});
 	}
-
-	
 }
