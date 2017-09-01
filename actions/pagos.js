@@ -8,7 +8,7 @@ exports.pagos = (res, req)=>{
 	let confirm = (typeof req.body.result.contexts[0].parameters.confirm_pago !== 'undefined') ? req.body.result.contexts[0].parameters.confirm_pago : '';
 	let response;
 	let text;
-	let resetContext;
+	let setContext;
 
 	if(franquicia){
 		console.log("Franquicia obtenida ====>",franquicia);
@@ -18,30 +18,41 @@ exports.pagos = (res, req)=>{
 			if(confirm){
 				console.log("La confirmacion fue obtenida =======>",confirm);
 				text = (confirm === 'si' || confirm === 'si') ? `El pago ${tipo_pago} de tu tarjeta de crédito ${franquicia} terminada en ${account[0].id} fue realizado con exito` : `Pago no realizado, ¿qué mas deceas hacer?`;
-				response = {
-					text: text
-				};
-				resetContext = [{"name":"pago_tarjeta", "lifespan":0, "parameters":{}}];
+				setContext = [{"name":"pago_tarjeta", "lifespan":0, "parameters":{}}];
 			}else{
 				let totxmin = (tipo_pago === 'minimo') ? accountDetail[0].pagoMinimo : accountDetail[0].pagoTotal;
 				text = `Ok, quires realizar el pago ${tipo_pago} por $ ${totxmin} de tu tarjeta de crédito ${franquicia} terminada en ${account[0].id}`
-				response = {
-					text: text
-				};	
 			}
 		}else{
 			console.log("El tipo de pago no fue ingresado");
 		}
 	}else{
 		console.log("La franquicia no fue enviada");
+		text = `¿Cual tarjeta de credito deseas pagar?`;
+		setContext = [
+			{
+				"name":"pago_tarjeta", 
+				"lifespan":0, 
+				"parameters":{
+					"pagar_accion":"pago", 
+					"franquicia": "", 
+					"tipo_pago": "", 
+					"confirm": ""
+				}
+			}
+		];
 	}
+
+	response = {
+		text: text
+	};	
 
 	if (resetContext) {
 		return res.json({
 		    speech: text,
 		    displayText: text,
 		    messages: response,
-		    contextOut: resetContext,
+		    contextOut: setContext,
 		    source: 'pagos'
 		});
 	}else{
