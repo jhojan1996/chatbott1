@@ -324,7 +324,7 @@ function saveFile(name, callback){
     fd.append('data', name);
 
     $.ajax({
-        url: "https://chatbot-todo1.azurewebsites.net/submitRecord",
+        url: "https://backend-chatbott1.azurewebsites.net/api/api.php",
         method: "POST",
         data: fd,
         processData: false,
