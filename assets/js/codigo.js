@@ -42,7 +42,7 @@ $(document).ready(function() {
 
     $recordBtn.on("click",()=>{
         spokenResponse = `Por favor repite la siguiente frase: Todo uno presente en la feria Bancolombia`;
-        $.when(respond(spokenResponse)).done(startRecording());
+        respond(spokenResponse, startRecording());
     });
 
     $stopRec.on("click", function(){
@@ -185,7 +185,9 @@ function respond(val, callback="") {
             console.log("Empece a hablar");
         };
         msg.onend = event=>{
-            console.log("Termine de hablar");
+            if(typeof callback === 'function'){
+                callback();
+            }
         }
         window.utterances.push(msg);
         window.speechSynthesis.speak(msg);
