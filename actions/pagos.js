@@ -38,7 +38,7 @@ exports.pagos = (res, req)=>{
 	    speech: text,
 	    displayText: text,
 	    messages: response,
-	    contextOut: [{"name":"pago_tarjeta ", "lifespan":0, "parameters":{}}],
+	    contextOut: [{"name":"pago_tarjeta", "lifespan":0, "parameters":{}}],
 	    source: 'pagos'
 	});
 }
