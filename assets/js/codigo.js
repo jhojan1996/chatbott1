@@ -159,7 +159,6 @@ function prepareResponse(val) {
             }
             $recBtn.prop("disabled", true);
             $recordBtn.prop("disabled", false);
-            spokenResponse += ` Por favor presione el botón grabar para iniciar la inscripción`;
             respond(spokenResponse);
             debugRespond(debugJSON);
         });
@@ -177,21 +176,19 @@ function respond(val, callback="") {
         val = messageSorry;
     }
     if (val !== messageRecording) {
+        window.utterances = [];
         var msg = new SpeechSynthesisUtterance();
         msg.voiceURI = "native";
         msg.text = val;
         msg.lang = "es-CO";
+        msg.onstart = event=>{
+            console.log("Empece a hablar");
+        };
         msg.onend = event=>{
             console.log("Termine de hablar");
         }
-
+        window.utterances.push(msg);
         window.speechSynthesis.speak(msg);
-
-
-
-        if(typeof callback === "function"){
-
-        }
     }
     $("#spokenResponse").addClass("is-active").find(".spoken-response__text").html(val);
 }
