@@ -69,6 +69,9 @@ $(document).ready(function() {
                                     respond(spokenResponse);
                                 }
                             });
+                        }else{
+                            spokenResponse = `La inscripción fallo. Por favor intentaloa de nuevo`;
+                            respond(spokenResponse);
                         }
                     });
                 }

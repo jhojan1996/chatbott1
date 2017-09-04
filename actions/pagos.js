@@ -1,4 +1,6 @@
 const Accounts = require('../modelAccounts');
+const voiceIt = require('VoiceIt');
+voiceIt.initialize('5cd68e4c391e4c09a5fad1917b4073a5');
 
 exports.pagos = (res, req)=>{
 	console.log("***** Pagos ********");
@@ -17,6 +19,19 @@ exports.pagos = (res, req)=>{
 		if(tipo_pago){
 			if(confirm){
 				console.log("La confirmacion fue obtenida =======>",confirm);
+				let respuesta = Accounts.getEnrollments();
+				let ingreso = JSON.parse(respuesta);
+				if(ingreso.ResponseCode === "SUC"){
+					let l = ingreso.Result.length;
+					if(l < 3){
+						text = `Usted tiene ${l} inscripciones. Debe realizar ${3-l} para poder realizar la autenticación`;
+					}else{
+						text = `Por seguridad necesito confirmar tu identidad. Por favor repite la siguiente frase: todo uno presente en la feria bancolombia`;
+					}
+				}else{
+					
+				}
+
 				text = (confirm === 'si' || confirm === 'si') ? `El pago ${tipo_pago} de tu tarjeta de crédito ${franquicia} terminada en ${account[0].id} fue realizado con exito` : `Pago no realizado, ¿qué mas deceas hacer?`;
 				setContext = [{"name":"pago_tarjeta", "lifespan":0, "parameters":{}}];
 			}else{

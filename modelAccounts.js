@@ -1,3 +1,6 @@
+//validaciones con voice it//
+const voiceIt = require('VoiceIt');
+voiceIt.initialize('5cd68e4c391e4c09a5fad1917b4073a5');
 /* ***** lista de cuentas ***** */
 var accounts = [
   {
@@ -177,7 +180,18 @@ function getMovements(id) {
   return listMovements;
 }
 
+function getEnrollments(){
+  var retResp;
+  voiceIt.getEnrollments({
+      userId: "developerUserId",
+      password: "d0CHipUXOk",
+      callback: function(response){
+          retResp = response;
+      }
+  });
 
+  return retResp;
+}
 
 module.exports = {
   account: accounts,
@@ -188,8 +202,8 @@ module.exports = {
   listAccTC: listAccTC,
   listAccountDetail: listAccountDetail,
   getAccount: getAccount,
-  getMovements: getMovements
-
+  getMovements: getMovements,
+  getEnrollments: getEnrollments
 };
 
 
