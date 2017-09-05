@@ -25,6 +25,16 @@ exports.pagos = (res, req)=>{
 					if(auth){
 						text = `Tu voz fue reconocida. El pago fue realizado exitosamente. ¿Puedo ayudarlo en algo mas?`;
 						setContext = [{"name":"pago_tarjeta", "lifespan":0, "parameters":{}}];
+						response = {
+							text: text
+						};
+						return res.json({
+						    speech: text,
+						    displayText: text,
+						    messages: response,
+						    contextOut: setContext,
+						    source: 'pagos'
+						});
 					}else{
 						getEnrollments(data=>{
 							let ingreso = JSON.parse(data);
@@ -60,6 +70,16 @@ exports.pagos = (res, req)=>{
 				}else{
 					text = `Pago no realizado, ¿qué mas deceas hacer?`;
 					setContext = [{"name":"pago_tarjeta", "lifespan":0, "parameters":{}}];
+					response = {
+						text: text
+					};
+					return res.json({
+					    speech: text,
+					    displayText: text,
+					    messages: response,
+					    contextOut: setContext,
+					    source: 'pagos'
+					});
 				}					
 			}else{
 				let totxmin = (tipo_pago === 'minimo') ? accountDetail[0].pagoMinimo : accountDetail[0].pagoTotal;
@@ -77,6 +97,16 @@ exports.pagos = (res, req)=>{
 						}
 					}
 				];
+				response = {
+					text: text
+				};
+				return res.json({
+				    speech: text,
+				    displayText: text,
+				    messages: response,
+				    contextOut: setContext,
+				    source: 'pagos'
+				});
 			}
 		}else{
 			console.log("El tipo de pago no fue ingresado");
@@ -94,6 +124,17 @@ exports.pagos = (res, req)=>{
 					}
 				}
 			];
+
+			response = {
+				text: text
+			};
+			return res.json({
+			    speech: text,
+			    displayText: text,
+			    messages: response,
+			    contextOut: setContext,
+			    source: 'pagos'
+			});
 		}
 	}else{
 		console.log("La franquicia no fue enviada");
@@ -111,25 +152,14 @@ exports.pagos = (res, req)=>{
 				}
 			}
 		];
-	}
-
-	response = {
-		text: text
-	};	
-
-	if (setContext) {
+		response = {
+			text: text
+		};
 		return res.json({
 		    speech: text,
 		    displayText: text,
 		    messages: response,
 		    contextOut: setContext,
-		    source: 'pagos'
-		});
-	}else{
-		return res.json({
-		    speech: text,
-		    displayText: text,
-		    messages: response,
 		    source: 'pagos'
 		});
 	}
