@@ -27,12 +27,12 @@ $(document).ready(function() {
     $recordBtn = $("#save-rec");
     $stopRec = $("#save-rec-stop");
 
-    $speechInput.keypress(function(event) {
+    /*$speechInput.keypress(function(event) {
         if (event.which == 13) {
             event.preventDefault();
             send();
         }
-    });
+    });*/
     $recBtn.on("click", (event)=> switchRecognition());
 
     $(".debug__btn").on("click", function() {
@@ -56,24 +56,37 @@ $(document).ready(function() {
                 let r = JSON.parse(data);
                 if(r.status === "200"){
                     console.log("URL DE ENVIO ====>", r.url);
-                    createEnrollmentByWavURL(r.url, data=>{
-                        console.log("Enrollment by wav URL====>",data);
-                        let r2 = JSON.parse(data);
-                        if(r2.ResponseCode === "SUC"){
-                            getEnrollments(data=>{
-                                let r3 = JSON.parse(data);
-                                console.log("getEnrollments ====> ",r3);
-                                if(r3.ResponseCode === "SUC"){
-                                    let l = r3.Result.length;
-                                    spokenResponse = (l < 3) ? `Inscripción exitosa, debe realizar ${3-l} para terminar.` : `Ya puede proceder a realizar la autenticación.`;
-                                    respond(spokenResponse);
-                                }
-                            });
-                        }else{
-                            spokenResponse = `La inscripción fallo. Por favor intentaloa de nuevo`;
-                            respond(spokenResponse);
-                        }
-                    });
+                    if(!hasEnroll){
+                        createEnrollmentByWavURL(r.url, data=>{
+                            console.log("Enrollment by wav URL====>",data);
+                            let r2 = JSON.parse(data);
+                            if(r2.ResponseCode === "SUC"){
+                                getEnrollments(data=>{
+                                    let r3 = JSON.parse(data);
+                                    console.log("getEnrollments ====> ",r3);
+                                    if(r3.ResponseCode === "SUC"){
+                                        let l = r3.Result.length;
+                                        spokenResponse = (l < 3) ? `Inscripción exitosa, debe realizar ${3-l} para terminar.` : `Ya puede proceder a realizar la autenticación.`;
+                                        respond(spokenResponse);
+                                    }
+                                });
+                            }else{
+                                spokenResponse = `La inscripción fallo. Por favor intentaloa de nuevo`;
+                                respond(spokenResponse);
+                           }
+                        });
+                    }else{
+                        authentication(r.url, data=>{
+                            let rAuth = JSON.parse(data):
+                            if(rAuth.ResponseCode === "SUC"){
+                                let txt = `auth_true_pay`;
+                                send(txt);
+                            }else{
+                                spokenResponse = `Tu voz no fue reconocida. Por favor intentalo de nuevo`;
+                            }
+                            respond(spokenResponse);                         
+                        });
+                    }                        
                 }
             });
         }, _AudioFormat);
@@ -122,13 +135,12 @@ function switchRecognition() {
 }
 function setInput(text) {
     $speechInput.val(text);
-    send();
+    send(text);
 }
 function updateRec() {
     $recBtn.text(recognition ? "Stop" : "Speak");
 }
-function send() {
-    var text = $speechInput.val();
+function send(text) {
     $.ajax({
         type: "POST",
         url: baseUrl + "query?v="+v,
@@ -159,7 +171,7 @@ function prepareResponse(val) {
                     spokenResponse = `Buenos días. Para poder ayudarte necesito registrar tu voz. Por favor presiona el boton grabar para iniciar el reconocimiento`;
                 }else{
                     hasEnroll = true;
-                    spokenResponse = `Ya puede proceder a realizar la autenticación.`;
+                    spokenResponse = `Buenos días. ¿En qué puedo ayudarte?`;
                 }
             }
             $recBtn.prop("disabled", true);
@@ -168,6 +180,22 @@ function prepareResponse(val) {
             debugRespond(debugJSON);
         });
     }else{
+        if(!hasEnroll){
+            getEnrollments(data=>{
+                let r = JSON.parse(data);
+                console.log("Datos del ajax ====> ",r);
+                if(r.ResponseCode === "SUC"){
+                    let l = r.Result.length;
+                    if(l >= 3){
+                        hasEnroll =  true;
+                    }
+                }
+                $recBtn.prop("disabled", true);
+                $recordBtn.prop("disabled", false);
+                respond(spokenResponse);
+                debugRespond(debugJSON);
+            });
+        }
         spokenResponse = val.result.fulfillment.speech;
         respond(spokenResponse);
         debugRespond(debugJSON);

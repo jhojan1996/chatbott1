@@ -1,6 +1,8 @@
-const Accounts = require('../modelAccounts');
 const voiceIt = require('VoiceIt');
 voiceIt.initialize('5cd68e4c391e4c09a5fad1917b4073a5');
+
+const Accounts = require('../modelAccounts');
+
 
 exports.pagos = (res, req)=>{
 	console.log("***** Pagos ********");
@@ -8,6 +10,7 @@ exports.pagos = (res, req)=>{
 	const franquicia = (typeof req.body.result.contexts[0].parameters.franquicia !== 'undefined') ? req.body.result.contexts[0].parameters.franquicia : '';
 	const tipo_pago = (typeof req.body.result.contexts[0].parameters.tipo_pago !== 'undefined') ? req.body.result.contexts[0].parameters.tipo_pago : '';
 	const confirm = (typeof req.body.result.contexts[0].parameters.confirm_pago !== 'undefined') ? req.body.result.contexts[0].parameters.confirm_pago : '';
+	const auth = (typeof req.body.result.contexts[0].parameters.valid_auth !== 'undefined') ? req.body.result.contexts[0].parameters.valid_auth : '';
 	let response;
 	let text;
 	let setContext;
@@ -19,21 +22,39 @@ exports.pagos = (res, req)=>{
 		if(tipo_pago){
 			if(confirm){
 				console.log("La confirmacion fue obtenida =======>",confirm);
-				let respuesta = Accounts.getEnrollments();
-				let ingreso = JSON.parse(respuesta);
-				if(ingreso.ResponseCode === "SUC"){
-					let l = ingreso.Result.length;
-					if(l < 3){
-						text = `Usted tiene ${l} inscripciones. Debe realizar ${3-l} para poder realizar la autenticación`;
+				if(confirm === 'si' || confirm === 'si'){
+					if(auth){
+						text = `Tu voz fue reconocida. El pago fue realizado exitosamente. ¿Puedo ayudarlo en algo mas?`;
+						setContext = [{"name":"pago_tarjeta", "lifespan":0, "parameters":{}}];
 					}else{
-						text = `Por seguridad necesito confirmar tu identidad. Por favor repite la siguiente frase: todo uno presente en la feria bancolombia`;
-					}
+						let respuesta = Accounts.getEnrollments();
+						let ingreso = JSON.parse(respuesta);
+						if(ingreso.ResponseCode === "SUC"){
+							let l = ingreso.Result.length;
+							if(l < 3){
+								text = `Usted tiene ${l} inscripciones. Debe realizar ${3-l} para poder realizar la autenticación`;
+							}else{
+								text = `Por seguridad necesito confirmar tu identidad. Por favor presiona el boton grabar para iniciar el reconocimiento`;
+							}
+							setContext = [
+								{
+									"name":"pago_tarjeta", 
+									"lifespan":1, 
+									"parameters":{
+										"pagar_accion":"pago", 
+										"franquicia": franquicia, 
+										"tipo_pago": tipo_pago, 
+										"confirm": confirm,
+										"valid_auth": ""
+									}
+								}
+							];
+						}
+					}	
 				}else{
-					
-				}
-
-				text = (confirm === 'si' || confirm === 'si') ? `El pago ${tipo_pago} de tu tarjeta de crédito ${franquicia} terminada en ${account[0].id} fue realizado con exito` : `Pago no realizado, ¿qué mas deceas hacer?`;
-				setContext = [{"name":"pago_tarjeta", "lifespan":0, "parameters":{}}];
+					text = `Pago no realizado, ¿qué mas deceas hacer?`;
+					setContext = [{"name":"pago_tarjeta", "lifespan":0, "parameters":{}}];
+				}					
 			}else{
 				let totxmin = (tipo_pago === 'minimo') ? accountDetail[0].pagoMinimo : accountDetail[0].pagoTotal;
 				text = `Ok, quires realizar el pago ${tipo_pago} por $ ${totxmin} de tu tarjeta de crédito ${franquicia} terminada en ${account[0].id}`;
@@ -45,7 +66,8 @@ exports.pagos = (res, req)=>{
 							"pagar_accion":"pago", 
 							"franquicia": franquicia, 
 							"tipo_pago": tipo_pago, 
-							"confirm": ""
+							"confirm": "",
+							"valid_auth": ""
 						}
 					}
 				];
@@ -61,7 +83,8 @@ exports.pagos = (res, req)=>{
 						"pagar_accion":"pago", 
 						"franquicia": franquicia, 
 						"tipo_pago": "", 
-						"confirm": ""
+						"confirm": "",
+						"valid_auth": ""
 					}
 				}
 			];
@@ -77,7 +100,8 @@ exports.pagos = (res, req)=>{
 					"pagar_accion":"pago", 
 					"franquicia": "", 
 					"tipo_pago": "", 
-					"confirm": ""
+					"confirm": "",
+					"valid_auth": ""
 				}
 			}
 		];

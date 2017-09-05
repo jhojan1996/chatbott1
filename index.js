@@ -514,10 +514,10 @@ app.post('/deleteEnrollment',(req,res)=>{
 });
 
 app.post('/authentication',(req,res)=>{
-    voiceIt.authentication({
+    voiceIt.authenticationByWavURL({
         userId: req.body.userId,
         password: req.body.userId,
-        pathToAuthenticationWav: req.body.wavUrl,
+        urlToAuthenticationWav: req.body.wavUrl,
         contentLanguage: 'es-CO',
         callback: function(response){
             res.send(response);
