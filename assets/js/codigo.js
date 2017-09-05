@@ -77,7 +77,7 @@ $(document).ready(function() {
                         });
                     }else{
                         authentication(r.url, data=>{
-                            let rAuth = JSON.parse(data):
+                            let rAuth = JSON.parse(data);
                             if(rAuth.ResponseCode === "SUC"){
                                 let txt = `auth_true_pay`;
                                 send(txt);
