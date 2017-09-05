@@ -1,8 +1,7 @@
 const voiceIt = require('VoiceIt');
-voiceIt.initialize('5cd68e4c391e4c09a5fad1917b4073a5');
-
 const Accounts = require('../modelAccounts');
 
+voiceIt.initialize('5cd68e4c391e4c09a5fad1917b4073a5');
 
 exports.pagos = (res, req)=>{
 	console.log("***** Pagos ********");
@@ -27,29 +26,34 @@ exports.pagos = (res, req)=>{
 						text = `Tu voz fue reconocida. El pago fue realizado exitosamente. ¿Puedo ayudarlo en algo mas?`;
 						setContext = [{"name":"pago_tarjeta", "lifespan":0, "parameters":{}}];
 					}else{
-						let respuesta = Accounts.getEnrollments();
-						let ingreso = JSON.parse(respuesta);
-						if(ingreso.ResponseCode === "SUC"){
-							let l = ingreso.Result.length;
-							if(l < 3){
-								text = `Usted tiene ${l} inscripciones. Debe realizar ${3-l} para poder realizar la autenticación`;
-							}else{
-								text = `Por seguridad necesito confirmar tu identidad. Por favor presiona el boton grabar para iniciar el reconocimiento`;
-							}
-							setContext = [
-								{
-									"name":"pago_tarjeta", 
-									"lifespan":1, 
-									"parameters":{
-										"pagar_accion":"pago", 
-										"franquicia": franquicia, 
-										"tipo_pago": tipo_pago, 
-										"confirm": confirm,
-										"valid_auth": ""
+						voiceIt.getEnrollments({
+						    userId: "developerUserId",
+						    password: "d0CHipUXOk",
+						    callback: function(response){
+						        let ingreso = JSON.parse(response);
+						        if(ingreso.ResponseCode === "SUC"){
+									let l = ingreso.Result.length;
+									if(l < 3){
+										text = `Usted tiene ${l} inscripciones. Debe realizar ${3-l} para poder realizar la autenticación`;
+									}else{
+										text = `Por seguridad necesito confirmar tu identidad. Por favor presiona el boton grabar para iniciar el reconocimiento`;
 									}
+									setContext = [
+										{
+											"name":"pago_tarjeta", 
+											"lifespan":1, 
+											"parameters":{
+												"pagar_accion":"pago", 
+												"franquicia": franquicia, 
+												"tipo_pago": tipo_pago, 
+												"confirm": confirm,
+												"valid_auth": ""
+											}
+										}
+									];
 								}
-							];
-						}
+						    }
+						});								
 					}	
 				}else{
 					text = `Pago no realizado, ¿qué mas deceas hacer?`;

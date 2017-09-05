@@ -168,7 +168,7 @@ function prepareResponse(val) {
             if(r.ResponseCode === "SUC"){
                 let l = r.Result.length;
                 if(l < 3){
-                    spokenResponse = `Buenos días. Para poder ayudarte necesito registrar tu voz. Por favor presiona el boton grabar para iniciar el reconocimiento`;
+                    spokenResponse = `Buenos días. Para poder ayudarte necesito registrar tu voz. Por favor presiona el botón grabar para iniciar el reconocimiento`;
                 }else{
                     hasEnroll = true;
                     spokenResponse = `Buenos días. ¿En qué puedo ayudarte?`;
@@ -180,6 +180,7 @@ function prepareResponse(val) {
             debugRespond(debugJSON);
         });
     }else{
+        console.log("HAS ENROLL====>",hasEnroll);
         if(!hasEnroll){
             getEnrollments(data=>{
                 let r = JSON.parse(data);

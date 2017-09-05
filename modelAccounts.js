@@ -180,19 +180,6 @@ function getMovements(id) {
   return listMovements;
 }
 
-function getEnrollments(){
-  var retResp;
-  voiceIt.getEnrollments({
-      userId: "developerUserId",
-      password: "d0CHipUXOk",
-      callback: function(response){
-          retResp = response;
-      }
-  });
-
-  return retResp;
-}
-
 module.exports = {
   account: accounts,
   isAccount: isAccount,
@@ -203,7 +190,6 @@ module.exports = {
   listAccountDetail: listAccountDetail,
   getAccount: getAccount,
   getMovements: getMovements,
-  getEnrollments: getEnrollments
 };
 
 
