@@ -84,8 +84,8 @@ $(document).ready(function() {
                                 send(txt);
                             }else{
                                 spokenResponse = `Tu voz no fue reconocida. Por favor intentalo de nuevo`;
-                            }
-                            respond(spokenResponse);                         
+                                respond(spokenResponse);
+                            }                      
                         });
                     }                        
                 }
