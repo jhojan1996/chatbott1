@@ -183,6 +183,7 @@ function prepareResponse(val) {
         });
     }else{
         console.log("HAS ENROLL====>",hasEnroll);
+        spokenResponse = val.result.fulfillment.speech;
         if(!hasEnroll){
             getEnrollments(data=>{
                 let r = JSON.parse(data);
@@ -193,14 +194,11 @@ function prepareResponse(val) {
                         hasEnroll =  true;
                     }
                 }
-                $recordBtn.prop("disabled", false);
-                respond(spokenResponse);
-                debugRespond(debugJSON);
             });
         }
         spokenResponse = val.result.fulfillment.speech;
         respond(spokenResponse);
-        debugRespond(debugJSON);
+        debugRespond(debugJSON);         
     }
 }
 function debugRespond(val) {
