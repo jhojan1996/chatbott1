@@ -26,19 +26,20 @@ exports.pagos = (res, req)=>{
 						text = `Tu voz fue reconocida. El pago fue realizado exitosamente. ¿Puedo ayudarlo en algo mas?`;
 						setContext = [{"name":"pago_tarjeta", "lifespan":0, "parameters":{}}];
 					}else{
-						voiceIt.getEnrollments({
-						    userId: "developerUserId",
-						    password: "d0CHipUXOk",
-						    callback: function(response){
-						        let ingreso = JSON.parse(response);
-						        if(ingreso.ResponseCode === "SUC"){
-									let l = ingreso.Result.length;
-									if(l < 3){
-										text = `Usted tiene ${l} inscripciones. Debe realizar ${3-l} para poder realizar la autenticación`;
-									}else{
-										text = `Por seguridad necesito confirmar tu identidad. Por favor presiona el boton grabar para iniciar el reconocimiento`;
-									}
-									setContext = [
+						getEnrollments(data=>{
+							let ingreso = JSON.parse(data);
+							if(ingreso.ResponseCode === "SUC"){
+								let l = ingreso.Result.length;
+								if(l < 3){
+									text = `Usted tiene ${l} inscripciones. Debe realizar ${3-l} para poder realizar la autenticación`;
+								}else{
+									text = `Por seguridad necesito confirmar tu identidad. Por favor presiona el boton grabar para iniciar el reconocimiento`;
+								}
+								return res.json({
+								    speech: text,
+								    displayText: text,
+								    messages: response,
+								    contextOut: [
 										{
 											"name":"pago_tarjeta", 
 											"lifespan":1, 
@@ -50,10 +51,11 @@ exports.pagos = (res, req)=>{
 												"valid_auth": ""
 											}
 										}
-									];
-								}
-						    }
-						});								
+									],
+								    source: 'pagos'
+								});
+							}
+						});												
 					}	
 				}else{
 					text = `Pago no realizado, ¿qué mas deceas hacer?`;
@@ -131,4 +133,14 @@ exports.pagos = (res, req)=>{
 		    source: 'pagos'
 		});
 	}
+}
+
+function getEnrollments(callback){
+  voiceIt.getEnrollments({
+      userId: "developerUserId",
+      password: "d0CHipUXOk",
+      callback: function(response){
+          callback(response);
+      }
+  });
 }
