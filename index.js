@@ -516,7 +516,7 @@ app.post('/deleteEnrollment',(req,res)=>{
 app.post('/authentication',(req,res)=>{
     voiceIt.authenticationByWavURL({
         userId: req.body.userId,
-        password: req.body.userId,
+        password: req.body.password,
         urlToAuthenticationWav: req.body.urlToAuthenticationWav,
         contentLanguage: 'es-CO',
         callback: function(response){
