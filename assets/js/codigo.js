@@ -169,12 +169,13 @@ function prepareResponse(val) {
                 let l = r.Result.length;
                 if(l < 3){
                     spokenResponse = `Buenos días. Para poder ayudarte necesito registrar tu voz. Por favor presiona el botón grabar para iniciar el reconocimiento`;
+                    $recBtn.prop("disabled", true);
                 }else{
                     hasEnroll = true;
                     spokenResponse = `Buenos días. ¿En qué puedo ayudarte?`;
+                    $recBtn.prop("disabled", false);
                 }
             }
-            $recBtn.prop("disabled", true);
             $recordBtn.prop("disabled", false);
             respond(spokenResponse);
             debugRespond(debugJSON);
@@ -191,7 +192,6 @@ function prepareResponse(val) {
                         hasEnroll =  true;
                     }
                 }
-                $recBtn.prop("disabled", true);
                 $recordBtn.prop("disabled", false);
                 respond(spokenResponse);
                 debugRespond(debugJSON);
