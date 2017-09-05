@@ -343,7 +343,7 @@ function authentication(wavUrl, callback){
         data:{
             userId: "developerUserId",
             password: "d0CHipUXOk",
-            urlToEnrollmentWav: wavUrl
+            urlToAuthenticationWav: wavUrl
         },
         success:(data)=>{
             callback(data);

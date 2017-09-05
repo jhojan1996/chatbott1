@@ -517,7 +517,7 @@ app.post('/authentication',(req,res)=>{
     voiceIt.authenticationByWavURL({
         userId: req.body.userId,
         password: req.body.userId,
-        urlToAuthenticationWav: req.body.wavUrl,
+        urlToAuthenticationWav: req.body.urlToAuthenticationWav,
         contentLanguage: 'es-CO',
         callback: function(response){
             res.send(response);
