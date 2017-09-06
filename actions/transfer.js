@@ -20,7 +20,7 @@ exports.transferencia = function (res, req){
             if(confirm){
                 if(confirm === 'si' || confirm === 'si'){
                     if(auth){
-                        text = `Tu voz fue reconocida. La transferencia fue realizada con exito. ¿Puedo ayudarlo en algo mas?`;
+                        text = `Tu voz fue reconocida. La transferencia fue realizada con exito. ¿Puedo ayudarlo en algo más?`;
                         setContext = [{"name":"transferencia", "lifespan":0, "parameters":{}}];
                         response = {
                             text: text
@@ -65,7 +65,7 @@ exports.transferencia = function (res, req){
                         });                                             
                     }   
                 }else{
-                    text = `Pago no realizado, ¿qué mas deceas hacer?`;
+                    text = `Pago no realizado, ¿qué más deseas hacer?`;
                     setContext = [{"name":"pago_tarjeta", "lifespan":0, "parameters":{}}];
                     response = {
                         text: text

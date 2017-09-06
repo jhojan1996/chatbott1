@@ -66,12 +66,12 @@ $(document).ready(function() {
                                     console.log("getEnrollments ====> ",r3);
                                     if(r3.ResponseCode === "SUC"){
                                         let l = r3.Result.length;
-                                        spokenResponse = (l < 3) ? `Inscripción exitosa, debe realizar ${3-l} para terminar.` : `Ya puede proceder a realizar la autenticación.`;
+                                        spokenResponse = (l < 3) ? `Inscripción exitosa, debe realizar ${3-l} más para terminar el reconocimiento.` : `He reconocido tu voz correctamente. ¿En qué puedo ayudarte?`;
                                         respond(spokenResponse);
                                     }
                                 });
                             }else{
-                                spokenResponse = `La inscripción fallo. Por favor intentaloa de nuevo`;
+                                spokenResponse = `La inscripción fallo. Por favor intentalo de nuevo`;
                                 respond(spokenResponse);
                            }
                         });
@@ -139,7 +139,7 @@ function setInput(text) {
     send(text);
 }
 function updateRec() {
-    $recBtn.text(recognition ? "Stop" : "Speak");
+    $recBtn.text(recognition ? "PARAR" : "HABLAR");
 }
 function send(text) {
     $.ajax({
