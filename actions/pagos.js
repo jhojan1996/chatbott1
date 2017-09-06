@@ -43,7 +43,7 @@ exports.pagos = (res, req)=>{
 								if(l < 3){
 									text = `Usted tiene ${l} inscripciones. Debe realizar ${3-l} para poder realizar la autenticación`;
 								}else{
-									text = `Por seguridad necesito confirmar tu identidad. Por favor presiona el boton grabar para iniciar el reconocimiento`;
+									text = `Por seguridad necesito confirmar tu identidad. Por favor presiona el botón grabar para iniciar el reconocimiento`;
 								}
 								return res.json({
 								    speech: text,
@@ -110,7 +110,7 @@ exports.pagos = (res, req)=>{
 			}
 		}else{
 			console.log("El tipo de pago no fue ingresado");
-			text = `¿Deseas realizar el pago minimo o total de tu tarjeta de credito ${franquicia}?`;
+			text = `¿Deseas realizar el pago minimo o total de tu tarjeta de crédito ${franquicia}?`;
 			setContext = [
 				{
 					"name":"pago_tarjeta", 
@@ -138,7 +138,7 @@ exports.pagos = (res, req)=>{
 		}
 	}else{
 		console.log("La franquicia no fue enviada");
-		text = `¿Cual tarjeta de credito deseas pagar?`;
+		text = `¿Cual tarjeta de crédito deseas pagar?`;
 		setContext = [
 			{
 				"name":"pago_tarjeta", 
