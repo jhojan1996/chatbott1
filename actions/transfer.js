@@ -54,7 +54,7 @@ exports.transferencia = function (res, req){
                                                 "transferir_action":"transferir", 
                                                 "cuenta_destino": cuentaDestino, 
                                                 "monto": {"number":monto}, 
-                                                "confirm": ""
+                                                "confirm": "",
                                                 "valid_auth": ""
                                             }
                                         }
