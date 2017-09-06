@@ -80,7 +80,7 @@ $(document).ready(function() {
                             console.log("datos de la autenticación =====>", data);
                             let rAuth = JSON.parse(data);
                             if(rAuth.ResponseCode === "SUC"){
-                                let txt = `auth_true_pay`;
+                                let txt = `auth_true`;
                                 send(txt);
                             }else{
                                 spokenResponse = `Tu voz no fue reconocida. Por favor intentalo de nuevo`;
