@@ -170,14 +170,14 @@ function prepareResponse(val) {
                 let l = r.Result.length;
                 if(l < 3){
                     spokenResponse = `Buenos días. Para poder ayudarte necesito registrar tu voz. Por favor presiona el botón grabar para iniciar el reconocimiento`;
-                    $recBtn.prop("disabled", true);
+                    
                 }else{
                     hasEnroll = true;
                     spokenResponse = `Buenos días. ¿En qué puedo ayudarte?`;
-                    $recBtn.prop("disabled", false);
+                    
                 }
             }
-            $recordBtn.prop("disabled", false);
+            
             respond(spokenResponse);
             debugRespond(debugJSON);
         });
@@ -266,8 +266,6 @@ function startRecording() {
         console.log('Recording...');
 
         // Disable Record button and enable stop button !
-        $recordBtn.prop("disabled", true);
-        $stopRec.prop("disabled", false);
     }, function (e) {
         console.error('No live audio input: ' + e);
     });
@@ -282,9 +280,7 @@ function stopRecording(callback, AudioFormat) {
     audio_stream.getAudioTracks()[0].stop();
 
     // Disable Stop button and enable Record button !
-    $recordBtn.prop("disabled", false);
-    $stopRec.prop("disabled", true);
-
+    
     // Use the Recorder Library to export the recorder Audio as a .wav file
     // The callback providen in the stop recording method receives the blob
     if(typeof(callback) == "function"){

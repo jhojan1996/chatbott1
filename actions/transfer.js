@@ -20,7 +20,7 @@ exports.transferencia = function (res, req){
             if(confirm){
                 if(confirm === 'si' || confirm === 'si'){
                     if(auth){
-                        text = `Tu voz fue reconocida. La transferencia fue realizada con exito. ¿Puedo ayudarlo en algo más?`;
+                        text = `Tu voz fue reconocida. La transferencia fue realizada con éxito. ¿Puedo ayudarlo en algo más?`;
                         setContext = [{"name":"transferencia", "lifespan":0, "parameters":{}}];
                         response = {
                             text: text
