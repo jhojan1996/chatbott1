@@ -341,7 +341,7 @@ function deleteEnrollment(id_delete){
             enrollmentId: id_delete
         },
         success:(data)=>{
-            callback(data);
+            console.log("Enrollment borrado");
         }
     });
 }
