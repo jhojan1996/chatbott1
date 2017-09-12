@@ -506,7 +506,6 @@ app.post('/deleteEnrollment',(req,res)=>{
         userId: req.body.userId,
         password: req.body.password,
         enrollmentId: req.body.enrollmentId,
-        contentLanguage: 'es-CO',
         callback: function(response){
             res.send(response);
         }

@@ -10,6 +10,7 @@
   "license": "ISC",
   "dependencies": {
     "VoiceIt": "^1.2.9",
+    "alexa-sdk": "^1.0.13",
     "apiai": "^4.0.1",
     "binaryjs": "^0.2.1",
     "body-parser": "^1.17.1",

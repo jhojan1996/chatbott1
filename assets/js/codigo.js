@@ -14,7 +14,7 @@ var accessToken = "b774636399634896af8b43567d942df7",
     audio_stream,
     messageRecording = "Escuchando...",
     messageCouldntHear = "No pude oirte, ¿Puedes decirlo de nuevo?",
-    messageInternalError = "Oh no! Ha habido un error interno, intentalo nuevamente",
+    messageInternalError = "Oh no! Ha habido un error interno, inténtalo nuevamente",
     messageSorry = "Lo siento, no tengo una respuesta a esto";
 
 $(document).ready(function() {
@@ -66,12 +66,12 @@ $(document).ready(function() {
                                     console.log("getEnrollments ====> ",r3);
                                     if(r3.ResponseCode === "SUC"){
                                         let l = r3.Result.length;
-                                        spokenResponse = (l < 3) ? `Inscripción exitosa, debe realizar ${3-l} más para terminar el reconocimiento.` : `He reconocido tu voz correctamente. ¿En qué puedo ayudarte?`;
+                                        spokenResponse = (l < 3) ? `Inscripción exitosa, debe realizar ${3-l} más para terminar el reconocimiento. Por favor presiona el botón grabar.` : `He reconocido tu voz correctamente. ¿En qué puedo ayudarte?`;
                                         respond(spokenResponse);
                                     }
                                 });
                             }else{
-                                spokenResponse = `La inscripción fallo. Por favor intentalo de nuevo`;
+                                spokenResponse = `La inscripción fallo. Por favor inténtalo de nuevo`;
                                 respond(spokenResponse);
                            }
                         });
@@ -83,7 +83,7 @@ $(document).ready(function() {
                                 let txt = `auth_true`;
                                 send(txt);
                             }else{
-                                spokenResponse = `Tu voz no fue reconocida. Por favor intentalo de nuevo`;
+                                spokenResponse = `Tu voz no fue reconocida. Por favor inténtalo de nuevo`;
                                 respond(spokenResponse);
                             }                      
                         });
@@ -91,6 +91,21 @@ $(document).ready(function() {
                 }
             });
         }, _AudioFormat);
+    });
+
+    $("#del_enroll").on("click",function(){
+        getEnrollments(data=>{
+            let r = JSON.parse(data);
+            console.log("getEnrollments to delete ====> ",r);
+            if(r.ResponseCode === "SUC"){
+                let l = r.Result.length;
+                let i = 0;
+                while(i < l){
+                    deleteEnrollment(r.Result[i]);
+                    i++;
+                }
+            }
+        });
     });
 
 });
@@ -309,6 +324,21 @@ function getEnrollments(callback){
         data:{
             userId: "developerUserId",
             password: "d0CHipUXOk"
+        },
+        success:(data)=>{
+            callback(data);
+        }
+    });
+}
+
+function deleteEnrollment(id_delete){
+    $.ajax({
+        url: "https://chatbot-todo1.azurewebsites.net/deleteEnrollment",
+        method: "POST",
+        data:{
+            userId: "developerUserId",
+            password: "d0CHipUXOk",
+            enrollmentId: id_delete
         },
         success:(data)=>{
             callback(data);
