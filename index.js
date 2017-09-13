@@ -423,7 +423,7 @@ class Todo1ChatBot {
 }
 
 let todo1ChatBot = new Todo1ChatBot();
-voiceIt.initialize('5cd68e4c391e4c09a5fad1917b4073a5');
+voiceIt.initialize(process.env.VOICEIT_KEY);
 const app = express();
 
 app.use(bodyParser.json({limit: "100mb", type:'application/json'}));
@@ -479,7 +479,7 @@ app.get('/', (req, res) => {
 });
 
 /*Autenticacion por voz*/
-app.post('/getEnrollments',(req,res)=>{
+app.get('/getEnrollments',(req,res)=>{
     voiceIt.getEnrollments({
         userId: req.body.userId,
         password: req.body.password,
