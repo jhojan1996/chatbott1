@@ -475,7 +475,7 @@ app.get('/authorize',function(req,res){
 app.get('/', (req, res) => {
     console.log("get /----->");
     //res.status(200).send("correcto");
-    res.sendfile('/src/demo.html');
+    res.sendfile('src/demo.html');
 });
 
 /*Autenticacion por voz*/
