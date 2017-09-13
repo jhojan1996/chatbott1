@@ -486,7 +486,7 @@ app.post('/getEnrollments',(req,res)=>{
         callback: function(response){
             //const r = JSON.parse(response);
             //resolve(response);
-            return response;
+            res.send(response);
         }
     });
 });
