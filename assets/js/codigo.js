@@ -60,7 +60,7 @@ $(document).ready(function() {
             .then(response=>{
                 let l = response.Result.length;
                 for (let i = 0; i < l; i++) {
-                    deleteEnrollment(r.Result[i]);
+                    deleteEnrollment(response.Result[i]);
                 }
             })
             .catch(err=>console.log(err));
