@@ -480,12 +480,16 @@ app.get('/', (req, res) => {
 
 /*Autenticacion por voz*/
 app.get('/getEnrollments',(req,res)=>{
-    voiceIt.getEnrollments({
-        userId: req.body.userId,
-        password: req.body.password,
-        callback: function(response){
-            res.send(response);
-        }
+    return new Promise((resolve,reject)=>{
+        voiceIt.getEnrollments({
+            userId: req.body.userId,
+            password: req.body.password,
+            callback: function(response){
+                const r = JSON.parse(response);
+                resolve(r);
+                //res.send(response);
+            }
+        });
     });
 });
 
