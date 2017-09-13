@@ -291,7 +291,7 @@ function createEnrollmentByWavURL(wavUrl){
             if(d.ResponseCode === "SUC"){
                 getEnrollments()
                     .then(response=>{
-                        const l = r3.Result.length;
+                        const l = response.Result.length;
                         spokenResponse = (l < 3) ? `Inscripción exitosa, debe realizar ${3-l} más para terminar el reconocimiento. Por favor presiona el botón grabar.` : `He reconocido tu voz correctamente. ¿En qué puedo ayudarte?`;
                         respond(spokenResponse);
                     })
