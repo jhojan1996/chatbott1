@@ -482,8 +482,8 @@ app.get('/', (req, res) => {
 app.get('/getEnrollments',(req,res)=>{
     return new Promise((resolve,reject)=>{
         voiceIt.getEnrollments({
-            userId: req.body.userId,
-            password: req.body.password,
+            userId: "developerUserId",//req.body.userId,
+            password: "d0CHipUXOk"//req.body.password,
             callback: function(response){
                 const r = JSON.parse(response);
                 resolve(response);
