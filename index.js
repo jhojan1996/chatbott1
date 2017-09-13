@@ -485,8 +485,8 @@ app.post('/getEnrollments',(req,res)=>{
         password: req.body.password,
         callback: function(response){
             //const r = JSON.parse(response);
-            resolve(response);
-            //res.send(response);
+            //resolve(response);
+            res.send(response);
         }
     });
 });
