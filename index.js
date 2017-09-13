@@ -428,7 +428,7 @@ const app = express();
 
 app.use(bodyParser.json({limit: "100mb", type:'application/json'}));
 app.use(bodyParser.urlencoded({limit: "100mb", extended: true, parameterLimit:50000}));
-app.use(express.static('src'));
+app.use("/src", express.static('src'));
 app.use(express.static('assets'));
 
 const server = app.listen(process.env.PORT || 5000, () => {
@@ -475,7 +475,7 @@ app.get('/authorize',function(req,res){
 app.get('/', (req, res) => {
     console.log("get /----->");
     //res.status(200).send("correcto");
-    res.sendfile('demo.html');
+    res.sendfile('/src/demo.html');
 });
 
 /*Autenticacion por voz*/
