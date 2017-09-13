@@ -138,7 +138,7 @@ function prepareResponse(val) {
     if(intent === "initial_intent"){
         getEnrollments()
             .then(response=>{
-                const l = r.Result.length;
+                const l = response.Result.length;
                 if(l < 3){
                     spokenResponse = `Buenos días. Para poder ayudarte necesito registrar tu voz. Por favor presiona el botón grabar para iniciar el reconocimiento`;  
                 }else{
@@ -155,7 +155,7 @@ function prepareResponse(val) {
         if(!hasEnroll){
              getEnrollments()
                 .then(response=>{
-                    const l = r.Result.length;
+                    const l = response.Result.length;
                     if(l >= 3){
                         hasEnroll =  true;
                     }
