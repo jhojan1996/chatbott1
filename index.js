@@ -486,7 +486,7 @@ app.get('/getEnrollments',(req,res)=>{
             password: req.body.password,
             callback: function(response){
                 const r = JSON.parse(response);
-                resolve(r);
+                resolve(response);
                 //res.send(response);
             }
         });
