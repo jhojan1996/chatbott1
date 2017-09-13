@@ -16,6 +16,7 @@ var accessToken = "b774636399634896af8b43567d942df7",
     messageCouldntHear = "No pude oirte, ¿Puedes decirlo de nuevo?",
     messageInternalError = "Oh no! Ha habido un error interno, inténtalo nuevamente",
     messageSorry = "Lo siento, no tengo una respuesta a esto";
+const base_url = "https://chatbot-todo1.azurewebsites.net/";
 
 $(document).ready(function() {
     //Con esta linea checkeamos si el browser tiene activo el permiso de usar microfono//
@@ -27,6 +28,12 @@ $(document).ready(function() {
     $recordBtn = $("#save-rec");
     $stopRec = $("#save-rec-stop");
 
+    /*$speechInput.keypress(function(event) {
+        if (event.which == 13) {
+            event.preventDefault();
+            send();
+        }
+    });*/
     $recBtn.on("click", (event)=> switchRecognition());
 
     $(".debug__btn").on("click", function() {
@@ -40,30 +47,64 @@ $(document).ready(function() {
     });
 
     $stopRec.on("click", function(){
-        const _AudioFormat = "audio/wav";
-        stopRecording(_AudioFormat)
-            .then(blob=> saveFile(blob))
-            .then(response=>{
-                if(!hasEnroll){
-                    return createEnrollmentByWavURL(response.url);
-                }else{
-                    return authentication(response.url);
+        var _AudioFormat = "audio/wav";
+        stopRecording(function(AudioBLOB){
+            console.log("audio BLOB", AudioBLOB);
+            saveFile(AudioBLOB, data=>{
+                console.log(data);
+                let r = JSON.parse(data);
+                if(r.status === "200"){
+                    console.log("URL DE ENVIO ====>", r.url);
+                    if(!hasEnroll){
+                        createEnrollmentByWavURL(r.url, data=>{
+                            console.log("Enrollment by wav URL====>",data);
+                            let r2 = JSON.parse(data);
+                            if(r2.ResponseCode === "SUC"){
+                                getEnrollments(data=>{
+                                    let r3 = JSON.parse(data);
+                                    console.log("getEnrollments ====> ",r3);
+                                    if(r3.ResponseCode === "SUC"){
+                                        let l = r3.Result.length;
+                                        spokenResponse = (l < 3) ? `Inscripción exitosa, debe realizar ${3-l} más para terminar el reconocimiento. Por favor presiona el botón grabar.` : `He reconocido tu voz correctamente. ¿En qué puedo ayudarte?`;
+                                        respond(spokenResponse);
+                                    }
+                                });
+                            }else{
+                                spokenResponse = `La inscripción fallo. Por favor inténtalo de nuevo`;
+                                respond(spokenResponse);
+                           }
+                        });
+                    }else{
+                        authentication(r.url, data=>{
+                            console.log("datos de la autenticación =====>", data);
+                            let rAuth = JSON.parse(data);
+                            if(rAuth.ResponseCode === "SUC"){
+                                let txt = `auth_true`;
+                                send(txt);
+                            }else{
+                                spokenResponse = `Tu voz no fue reconocida. Por favor inténtalo de nuevo`;
+                                respond(spokenResponse);
+                            }                      
+                        });
+                    }                        
                 }
-            })
-            .catch((err)=>{
-                console.log(err);
             });
+        }, _AudioFormat);
     });
 
     $("#del_enroll").on("click",function(){
-        getEnrollments()
-            .then(response=>{
-                let l = response.Result.length;
-                for (let i = 0; i < l; i++) {
+        getEnrollments(data=>{
+            let r = JSON.parse(data);
+            console.log("getEnrollments to delete ====> ",r);
+            if(r.ResponseCode === "SUC"){
+                let l = r.Result.length;
+                let i = 0;
+                while(i < l){
                     deleteEnrollment(r.Result[i]);
+                    i++;
                 }
-            })
-            .catch(err=>console.log(err));
+            }
+        });
     });
 
 });
@@ -78,8 +119,8 @@ function startRecognition() {
     recognition.onresult = function(event) {
         recognition.onend = null;
     
-        let text = "";
-        for (let i = event.resultIndex; i < event.results.length; ++i) {
+        var text = "";
+        for (var i = event.resultIndex; i < event.results.length; ++i) {
           text += event.results[i][0].transcript;
         }
         setInput(text);
@@ -133,34 +174,38 @@ function send(text) {
     });
 }
 function prepareResponse(val) {
-    const debugJSON = JSON.stringify(val, undefined, 2);
-    const intent = val.result.metadata.intentName;
+    let debugJSON = JSON.stringify(val, undefined, 2);
+    let intent = val.result.metadata.intentName;
     if(intent === "initial_intent"){
-        getEnrollments()
-            .then(response=>{
-                const l = r.Result.length;
+        getEnrollments(data=>{
+            let r = JSON.parse(data);
+            console.log("Datos del ajax ====> ",r);
+            if(r.ResponseCode === "SUC"){
+                let l = r.Result.length;
                 if(l < 3){
                     spokenResponse = `Buenos días. Para poder ayudarte necesito registrar tu voz. Por favor presiona el botón grabar para iniciar el reconocimiento`;  
                 }else{
                     hasEnroll = true;
                     spokenResponse = `Buenos días. ¿En qué puedo ayudarte?`;   
                 }
-                respond(spokenResponse);
-                debugRespond(debugJSON);
-            })
-            .catch(err=>console.log(err));
+            }
+            respond(spokenResponse);
+            debugRespond(debugJSON);
+        });
     }else{
         console.log("HAS ENROLL====>",hasEnroll);
         spokenResponse = val.result.fulfillment.speech;
         if(!hasEnroll){
-             getEnrollments()
-                .then(response=>{
-                    const l = r.Result.length;
+            getEnrollments(data=>{
+                let r = JSON.parse(data);
+                console.log("Datos del ajax ====> ",r);
+                if(r.ResponseCode === "SUC"){
+                    let l = r.Result.length;
                     if(l >= 3){
                         hasEnroll =  true;
                     }
-                })
-                .catch(err=>console.log(err));
+                }
+            });
         }
         spokenResponse = val.result.fulfillment.speech;
         respond(spokenResponse);
@@ -176,7 +221,7 @@ function respond(val, callback="") {
     }
     if (val !== messageRecording) {
         window.utterances = [];
-        const msg = new SpeechSynthesisUtterance();
+        var msg = new SpeechSynthesisUtterance();
         msg.voiceURI = "native";
         msg.text = val;
         msg.lang = "es-CO";
@@ -199,9 +244,12 @@ function respond(val, callback="") {
 /* CODIGO PARA GENERAR LA URL DEL WAV */
 function Initialize() {
     try {
+        // Monkeypatch for AudioContext, getUserMedia and URL
         window.AudioContext = window.AudioContext || window.webkitAudioContext;
         navigator.getUserMedia = navigator.getUserMedia || navigator.webkitGetUserMedia;
         window.URL = window.URL || window.webkitURL;
+
+        // Store the instance of AudioContext globally
         audio_context = new AudioContext;
         console.log('Audio context is ready !');
         console.log('navigator.getUserMedia ' + (navigator.getUserMedia ? 'available.' : 'not present!'));
@@ -212,71 +260,89 @@ function Initialize() {
 
 function startRecording() {
     console.log("inicie startRecording");
+    // Access the Microphone using the navigator.getUserMedia method to obtain a stream
     navigator.getUserMedia({ audio: true }, function (stream) {
+        // Expose the stream to be accessible globally
         audio_stream = stream;
-        const input = audio_context.createMediaStreamSource(stream);
+        // Create the MediaStreamSource for the Recorder library
+        var input = audio_context.createMediaStreamSource(stream);
         console.log('Media stream succesfully created');
+
+        // Initialize the Recorder Library
         recorder = new Recorder(input);
         console.log('Recorder initialised');
+
+        // Start recording !
         recorder && recorder.record();
         console.log('Recording...');
+
+        // Disable Record button and enable stop button !
     }, function (e) {
         console.error('No live audio input: ' + e);
     });
 }
 
-function stopRecording(AudioFormat) {
+function stopRecording(callback, AudioFormat) {
+    // Stop the recorder instance
     recorder && recorder.stop();
     console.log('Stopped recording.');
+
+    // Stop the getUserMedia Audio Stream !
     audio_stream.getAudioTracks()[0].stop();
 
-    return new Promise((resolve, reject)=>{
+    // Disable Stop button and enable Record button !
+    
+    // Use the Recorder Library to export the recorder Audio as a .wav file
+    // The callback providen in the stop recording method receives the blob
+    if(typeof(callback) == "function"){
+
+        /**
+         * Export the AudioBLOB using the exportWAV method.
+         * Note that this method exports too with mp3 if
+         * you provide the second argument of the function
+         */
         recorder && recorder.exportWAV(function (blob) {
+            callback(blob);
+
+            // create WAV download link using audio data blob
+            // createDownloadLink();
+
+            // Clear the Recorder to start again !
             recorder.clear();
-            resolve(blob);
         }, (AudioFormat || "audio/wav"));
-    });
+    }
 }
 
-function getEnrollments(){
-    return new Promise((resolve, reject)=>{
-         $.ajax({
-            url: "https://chatbot-todo1.azurewebsites.net/getEnrollments",
-            method: "POST",
-            data:{
-                userId: "developerUserId",
-                password: "d0CHipUXOk"
-            },
-            success:(data)=>{
-                const d = JSON.parse(data);
-                if(d.ResponseCode === "SUC"){
-                    resolve(d);
-                }else{
-                    reject(new Error(`Se produjo en error en la petición: ${d.ResponseCode}`));
-                }
-            }
-        });
-    });      
+function getEnrollments(callback){
+    $.ajax({
+        url: "https://chatbot-todo1.azurewebsites.net/getEnrollments",
+        method: "POST",
+        data:{
+            userId: "developerUserId",
+            password: "d0CHipUXOk"
+        },
+        success:(data)=>{
+            callback(data);
+        }
+    });
 }
 
 function deleteEnrollment(id_delete){
-    return new Promise((resolve, reject)=>{
-        $.ajax({
-            url: "https://chatbot-todo1.azurewebsites.net/deleteEnrollment",
-            method: "POST",
-            data:{
-                userId: "developerUserId",
-                password: "d0CHipUXOk",
-                enrollmentId: id_delete
-            },
-            success:(data)=>{
-                console.log("Enrollment borrado");
-            }
-        });
+    $.ajax({
+        url: "https://chatbot-todo1.azurewebsites.net/deleteEnrollment",
+        method: "POST",
+        data:{
+            userId: "developerUserId",
+            password: "d0CHipUXOk",
+            enrollmentId: id_delete
+        },
+        success:(data)=>{
+            console.log("Enrollment borrado");
+        }
     });
 }
 
-function createEnrollmentByWavURL(wavUrl){
+function createEnrollmentByWavURL(wavUrl, callback){
     $.ajax({
         url: "https://chatbot-todo1.azurewebsites.net/createEnrollmentByWavURL",
         method: "POST",
@@ -286,25 +352,12 @@ function createEnrollmentByWavURL(wavUrl){
             urlToEnrollmentWav: wavUrl
         },
         success:(data)=>{
-            const d = JSON.parse(data);
-            let spk;
-            if(d.ResponseCode === "SUC"){
-                getEnrollments()
-                    .then(response=>{
-                        const l = r3.Result.length;
-                        spokenResponse = (l < 3) ? `Inscripción exitosa, debe realizar ${3-l} más para terminar el reconocimiento. Por favor presiona el botón grabar.` : `He reconocido tu voz correctamente. ¿En qué puedo ayudarte?`;
-                        respond(spokenResponse);
-                    })
-                    .catch(err=>console.log(err));
-            }else{
-                spokenResponse = `La inscripción fallo. Por favor inténtalo de nuevo`;
-                respond(spokenResponse);
-            }
+            callback(data);
         }
-    });
+    }); 
 }
 
-function authentication(wavUrl){
+function authentication(wavUrl, callback){
     $.ajax({
         url: "https://chatbot-todo1.azurewebsites.net/authentication",
         method: "POST",
@@ -314,41 +367,26 @@ function authentication(wavUrl){
             urlToAuthenticationWav: wavUrl
         },
         success:(data)=>{
-            const d = JSON.parse(data);
-            if(d.ResponseCode === "SUC"){
-                const txt = `auth_true`;
-                send(txt);
-            }else{
-                spokenResponse = `Tu voz no fue reconocida. Por favor inténtalo de nuevo`;
-                respond(spokenResponse);
-            }
+            callback(data);
         }
-    });
+    }); 
 }
 
-function saveFile(name){
+function saveFile(name, callback){
     console.log("BLOB IN FUNCTION =====>",name);
 
     var fd = new FormData();
     fd.append('fname', 'test2.wav');
     fd.append('data', name);
 
-
-    return new Promise((resolve, reject)=>{
-        $.ajax({
-            url: "https://backend-chatbott1.azurewebsites.net/api/api.php",
-            method: "POST",
-            data: fd,
-            processData: false,
-            contentType: false,
-            success:(data)=>{
-                const d = JSON.parse(data);
-                if(d.status === "200"){
-                    resolve(d);
-                }else{
-                    reject(new Error(`Se produjo en error en la petición: ${d.ResponseCode}`));
-                }
-            }
-        });
+    $.ajax({
+        url: "https://backend-chatbott1.azurewebsites.net/api/api.php",
+        method: "POST",
+        data: fd,
+        processData: false,
+        contentType: false,
+        success:(data)=>{
+            callback(data);
+        }
     });
 }
