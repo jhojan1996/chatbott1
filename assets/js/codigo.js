@@ -2,6 +2,10 @@ const messageRecording = "Escuchando...";
 const messageCouldntHear = "No pude oirte, ¿Puedes decirlo de nuevo?";
 const messageInternalError = "Oh no! Ha habido un error interno, inténtalo nuevamente";
 const messageSorry = "Lo siento, no tengo una respuesta a esto";
+const accessToken = "b774636399634896af8b43567d942df7";
+const developerToken = "8a03cac054a24cfa9538ae6dd1243723";
+const baseUrl = "https://api.api.ai/v1/";
+const v = "20170516";
 
 var $speechInput,
     $recBtn,
@@ -114,11 +118,11 @@ function updateRec() {
 function send(text) {
     $.ajax({
         type: "POST",
-        url: `${process.env.BASE_URL}query?v=${process.env.V}`,
+        url: `${baseUrl}query?v=${v}`,
         contentType: "application/json; charset=utf-8",
         dataType: "json",
         headers: {
-            "Authorization": `Bearer ${process.env.DEVELOPER_TOKEN}`
+            "Authorization": `Bearer ${developerToken}`
         },
         data: JSON.stringify({query: text, lang: "es", sessionId: "yaydevdiner"}),
         success: (data)=>{
@@ -217,6 +221,11 @@ function startRecording() {
         console.log('Recorder initialised');
         recorder && recorder.record();
         console.log('Recording...');
+
+        setTimeout(()=>{
+            $stopRec.trigger("click");
+        },5000);
+
     }, function (e) {
         console.error('No live audio input: ' + e);
     });
