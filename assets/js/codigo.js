@@ -217,11 +217,6 @@ function startRecording() {
         console.log('Recorder initialised');
         recorder && recorder.record();
         console.log('Recording...');
-
-        setTimeout(()=>{
-            $stopRec.trigger("click");
-        },5000);
-
     }, function (e) {
         console.error('No live audio input: ' + e);
     });
