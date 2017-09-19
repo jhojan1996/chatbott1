@@ -1,6 +1,6 @@
-const messageRecording = "Escuchando...",
-const messageCouldntHear = "No pude oirte, ¿Puedes decirlo de nuevo?",
-const messageInternalError = "Oh no! Ha habido un error interno, inténtalo nuevamente",
+const messageRecording = "Escuchando...";
+const messageCouldntHear = "No pude oirte, ¿Puedes decirlo de nuevo?";
+const messageInternalError = "Oh no! Ha habido un error interno, inténtalo nuevamente";
 const messageSorry = "Lo siento, no tengo una respuesta a esto";
 
 var $speechInput,
