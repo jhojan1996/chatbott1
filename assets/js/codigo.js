@@ -1,8 +1,9 @@
-var accessToken = "b774636399634896af8b43567d942df7",
-    developerToken = "8a03cac054a24cfa9538ae6dd1243723",
-    baseUrl = "https://api.api.ai/v1/",
-    v = "20170516",
-    $speechInput,
+const messageRecording = "Escuchando...",
+const messageCouldntHear = "No pude oirte, ¿Puedes decirlo de nuevo?",
+const messageInternalError = "Oh no! Ha habido un error interno, inténtalo nuevamente",
+const messageSorry = "Lo siento, no tengo una respuesta a esto";
+
+var $speechInput,
     $recBtn,
     $recordBtn,
     $stopRec,
@@ -11,11 +12,7 @@ var accessToken = "b774636399634896af8b43567d942df7",
     recorder,
     spokenResponse,
     hasEnroll = false,
-    audio_stream,
-    messageRecording = "Escuchando...",
-    messageCouldntHear = "No pude oirte, ¿Puedes decirlo de nuevo?",
-    messageInternalError = "Oh no! Ha habido un error interno, inténtalo nuevamente",
-    messageSorry = "Lo siento, no tengo una respuesta a esto";
+    audio_stream;
 
 $(document).ready(function() {
     //Con esta linea checkeamos si el browser tiene activo el permiso de usar microfono//
@@ -117,11 +114,11 @@ function updateRec() {
 function send(text) {
     $.ajax({
         type: "POST",
-        url: baseUrl + "query?v="+v,
+        url: `${process.env.BASE_URL}query?v=${process.env.V}`,
         contentType: "application/json; charset=utf-8",
         dataType: "json",
         headers: {
-            "Authorization": "Bearer " + developerToken
+            "Authorization": `Bearer ${process.env.DEVELOPER_TOKEN}`
         },
         data: JSON.stringify({query: text, lang: "es", sessionId: "yaydevdiner"}),
         success: (data)=>{
@@ -140,10 +137,10 @@ function prepareResponse(val) {
             .then(response=>{
                 const l = response.Result.length;
                 if(l < 3){
-                    spokenResponse = `Buenos días. Para poder ayudarte necesito registrar tu voz. Por favor presiona el botón grabar para iniciar el reconocimiento`;  
+                    spokenResponse = `Hola. Para poder ayudarte necesito registrar tu voz. Por favor, presiona el botón grabar para iniciar el reconocimiento`;  
                 }else{
                     hasEnroll = true;
-                    spokenResponse = `Buenos días. ¿En qué puedo ayudarte?`;   
+                    spokenResponse = `Hola. ¿En qué puedo ayudarte?`;   
                 }
                 respond(spokenResponse);
                 debugRespond(debugJSON);
@@ -220,6 +217,11 @@ function startRecording() {
         console.log('Recorder initialised');
         recorder && recorder.record();
         console.log('Recording...');
+
+        setTimeout(()=>{
+            $stopRec.trigger("click");
+        },5000);
+
     }, function (e) {
         console.error('No live audio input: ' + e);
     });
@@ -292,12 +294,12 @@ function createEnrollmentByWavURL(wavUrl){
                 getEnrollments()
                     .then(response=>{
                         const l = response.Result.length;
-                        spokenResponse = (l < 3) ? `Inscripción exitosa, debe realizar ${3-l} más para terminar el reconocimiento. Por favor presiona el botón grabar.` : `He reconocido tu voz correctamente. ¿En qué puedo ayudarte?`;
+                        spokenResponse = (l < 3) ? `Inscripción exitosa, debe realizar ${3-l} más para terminar el reconocimiento. Por favor, presiona el botón grabar.` : `He reconocido tu voz correctamente. ¿En qué puedo ayudarte?`;
                         respond(spokenResponse);
                     })
                     .catch(err=>console.log(err));
             }else{
-                spokenResponse = `La inscripción fallo. Por favor inténtalo de nuevo`;
+                spokenResponse = `La inscripción falló. Por favor, inténtalo de nuevo`;
                 respond(spokenResponse);
             }
         }
@@ -319,7 +321,7 @@ function authentication(wavUrl){
                 const txt = `auth_true`;
                 send(txt);
             }else{
-                spokenResponse = `Tu voz no fue reconocida. Por favor inténtalo de nuevo`;
+                spokenResponse = `Tu voz no fue reconocida. Por favor, inténtalo de nuevo`;
                 respond(spokenResponse);
             }
         }

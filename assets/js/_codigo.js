@@ -209,7 +209,7 @@ function prepareResponse(val) {
         }
         spokenResponse = val.result.fulfillment.speech;
         respond(spokenResponse);
-        debugRespond(debugJSON);         
+        debugRespond(debugJSON);
     }
 }
 function debugRespond(val) {
