@@ -243,3 +243,7 @@ input.custom{
   opacity: 0;
   display: none;
 }
+
+.text_container{
+  margin-top: 3%;
+}
