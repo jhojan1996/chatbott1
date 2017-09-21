@@ -27,6 +27,12 @@ input {
   width: 400px;
   -webkit-transition: all 0.35s ease-in;
 }
+
+span{
+  display: inline-block;
+}
+
+
 textarea {
   background-color: #070F24;
   border: 1px solid #122435;
