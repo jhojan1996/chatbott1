@@ -217,3 +217,13 @@ input.custom{
   font-weight: bold;
   font-size: 1.2em;
 }
+
+.machine_text{
+  color: #F44646;
+  font-weight: bold;
+}
+
+.user_text{
+  color: #FFFFFF;
+  font-weight: bold;
+}
