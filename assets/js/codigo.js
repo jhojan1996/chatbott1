@@ -112,6 +112,9 @@ function setInput(text) {
     div.classList.add("user_text");
     div.innerHTML = "Usted: "+text;
     document.getElementById("history__text").appendChild(div);
+    $("#history__text").animate({
+        scrollTop: $("#history__text").height()
+    },500);
     send(text);
 }
 function updateRec() {
@@ -209,6 +212,9 @@ function respond(val, callback="") {
     div.classList.add("machine_text");
     div.innerHTML = "Bank1: "+val;
     document.getElementById("history__text").appendChild(div);
+    $("#history__text").animate({
+        scrollTop: $("#history__text").height()
+    },500);
 }
 
 /* CODIGO PARA GENERAR LA URL DEL WAV */
