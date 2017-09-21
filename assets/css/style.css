@@ -96,3 +96,119 @@ input:active, input:focus, textarea:active, textarea:focus {
 .recording_section{
   display: none;
 }
+
+
+.header{
+  color: #FFFFFF;
+}
+
+.header .title{
+  font-weight: bold;
+}
+
+.header .subtitle{
+  font-weight: normal;
+}
+
+.init_container{
+  position: relative;
+  color: #FFFFFF;
+  text-align: center;
+}
+
+.init_asist{
+  position: relative;
+  margin-top: 5%;
+  padding-left: 5%;
+  padding-right: 5%;
+  padding-top: 1%;
+  padding-bottom: 1%;
+  background-color: #1FB6FF;
+  border: none;
+  border-radius: 5px;
+  color: #FFFFFF;
+  font-size: 18px;
+  cursor: pointer;
+}
+
+input.custom{
+  background-color: #0A3B52;
+  border: none;
+  border-bottom: solid #375E72;
+  color: #FFFFFF;
+  font-size: 20px;
+  line-height: 43px;
+  padding: 0 0.75em;
+  width: 400px;
+}
+
+.img_record{
+    position: relative;
+    max-width: 7%;
+    top: 20px;
+    cursor: pointer;
+}
+
+.img_record img{
+    width: 100%;
+}
+
+.footer {
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  padding: 1rem;
+  text-align: center;
+  color: #FFFFFF;
+  font-size: 14px;
+}
+
+.text{
+  float: right;
+  cursor: pointer;
+}
+
+.clear{
+  clear: both;
+}
+
+.post_header{
+  text-align: center;
+  color: #FFFFFF;
+  font-weight: bold;
+  text-transform: uppercase;
+}
+
+.general_text{
+  color: #FFFFFF;
+}
+
+.tips{
+  position: relative;
+  box-shadow: 0px 0px 10px #2B5569; 
+  margin-top: 5%;
+  padding: 2%;
+  border-radius: 5px;
+}
+
+.tips__text{
+  color:#FFFFFF;
+}
+
+.tips__tip{
+  color: #F44646;
+  font-weight: bold;
+}
+
+.history{
+  box-shadow: 0px 0px 10px #2B5569; 
+  padding: 2%;
+  margin-top: 3%;
+}
+
+.title{
+  color: #FFFFFF;
+  font-weight: bold;
+  font-size: 1.2em;
+}
