@@ -73,7 +73,6 @@ function startRecognition() {
     recognition.continuous = false;
     recognition.interimResults = false;
     recognition.onstart = function(event) {
-        respond(messageRecording);
         updateRec();
     };
     recognition.onresult = function(event) {
