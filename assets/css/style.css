@@ -28,6 +28,11 @@ input {
   -webkit-transition: all 0.35s ease-in;
 }
 
+h1{
+  padding: 0;
+  margin: 0;
+}
+
 span{
   display: inline-block;
 }
@@ -226,4 +231,10 @@ input.custom{
 .user_text{
   color: #FFFFFF;
   font-weight: bold;
+}
+
+.history__text{
+  height: 150px;
+  overflow-y: auto;
+  overflow-x: hidden; 
 }
