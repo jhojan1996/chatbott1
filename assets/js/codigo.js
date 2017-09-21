@@ -109,7 +109,9 @@ function switchRecognition() {
     }
 }
 function setInput(text) {
-    $speechInput.val(text);
+    let div = document.createElement("div");
+    div.classList.add("user_text");
+    document.getElementById("history__text").appendChild(div);
     send(text);
 }
 function updateRec() {
@@ -194,7 +196,9 @@ function respond(val, callback="") {
         window.utterances.push(msg);
         window.speechSynthesis.speak(msg);
     }
-    $("#spokenResponse").addClass("is-active").find(".spoken-response__text").html(val);
+    let div = document.createElement("div");
+    div.classList.add("machine_text");
+    document.getElementById("history__text").appendChild(div);
 }
 
 /* CODIGO PARA GENERAR LA URL DEL WAV */
