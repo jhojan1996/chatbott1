@@ -5,16 +5,16 @@ html {
   box-sizing: inherit;
 }
 body {
-  background-color: #FAFAFA;
+  background-color: #0A3B52;
   font-family: "Titillium Web", Arial, sans-serif;
   font-size: 20px;
   margin: 0;
 }
 .container {
-  position: fixed;
-  top: 50%;
-  left: 50%;
-  -webkit-transform: translate(-50%, -50%);
+  position: relative;
+  margin: 0 auto;
+  width: 50%;
+  margin-top: 5%;
 }
 input {
   background-color: #126077;
@@ -39,18 +39,17 @@ input:active, input:focus, textarea:active, textarea:focus {
   outline: 1px solid #48788B;
 }
 .btn {
-  background-color: #126178;
-  border: 1px solid #549EAF;
-  color: #549EAF;
+  background-color: #1FB6FF;
+  border: none;
+  color: #FFFFFF;
   cursor: pointer;
-  display: inline-block;
-  font-family: "Titillium Web";
   font-size: 20px;
-  line-height: 43px;
-  padding: 0 0.75em;
-  text-align: center;
-  text-transform: uppercase;
-  -webkit-transition: all 0.35s ease-in;
+  padding-left: 5%;
+  padding-right: 5%;
+  padding-top: 1%;
+  padding-bottom: 1%;
+  border-radius: 5px;
+  margin-left: 5%;
 }
 .btn:hover {
   background-color: #1888A9;
