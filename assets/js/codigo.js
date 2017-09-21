@@ -147,7 +147,7 @@ function prepareResponse(val) {
                     spokenResponse = `Hola. ¿En qué puedo ayudarte?`;   
                 }
                 respond(spokenResponse);
-                debugRespond(debugJSON);
+                //debugRespond(debugJSON);
             })
             .catch(err=>console.log(err));
     }else{
@@ -165,12 +165,12 @@ function prepareResponse(val) {
         }
         spokenResponse = val.result.fulfillment.speech;
         respond(spokenResponse);
-        debugRespond(debugJSON);         
+        //debugRespond(debugJSON);         
     }
 }
-function debugRespond(val) {
+/*function debugRespond(val) {
     $("#response").text(val);
-}
+}*/
 function respond(val, callback="") {
     if (val == "") {
         val = messageSorry;

@@ -5,7 +5,7 @@ html {
   box-sizing: inherit;
 }
 body {
-  background-color: #192837;
+  background-color: #FAFAFA;
   font-family: "Titillium Web", Arial, sans-serif;
   font-size: 20px;
   margin: 0;
@@ -86,4 +86,13 @@ input:active, input:focus, textarea:active, textarea:focus {
   background-color: #040E23;
   color: #7584A2;
   padding: 1em;
+}
+
+.init_container{
+  position: relative;
+  display: block;
+}
+
+.recording_section{
+  display: none;
 }
