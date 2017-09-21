@@ -144,6 +144,15 @@ function prepareResponse(val) {
                 const l = response.Result.length;
                 if(l < 3){
                     spokenResponse = `Hola. Para poder ayudarte necesito registrar tu voz. Por favor, presiona el botón grabar para iniciar el reconocimiento`;  
+                    $(".current").animate({
+                        opacity: 0
+                    }, 1000, function(){
+                        $(".current").css("display", "none");
+                        $(".record").css("display", "block");
+                        $(".record").animate({
+                            opacity: 1
+                        }, 1000);
+                    });
                 }else{
                     hasEnroll = true;
                     spokenResponse = `Hola. ¿En qué puedo ayudarte?`;
