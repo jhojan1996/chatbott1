@@ -238,3 +238,8 @@ input.custom{
   overflow-y: auto;
   overflow-x: hidden; 
 }
+
+.record{
+  opacity: 0;
+  display: none;
+}

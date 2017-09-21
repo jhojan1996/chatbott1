@@ -110,7 +110,7 @@ function switchRecognition() {
 function setInput(text) {
     let div = document.createElement("div");
     div.classList.add("user_text");
-    div.innerHTML = text;
+    div.innerHTML = "Usted: "+text;
     document.getElementById("history__text").appendChild(div);
     send(text);
 }
@@ -146,7 +146,7 @@ function prepareResponse(val) {
                     spokenResponse = `Hola. Para poder ayudarte necesito registrar tu voz. Por favor, presiona el botón grabar para iniciar el reconocimiento`;  
                 }else{
                     hasEnroll = true;
-                    spokenResponse = `Hola. ¿En qué puedo ayudarte?`;   
+                    spokenResponse = `Hola. ¿En qué puedo ayudarte?`;
                 }
                 respond(spokenResponse);
                 //debugRespond(debugJSON);
@@ -198,7 +198,7 @@ function respond(val, callback="") {
     }
     let div = document.createElement("div");
     div.classList.add("machine_text");
-    div.innerHTML = val;
+    div.innerHTML = "Bank1: "+val;
     document.getElementById("history__text").appendChild(div);
 }
 
