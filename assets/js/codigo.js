@@ -6,6 +6,7 @@ const accessToken = "b774636399634896af8b43567d942df7";
 const developerToken = "8a03cac054a24cfa9538ae6dd1243723";
 const baseUrl = "https://api.api.ai/v1/";
 const v = "20170516";
+const resp = "TODO1 presente en la feria bancolombia"
 
 var $speechInput,
     $recBtn,
@@ -36,12 +37,18 @@ $(document).ready(function() {
     });
 
     $recordBtn.on("click",()=>{
-        spokenResponse = `Por favor repite la siguiente frase: Todo uno presente en la feria Bancolombia`;
-        respond(spokenResponse, ()=>startRecording());
+        startRecording();
     });
 
     $stopRec.on("click", function(){
         const _AudioFormat = "audio/wav";
+        let div = document.createElement("div");
+        div.classList.add("user_text");
+        div.innerHTML = "Usted: "+text;
+        document.getElementById("history__text").appendChild(div);
+        $("#history__text").animate({
+            scrollTop: $("#history__text").height()
+        },500);
         stopRecording(_AudioFormat)
             .then(blob=> saveFile(blob))
             .then(response=>{
@@ -146,7 +153,7 @@ function prepareResponse(val) {
             .then(response=>{
                 const l = response.Result.length;
                 if(l < 3){
-                    spokenResponse = `Hola. Para poder ayudarte necesito registrar tu voz. Por favor, presiona el botón grabar para iniciar el reconocimiento`;  
+                    spokenResponse = `Hola, que gusto tenerte con nosotros. Para poder ayudarte necesito registrar tu voz. Por favor, presiona el botón grabar y repite la siguiente frase: Todo uno presente en la feria bancolombia.`;
                     $(".current").animate({
                         opacity: 0
                     }, 1000, function(){
@@ -314,15 +321,20 @@ function createEnrollmentByWavURL(wavUrl){
         success:(data)=>{
             const d = JSON.parse(data);
             let spk;
+            let txt;
             if(d.ResponseCode === "SUC"){
                 getEnrollments()
                     .then(response=>{
                         const l = response.Result.length;
+                        txt = `Resultado de la grabación ${l}: Exitosa`;
+                        changeTipWithSus(txt, l);
                         spokenResponse = (l < 3) ? `Inscripción exitosa, debe realizar ${3-l} más para terminar el reconocimiento. Por favor, presiona el botón grabar.` : `He reconocido tu voz correctamente. ¿En qué puedo ayudarte?`;
                         respond(spokenResponse);
                     })
                     .catch(err=>console.log(err));
             }else{
+                txt = `Resultado de la grabación ${l}: Fallida`;
+                changeTipWithSus(txt, l);
                 spokenResponse = `La inscripción falló. Por favor, inténtalo de nuevo`;
                 respond(spokenResponse);
             }
@@ -377,4 +389,14 @@ function saveFile(name){
             }
         });
     });
+}
+
+function changeTip(text){
+    $(".tips__text").html(text)
+}
+
+function changeTipWithSus(text, l){
+    if(l == 1 || l == 0) $(".tips__text").html("");
+    let txt = $(".tips__text").html();
+    $(".tips__text").html(`${txt} <br/> ${text}`);
 }
