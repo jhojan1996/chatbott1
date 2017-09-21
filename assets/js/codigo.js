@@ -111,6 +111,7 @@ function switchRecognition() {
 function setInput(text) {
     let div = document.createElement("div");
     div.classList.add("user_text");
+    div.html(text);
     document.getElementById("history__text").appendChild(div);
     send(text);
 }
@@ -198,6 +199,7 @@ function respond(val, callback="") {
     }
     let div = document.createElement("div");
     div.classList.add("machine_text");
+    div.html(val);
     document.getElementById("history__text").appendChild(div);
 }
 
