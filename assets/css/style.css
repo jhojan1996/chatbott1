@@ -6,7 +6,7 @@ html {
 }
 body {
   background-color: #0A3B52;
-  font-family: "Titillium Web", Arial, sans-serif;
+  font-family: "Open Sans";
   font-size: 20px;
   margin: 0;
 }
@@ -20,7 +20,7 @@ input {
   background-color: #126077;
   border: 1px solid #3F7F93;
   color: #A6CAE6;
-  font-family: "Titillium Web";
+  font-family: "Open Sans";
   font-size: 20px;
   line-height: 43px;
   padding: 0 0.75em;
@@ -246,4 +246,13 @@ input.custom{
 
 .text_container{
   margin-top: 3%;
+}
+
+.timer{
+  color: #F44646;
+}
+
+#save-rec{
+  width: 8%;
+  cursor: pointer;
 }
