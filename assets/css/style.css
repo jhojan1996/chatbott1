@@ -178,6 +178,8 @@ input.custom{
 .text{
   float: right;
   cursor: pointer;
+  position: relative;
+  top: 25px;
 }
 
 .clear{
@@ -269,6 +271,7 @@ input.custom{
 
 .text2{
   text-align: left;
+  float: left;
 }
 
 .logot1{
