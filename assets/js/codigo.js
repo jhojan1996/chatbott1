@@ -64,6 +64,7 @@ $(document).ready(function() {
                 for (let i = 0; i < l; i++) {
                     deleteEnrollment(response.Result[i]);
                 }
+                location.reload();
             })
             .catch(err=>console.log(err));
     });
