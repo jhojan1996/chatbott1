@@ -13,8 +13,8 @@ body {
 .container {
   position: relative;
   margin: 0 auto;
-  width: 50%;
-  margin-top: 5%;
+  width: 70%;
+  margin-top: 2%;
 }
 input {
   background-color: #126077;
@@ -197,13 +197,15 @@ input.custom{
 .tips{
   position: relative;
   box-shadow: 0px 0px 10px #2B5569; 
-  margin-top: 5%;
+  margin-top: 3%;
   padding: 2%;
   border-radius: 5px;
 }
 
 .tips__text{
   color:#FFFFFF;
+  height: 80px;
+  overflow: auto;
 }
 
 .tips__tip{
@@ -234,7 +236,7 @@ input.custom{
 }
 
 .history__text{
-  height: 150px;
+  height: 80px;
   overflow-y: auto;
   overflow-x: hidden; 
 }

@@ -116,6 +116,18 @@ function setInput(text) {
     $("#history__text").animate({
         scrollTop: $("#history__text").height()
     },500);
+    if(text === 'si' || text === 'sí'){
+        $(".current").animate({
+            opacity: 0
+        }, 1000, function(){
+            $(".current").css("display", "none");
+            $(".record").css("display", "block");
+            $(".record").animate({
+                opacity: 1
+            }, 1000);
+        });
+    }
+
     send(text);
 }
 function updateRec() {
@@ -334,6 +346,7 @@ function createEnrollmentByWavURL(wavUrl){
                                     opacity: 1
                                 }, 1000);
                             });
+                            changeTip(`Por favor utilice la siguiente frase para realizar una transacción: Realizar el pago mínimo de mi tarjeta de crédito visa.`);
                         }
                         respond(spokenResponse);
                     })
@@ -362,6 +375,16 @@ function authentication(wavUrl){
             if(d.ResponseCode === "SUC"){
                 const txt = `auth_true`;
                 send(txt);
+                changeTip(`El reconocimiento fue exitoso<br/>Por favor utilice la siguiente frase para realizar otra transacción: Transferir 500 dolares a la cuenta mamá`);
+                $(".record").animate({
+                    opacity: 0
+                }, 1000, function(){
+                    $(".record").css("display", "none");
+                    $(".current").css("display", "block");
+                    $(".current").animate({
+                        opacity: 1
+                    }, 1000);
+                });
             }else{
                 spokenResponse = `Tu voz no fue reconocida. Por favor, inténtalo de nuevo`;
                 respond(spokenResponse);
