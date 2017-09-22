@@ -267,8 +267,12 @@ input.custom{
   top: 15px;
 }
 
+.text2{
+  text-align: left;
+}
+
 .logot1{
-  width: 10%;
+  width: 20%;
   position: relative;
   top: 15px;
 }
