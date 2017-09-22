@@ -253,11 +253,13 @@ input.custom{
 }
 
 #save-rec{
-  width: 24%;
+  width: 8%;
   cursor: pointer;
 }
 
 .content_img_rec{
   vertical-align: bottom;
-  margin-left: 10%;
+  margin-left: 8%;
+  position: relative;
+  top: 15px;
 }    
