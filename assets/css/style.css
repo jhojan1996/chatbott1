@@ -168,11 +168,13 @@ input.custom{
   right: 0;
   bottom: 0;
   left: 0;
-  padding: 1rem;
   text-align: center;
   color: #FFFFFF;
   font-size: 14px;
   background-color: #072D40;
+  padding-left: 2%;
+  padding-right: 2%;
+  padding-bottom: 1%;
 }
 
 .text{
