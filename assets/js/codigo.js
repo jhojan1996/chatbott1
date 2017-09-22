@@ -321,7 +321,21 @@ function createEnrollmentByWavURL(wavUrl){
                         const l = response.Result.length;
                         txt = `Resultado de la grabación ${l}: Exitosa`;
                         changeTipWithSus(txt, l);
-                        spokenResponse = (l < 3) ? `Inscripción exitosa, debe realizar ${3-l} más para terminar el reconocimiento. Por favor, presiona el botón grabar.` : `He reconocido tu voz correctamente. ¿En qué puedo ayudarte?`;
+                        if(l < 3){
+                            spokenResponse = `Inscripción exitosa, debe realizar ${3-l} más para terminar el reconocimiento. Por favor, presiona el botón grabar.`;
+                        }else{
+                            spokenResponse = `He reconocido tu voz correctamente. ¿En qué puedo ayudarte?`;
+                            $(".record").animate({
+                                opacity: 0
+                            }, 1000, function(){
+                                $(".record").css("display", "none");
+                                $(".current").css("display", "block");
+                                $(".current").animate({
+                                    opacity: 1
+                                }, 1000);
+                            });
+                        }
+                        spokenResponse = (l < 3) ?  : ;
                         respond(spokenResponse);
                     })
                     .catch(err=>console.log(err));
