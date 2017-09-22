@@ -243,7 +243,7 @@ function startRecording() {
         recorder && recorder.record();
         console.log('Recording...');
 
-        let seconds = 5;
+        let seconds = 6;
         let display = document.querySelector('#timer');
         startTimer(seconds, display);
     }, function (e) {
