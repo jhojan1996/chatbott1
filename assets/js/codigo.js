@@ -42,13 +42,7 @@ $(document).ready(function() {
 
     $stopRec.on("click", function(){
         const _AudioFormat = "audio/wav";
-        let div = document.createElement("div");
-        div.classList.add("user_text");
-        div.innerHTML = "Usted: "+text;
-        document.getElementById("history__text").appendChild(div);
-        $("#history__text").animate({
-            scrollTop: $("#history__text").height()
-        },500);
+       
         stopRecording(_AudioFormat)
             .then(blob=> saveFile(blob))
             .then(response=>{
@@ -249,10 +243,9 @@ function startRecording() {
         recorder && recorder.record();
         console.log('Recording...');
 
-        setTimeout(()=>{
-            $stopRec.trigger("click");
-        },5000);
-
+        let seconds = 5;
+        let display = document.querySelector('#timer');
+        startTimer(seconds, display);
     }, function (e) {
         console.error('No live audio input: ' + e);
     });
@@ -399,4 +392,39 @@ function changeTipWithSus(text, l){
     if(l == 1 || l == 0) $(".tips__text").html("");
     let txt = $(".tips__text").html();
     $(".tips__text").html(`${txt} <br/> ${text}`);
+}
+
+function stopRec(){
+     const _AudioFormat = "audio/wav";
+       
+    stopRecording(_AudioFormat)
+        .then(blob=> saveFile(blob))
+        .then(response=>{
+            if(!hasEnroll){
+                return createEnrollmentByWavURL(response.url);
+            }else{
+                return authentication(response.url);
+            }
+        })
+        .catch((err)=>{
+            console.log(err);
+        });
+}
+
+function startTimer(duration, display) {
+    var timer = duration, minutes, seconds;
+    var int = setInterval(function () {
+        minutes = parseInt(timer / 60, 10)
+        seconds = parseInt(timer % 60, 10);
+
+        minutes = minutes < 10 ? "0" + minutes : minutes;
+        seconds = seconds < 10 ? "0" + seconds : seconds;
+
+        display.textContent = minutes + ":" + seconds;
+
+        if (--timer < 0) {
+            clearInterval(int);
+            stopRec();
+        }
+    }, 1000);
 }
