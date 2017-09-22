@@ -335,7 +335,6 @@ function createEnrollmentByWavURL(wavUrl){
                                 }, 1000);
                             });
                         }
-                        spokenResponse = (l < 3) ?  : ;
                         respond(spokenResponse);
                     })
                     .catch(err=>console.log(err));
