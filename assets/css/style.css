@@ -172,6 +172,7 @@ input.custom{
   text-align: center;
   color: #FFFFFF;
   font-size: 14px;
+  background-color: #072D40;
 }
 
 .text{
@@ -264,4 +265,8 @@ input.custom{
   margin-left: 8%;
   position: relative;
   top: 15px;
-}    
+}
+
+.logot1{
+  width: 10%;
+}
