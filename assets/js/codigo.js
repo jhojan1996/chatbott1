@@ -326,8 +326,8 @@ function createEnrollmentByWavURL(wavUrl){
                     })
                     .catch(err=>console.log(err));
             }else{
-                txt = `Resultado de la grabación ${l}: Fallida`;
-                changeTipWithSus(txt, l);
+                txt = `Resultado de la grabación: Fallida`;
+                changeTipWithSus(txt, 1);
                 spokenResponse = `La inscripción falló. Por favor, inténtalo de nuevo`;
                 respond(spokenResponse);
             }
