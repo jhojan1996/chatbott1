@@ -43,7 +43,7 @@ exports.pagos = (res, req)=>{
 								if(l < 3){
 									text = `Usted tiene ${l} inscripciones. Debe realizar ${3-l} para poder realizar la autenticación`;
 								}else{
-									text = `Por seguridad necesito confirmar tu identidad. Por favor presiona el botón grabar para iniciar el reconocimiento`;
+									text = `Está todo listo para realizar tu transacción. Por favor repite la siguiente para confirmar tu identidad: Todo uno presente en la feria bancolombia`;
 								}
 								return res.json({
 								    speech: text,
