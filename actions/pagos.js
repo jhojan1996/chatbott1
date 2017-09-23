@@ -82,8 +82,9 @@ exports.pagos = (res, req)=>{
 					});
 				}					
 			}else{
+				let speech = (tipo_pago === 'minimo') ? 'mínimo': 'total';
 				let totxmin = (tipo_pago === 'minimo') ? accountDetail[0].pagoMinimo : accountDetail[0].pagoTotal;
-				text = `Ok, ¿quieres realizar el pago ${tipo_pago} por $ ${totxmin} de tu tarjeta de crédito ${franquicia} terminada en ${account[0].id}?`;
+				text = `Ok, ¿quieres realizar el pago ${speech} por $ ${totxmin} de tu tarjeta de crédito ${franquicia} terminada en ${account[0].id}?`;
 				setContext = [
 					{
 						"name":"pago_tarjeta", 

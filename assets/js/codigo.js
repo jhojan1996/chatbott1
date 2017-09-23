@@ -24,6 +24,20 @@ $(document).ready(function() {
     Initialize();
     //--------------------------------------------------------------------------------//
 
+    //Controlar donde inicia el demo//
+    getEnrollments()
+        .then(response=>{
+            const l = response.Result.length;
+            if(l < 3){
+                changeTip(`Por favor presiona el botón "Hablar" y pronuncia lo siguiente: <span class="tips__tip"><i>Iniciar demo</i></span>`);
+            }else{
+                hasEnroll = true;
+                changeTip(`Por favor utilice la siguiente frase para realizar una transacción: Realizar el pago mínimo de mi tarjeta de crédito visa.`);
+            }
+        })
+        .catch(err=>console.log(err));
+    //-----------------------------//
+
     $speechInput = $("#speech");
     $recBtn = $("#rec");
     $recordBtn = $("#save-rec");
@@ -112,13 +126,7 @@ function switchRecognition() {
     }
 }
 function setInput(text) {
-    let div = document.createElement("div");
-    div.classList.add("user_text");
-    div.innerHTML = "Usted: "+text;
-    document.getElementById("history__text").appendChild(div);
-    $("#history__text").animate({
-        scrollTop: $("#history__text").height()
-    },500);
+    setConv(text, 'user');
     if(text === 'si' || text === 'sí'){
         $(".current").animate({
             opacity: 0
@@ -163,6 +171,7 @@ function prepareResponse(val) {
                 const l = response.Result.length;
                 if(l < 3){
                     spokenResponse = `Hola, que gusto tenerte con nosotros. Para poder ayudarte necesito registrar tu voz. Por favor, presiona el botón grabar y repite la siguiente frase: Todo uno presente en la feria bancolombia.`;
+                    changeTip(`Resultados de las grabaciones: <br/>`);
                     $(".current").animate({
                         opacity: 0
                     }, 1000, function(){
@@ -182,6 +191,7 @@ function prepareResponse(val) {
             .catch(err=>console.log(err));
     }else{
         console.log("HAS ENROLL====>",hasEnroll);
+        changeTip(`Resultados de las grabaciones: <br/>`);
         spokenResponse = val.result.fulfillment.speech;
         if(!hasEnroll){
              getEnrollments()
@@ -224,13 +234,8 @@ function respond(val, callback="") {
         window.utterances.push(msg);
         window.speechSynthesis.speak(msg);
     }
-    let div = document.createElement("div");
-    div.classList.add("machine_text");
-    div.innerHTML = "Bank1: "+val;
-    document.getElementById("history__text").appendChild(div);
-    $("#history__text").animate({
-        scrollTop: $("#history__text").height()
-    },500);
+   //AQUI IBA LA LLAMADA AL METODO NUEVO
+   setConv(val, 'bnk1');
 }
 
 /* CODIGO PARA GENERAR LA URL DEL WAV */
@@ -337,7 +342,7 @@ function createEnrollmentByWavURL(wavUrl){
                         txt = `Resultado de la grabación ${l}: Exitosa`;
                         changeTipWithSus(txt, l);
                         if(l < 3){
-                            spokenResponse = `Inscripción exitosa, debe realizar ${3-l} más para terminar el reconocimiento. Por favor, presiona el botón grabar.`;
+                            spokenResponse = `Inscripción exitosa, debe realizar ${3-l} más para terminar el reconocimiento. Por favor, presiona el botón grabar y repite la siguiente frase: todo uno presente en la feria Bancolombia`;
                         }else{
                             spokenResponse = `He reconocido tu voz correctamente. ¿En qué puedo ayudarte?`;
                             $(".record").animate({
@@ -437,6 +442,7 @@ function stopRec(){
     const _AudioFormat = "audio/wav";
     $(".rec-button").css("fill", "#000000");
     $(".timer").css("color", "#000000");
+    setConv('TODO1 presente en la feria bancolombia', 'user')
     stopRecording(_AudioFormat)
         .then(blob=> saveFile(blob))
         .then(response=>{
@@ -467,4 +473,16 @@ function startTimer(duration, display) {
             stopRec();
         }
     }, 1000);
+}
+
+function setConv(text, who){
+    let div = document.createElement("div");
+    let msg = (who == 'user')?'Usted':'Bank1';
+    let cls = (who == 'user')?'user_text':'machine_text';
+    div.classList.add(cls);
+    div.innerHTML = `${msg}: ${text}`;
+    document.getElementById("history__text").appendChild(div);
+    $("#history__text").animate({
+        scrollTop: $("#history__text").height()
+    },500);
 }
