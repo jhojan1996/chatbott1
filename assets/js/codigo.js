@@ -37,6 +37,7 @@ $(document).ready(function() {
     });
 
     $recordBtn.on("click",()=>{
+        $(".rec-button").css("fill", "#F44646");
         startRecording();
     });
 
@@ -432,8 +433,8 @@ function changeTipWithSus(text, l){
 }
 
 function stopRec(){
-     const _AudioFormat = "audio/wav";
-       
+    const _AudioFormat = "audio/wav";
+    $(".rec-button").css("fill", "#000000");
     stopRecording(_AudioFormat)
         .then(blob=> saveFile(blob))
         .then(response=>{
