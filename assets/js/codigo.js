@@ -436,8 +436,8 @@ function changeTipWithSus(text, l){
 
 function stopRec(){
     const _AudioFormat = "audio/wav";
-    $(".rec-button").css("fill", "#000000");
-    $(".timer").css("color", "#000000");
+    $(".rec-button").css("fill", "#9EC9DA");
+    $(".timer").css("color", "#9EC9DA");
     setConv('TODO1 presente en la feria bancolombia', 'user')
     stopRecording(_AudioFormat)
         .then(blob=> saveFile(blob))
