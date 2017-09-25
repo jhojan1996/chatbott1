@@ -280,3 +280,7 @@ input.custom{
   position: relative;
   top: 15px;
 }
+
+.icon{
+  fill: #D8D8D8;
+}

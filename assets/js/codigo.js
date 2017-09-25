@@ -186,7 +186,6 @@ function prepareResponse(val) {
                     spokenResponse = `Hola. ¿En qué puedo ayudarte?`;
                 }
                 respond(spokenResponse);
-                //debugRespond(debugJSON);
             })
             .catch(err=>console.log(err));
     }else{
@@ -204,13 +203,10 @@ function prepareResponse(val) {
                 .catch(err=>console.log(err));
         }
         spokenResponse = val.result.fulfillment.speech;
-        respond(spokenResponse);
-        //debugRespond(debugJSON);         
+        respond(spokenResponse);    
     }
 }
-/*function debugRespond(val) {
-    $("#response").text(val);
-}*/
+
 function respond(val, callback="") {
     if (val == "") {
         val = messageSorry;
@@ -479,10 +475,8 @@ function setConv(text, who){
     let div = document.createElement("div");
     let msg = (who == 'user')?'Usted':'Bank1';
     let cls = (who == 'user')?'user_text':'machine_text';
+    let container = document.getElementById("history__text");
     div.classList.add(cls);
     div.innerHTML = `${msg}: ${text}`;
-    document.getElementById("history__text").appendChild(div);
-    $("#history__text").animate({
-        scrollTop: $("#history__text").height()
-    },500);
+    container.insertBefore(div, container.firstChild);
 }
