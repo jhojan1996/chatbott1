@@ -196,7 +196,7 @@ function prepareResponse(val) {
             }else{
                 changeTip(`Por favor presiona el botón "Hablar" y pronuncia lo siguiente: <span class="tips__tip"><i>Si</i></span>`);
             }                
-        }else if(intent === ){
+        }else{
             changeTip(`Por favor presiona el botón "Hablar" y pronuncia lo siguiente: <span class="tips__tip"><i>Transferir 500 dolares a la cuenta mamá</i></span>`);
         }
         console.log("HAS ENROLL====>",hasEnroll);
