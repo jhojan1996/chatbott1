@@ -190,13 +190,13 @@ function prepareResponse(val) {
             })
             .catch(err=>console.log(err));
     }else{
-        if(intent === "transferencia" || intent === "pago_tarjeta"){
+        if(intent === "transferencia" || intent === "pago_tarjeta" || intent === "pago_tarjeta_confirm" || intent === "transferencia_confirm"){
             if(dialog === 'si' || dialog=== 'sí'){
                 changeTip(`Presiona el botón grabar y repite la siguiente frase: Todo uno presente en la feria bancolombia.`);
             }else{
                 changeTip(`Por favor presiona el botón "Hablar" y pronuncia lo siguiente: <span class="tips__tip"><i>Si</i></span>`);
             }                
-        }else{
+        }else if(intent === ){
             changeTip(`Por favor presiona el botón "Hablar" y pronuncia lo siguiente: <span class="tips__tip"><i>Transferir 500 dolares a la cuenta mamá</i></span>`);
         }
         console.log("HAS ENROLL====>",hasEnroll);
