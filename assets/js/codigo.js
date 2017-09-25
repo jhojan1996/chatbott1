@@ -165,6 +165,7 @@ function send(text) {
 function prepareResponse(val) {
     const debugJSON = JSON.stringify(val, undefined, 2);
     const intent = val.result.metadata.intentName;
+    let dialog = val.result.resolvedQuery;
     if(intent === "initial_intent"){
         getEnrollments()
             .then(response=>{
@@ -190,11 +191,13 @@ function prepareResponse(val) {
             .catch(err=>console.log(err));
     }else{
         if(intent === "transferencia" || intent === "pago_tarjeta"){
-            if(val.result.fulfillment.speech === 'si' || val.result.fulfillment.speech === 'sí'){
+            if(dialog === 'si' || dialog=== 'sí'){
                 changeTip(`Presiona el botón grabar y repite la siguiente frase: Todo uno presente en la feria bancolombia.`);
             }else{
                 changeTip(`Por favor presiona el botón "Hablar" y pronuncia lo siguiente: <span class="tips__tip"><i>Si</i></span>`);
             }                
+        }else{
+            changeTip(`Por favor presiona el botón "Hablar" y pronuncia lo siguiente: <span class="tips__tip"><i>Transferir 500 dolares a la cuenta mamá</i></span>`);
         }
         console.log("HAS ENROLL====>",hasEnroll);
         spokenResponse = val.result.fulfillment.speech;
