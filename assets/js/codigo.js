@@ -189,8 +189,14 @@ function prepareResponse(val) {
             })
             .catch(err=>console.log(err));
     }else{
+        if(intent === "transferencia" || intent === "pago_tarjeta"){
+            if(val.result.fulfillment.speech === 'si' || val.result.fulfillment.speech === 'sí'){
+                changeTip(`Presiona el botón grabar y repite la siguiente frase: Todo uno presente en la feria bancolombia.`);
+            }else{
+                changeTip(`Por favor presiona el botón "Hablar" y pronuncia lo siguiente: <span class="tips__tip"><i>Si</i></span>`);
+            }                
+        }
         console.log("HAS ENROLL====>",hasEnroll);
-        changeTip(`Resultados de las grabaciones: <br/>`);
         spokenResponse = val.result.fulfillment.speech;
         if(!hasEnroll){
              getEnrollments()
