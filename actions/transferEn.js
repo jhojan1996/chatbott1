@@ -3,7 +3,7 @@ exports.transfer = function (res, req){
     console.log('***** transferencia *****');
     const cuentaDestino = (typeof req.body.result.contexts[0].parameters.destination_account !== 'undefined') ? req.body.result.contexts[0].parameters.destination_account : '';
     const monto = (typeof req.body.result.contexts[0].parameters.amount.number !== 'undefined') ? req.body.result.contexts[0].parameters.amount.number: '';
-    const confirm = (typeof req.body.result.contexts[0].parameters.confirm !== 'undefined') ? req.body.result.contexts[0].parameters.confirm : '';
+    const confirm = (typeof req.body.result.contexts[0].parameters.confirm_transfer !== 'undefined') ? req.body.result.contexts[0].parameters.confirm_transfer : '';
     let response;
     let text;
     let setContext;

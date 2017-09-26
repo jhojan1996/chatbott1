@@ -5,7 +5,7 @@ exports.payment = (res, req)=>{
 	const tc = Accounts.listAccTC(true);
 	const franquicia = (typeof req.body.result.contexts[0].parameters.franchise !== 'undefined') ? req.body.result.contexts[0].parameters.franchise : '';
 	const tipo_pago = (typeof req.body.result.contexts[0].parameters.payment_type !== 'undefined') ? req.body.result.contexts[0].parameters.payment_type : '';
-	const confirm = (typeof req.body.result.contexts[0].parameters.confirm !== 'undefined') ? req.body.result.contexts[0].parameters.confirm : '';
+	const confirm = (typeof req.body.result.contexts[0].parameters.confirm_payment !== 'undefined') ? req.body.result.contexts[0].parameters.confirm_payment : '';
 	let response;
 	let text;
 	let setContext;
