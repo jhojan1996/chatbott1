@@ -46,7 +46,7 @@ exports.payment = (res, req)=>{
 				}					
 			}else{
 				let totxmin = (tipo_pago === 'minimum') ? accountDetail[0].pagoMinimo : accountDetail[0].pagoTotal;
-				text = `Ok, do you want to make the ${tipo_pago} payment for $ ${totxmin} of your ${franquicia} credit card terminated in ${account[0].id}?`;
+				text = `Ok, do you want to make the ${tipo_pago} payment for $ ${totxmin} of your ${franquicia} credit card with last numbers ${account[0].id}?`;
 				setContext = [
 					{
 						"name":"card_payment", 
