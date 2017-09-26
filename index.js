@@ -15,6 +15,8 @@ const session = require('./actions/session.js');
 const accounts = require('./actions/accounts.js');
 const movements = require('./actions/movements');
 const pagos = require('./actions/pagos');
+const payment = require('./actions/payment');
+const transferEn = require('./actions/transferEn');
 const listAccounts = require('./model.js');
 
 
@@ -717,6 +719,161 @@ app.post('/ai', (req, res) => {
         case 'pagos':
            console.log("Inicio pagar tarjeta");
             pagos.pagos(res, req);
+        break;
+    }
+
+});
+
+app.post('/english', (req, res) => {
+    console.log('*** Webhook for api.ai ***');
+    console.log(req.body.result);
+
+    // Validate if user has type unless one time the password: for now with LOCAL STORAGE//
+    // -------------------------------------------------------------------------------- //
+
+    //general variables for every action//
+    let action = req.body.result.action;
+    let sessionId = req.body.sessionId;
+    let franquicia = req.body.result.parameters.franquicia_tarjeta;
+    let cuenta = req.body.result.parameters.cuenta;
+    console.log(req.body.result.contexts.length);
+    let confir = ((typeof req.body.result.contexts === 'undefined' || req.body.result.contexts.length === 0) ? '' : req.body.result.contexts[0].parameters.confirm);
+    let t = ((typeof req.body.result.fulfillment.messages[0].speech === 'undefined') ? req.body.result.fulfillment.messages.text : req.body.result.fulfillment.messages[0].speech);
+    let accounts = todo1ChatBot.listAccount(true);
+    let accountsDetail;
+    let listAccounts = [];
+    let quick_replies = [];
+    let error = false;
+    //---------------------------------//
+
+    switch (action) {
+        case 'input.welcome':
+            console.log(action, action);
+            return res.json({
+                speech: "login",
+                displayText: "login",
+                messages: {
+                    attachment: {
+                        type: "template",
+                        payload: {
+                            template_type: "button",
+                            text:req.body.result.fulfillment.messages[0].speech,
+                            buttons:[
+                                {
+                                    type: "account_link",
+                                    url: "https://chatbot-todo1.azurewebsites.net/login.html"
+                                }
+                            ]
+                        }
+                    }
+                },
+                source: 'saludo'
+            });
+        break;
+        case 'login':
+            console.log('intent login ---->', req.body.result.fulfillment.messages[0].speech);
+            return res.json({
+                speech: "login",
+                displayText: "login",
+                messages: {
+                    text: req.body.result.fulfillment.messages[0].speech,
+                    quick_replies: [
+                        {
+                            content_type: "text",
+                            title: "Ver qué puedo hacer",
+                            payload: "ayuda"
+                        }
+                    ]
+                },
+                source: 'saludo'
+            });
+        break;
+        case 'logout':
+            console.log('intent logout ---->', req.body.result.fulfillment.messages[0].speech);
+            return res.json({
+                speech: "logout",
+                displayText: "logout",
+                messages: {
+                     attachment: {
+                        type: "template",
+                        payload: {
+                            template_type: "button",
+                            text:req.body.result.fulfillment.messages[0].speech,
+                            buttons:[
+                                {
+                                    type: "account_unlink"
+                                }
+                            ]
+                        }
+                    }
+                },
+                source: 'saludo'
+            });
+        break;
+        case 'ayuda':
+            console.log('intent login ---->', req.body.result.fulfillment.speech);
+            return res.json({
+                speech: req.body.result.fulfillment.speech,
+                displayText: req.body.result.fulfillment.speech,
+                messages: {
+                    attachment: {
+                        type: "template",
+                        payload: {
+                            template_type: "generic",
+                            elements: [
+                                {
+                                    title: "Transferencia",
+                                    image_url: "https://chatbot-todo1.azurewebsites.net/images/transferencias.png",
+                                    subtitle: "Escribe por ejemplo: Transferir de nómina a mamá 30000 "
+                                },
+                                {
+                                    title: "Consulta de saldo tarjeta de crédito o cuenta de ahorros",
+                                    image_url: "https://chatbot-todo1.azurewebsites.net/images/consulta_saldos.png",
+                                    subtitle: "Escribe por ejemplo:  saldo de mi tarjeta de crédito visa"
+                                },
+                                {
+                                    title: "Movimientos",
+                                    image_url: "https://chatbot-todo1.azurewebsites.net/images/movimientos.png",
+                                    subtitle: "Escribe por ejemplo: Movimientos de mi tarjeta de crédito visa "
+                                },
+                                {
+                                    title: "Pago tarjeta de crédito",
+                                    image_url: "https://chatbot-todo1.azurewebsites.net/images/pago_tc.png",
+                                    subtitle: "Escribe por ejemplo: Pagar tarjeta de crédito visa "
+
+                                },
+                                {
+                                    title: "Servicios adicionales",
+                                    image_url: "https://chatbot-todo1.azurewebsites.net/images/servicios_adicionales_tc_ahorros.png",
+                                    subtitle: "Tarjeta de crédito y Cuenta de ahorros",
+                                    buttons: [
+                                        {
+                                            type: "postback",
+                                            title: "Tarjeta de Crédito",
+                                            payload: "servicios_tc"
+                                        },
+                                        {
+                                            type: "postback",
+                                            title: "Cuenta de ahorros",
+                                            payload: "servicios_ahorros"
+                                        }
+
+                                    ]
+                                }
+                            ]
+                        }
+                    }
+                },
+                source: 'saludo'
+            });
+ 
+        case 'transfer':
+           console.log("Inicio transferencia");
+           transferEn.transfer(res, req);
+        break;
+        case 'payment':
+           console.log("Inicio pagar tarjeta");
+            payment.payment(res, req);
         break;
     }
 
