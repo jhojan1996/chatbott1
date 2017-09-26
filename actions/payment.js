@@ -45,7 +45,7 @@ exports.payment = (res, req)=>{
 					});
 				}					
 			}else{
-				let totxmin = (tipo_pago === 'minimo') ? accountDetail[0].pagoMinimo : accountDetail[0].pagoTotal;
+				let totxmin = (tipo_pago === 'minimum') ? accountDetail[0].pagoMinimo : accountDetail[0].pagoTotal;
 				text = `Ok, do you want to make the ${tipo_pago} payment for $ ${totxmin} of your ${franquicia} credit card terminated in ${account[0].id}?`;
 				setContext = [
 					{
@@ -101,7 +101,7 @@ exports.payment = (res, req)=>{
 		}
 	}else{
 		console.log("La franquicia no fue enviada");
-		text = `¿Cual tarjeta de crédito deseas pagar?`;
+		text = `What credit card do you want to pay?`;
 		setContext = [
 			{
 				"name":"card_payment", 
